@@ -11,7 +11,7 @@ const SIGLA_PARA_ID = {
   "SC":"42","RS":"43","MS":"50","MT":"51","GO":"52","DF":"53"
 };
 
-export default function MapaBrasil({ onEstadoChange, siglaSelecionada }) {
+export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel }) {
  const [pib, setPib] = useState({});
 const [populacao, setPopulacao] = useState({});
 const [perCapita, setPerCapita] = useState({});
@@ -40,7 +40,7 @@ useEffect(() => {
       projectionConfig={{ scale: 400, center: [-55, -15] }}
       width={400}
       height={300}
-      style={{ width: "100%", maxWidth: "480px", height: "auto", display: "block", margin: "0 auto" }}
+      style={{ width: "100%", maxWidth: "550px", height: "auto", display: "block", margin: "0" }}
     
     >
         <Geographies geography={GEO_URL}>
@@ -48,13 +48,22 @@ useEffect(() => {
     geographies.map((geo) => {
       const nome = geo.properties.Estado || geo.properties.name || "UF";
       const sigla = geo.properties.SIGLA || "";
+      const REGIAO_NOME_PARA_ID = { "Norte": "1", "Nordeste": "2", "Sudeste": "3", "Centro-Oeste": "4", "Sul": "5" };
+const regiaoDoEstado = (sigla) => {
+  const i = info[SIGLA_PARA_ID[sigla]];
+  return i ? REGIAO_NOME_PARA_ID[i.regiao] : null;
+};
 
       return (
         <Geography
           style={{ outline: "none" }}
           key={geo.rsmKey}
           geography={geo}
-          fill={siglaSelecionada === sigla ? "#000080" : "#728E6D"}
+          fill={
+  regiaoSel
+    ? (regiaoDoEstado(sigla) === regiaoSel ? "#000080" : "#c8c8c8")
+    : (siglaSelecionada === sigla ? "#000080" : "#728E6D")
+}
           stroke="#ffffff"
           strokeWidth={1}
           onClick={() => onEstadoChange({ nome, sigla, id: geo.id, pib: pib[SIGLA_PARA_ID[sigla]], populacao: populacao[SIGLA_PARA_ID[sigla]], perCapita: perCapita[SIGLA_PARA_ID[sigla]], info: info[SIGLA_PARA_ID[sigla]], agro: agro[SIGLA_PARA_ID[sigla]], industria: industria[SIGLA_PARA_ID[sigla]], servicos: servicos[SIGLA_PARA_ID[sigla]], administracao: administracao[SIGLA_PARA_ID[sigla]], impostos: impostos[SIGLA_PARA_ID[sigla]] })}

@@ -28,7 +28,7 @@ a:hover {
   background-color: #d4d0c8;
   border: 2px solid;
   padding: 2px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .janela-titulo {
@@ -45,8 +45,9 @@ a:hover {
 }
 
 .painel-mapa {
-  height: 440px;
+  height: 490px;
   overflow: hidden;
+  position: relative;
 }
 
 .painel {
@@ -93,6 +94,6 @@ a:hover {
 }
 
 main {
-  max-width: 540px;
+  max-width: 660px;
   margin: 0 auto;
 }

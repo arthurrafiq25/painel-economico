@@ -3,8 +3,41 @@
 import { useState } from "react";
 import MapaBrasil from "./MapaBrasil";
 
+const REGIOES = [
+  { id: "1", nome: "• Norte" },
+  { id: "2", nome: "• Nordeste" },
+  { id: "3", nome: "• Sudeste" },
+  { id: "4", nome: "• Centro-Oeste" },
+  { id: "5", nome: "• Sul" },
+];
+
+const NOME_REGIAO = { "1": "Norte", "2": "Nordeste", "3": "Sudeste", "4": "Centro-Oeste", "5": "Sul" };
+
 export default function Home() {
   const [estadoHover, setEstadoHover] = useState(null);
+  const [regiaoSel, setRegiaoSel] = useState(null);
+  const [dadosRegiao, setDadosRegiao] = useState(null);
+
+  const handleRegiao = async (id) => {
+    setRegiaoSel(id);
+    setEstadoHover(null);
+    if (id === null) {
+      setDadosRegiao(null);
+      return;
+    }
+    const r = await fetch("/dados-regiao.json");
+    const d = await r.json();
+    setDadosRegiao({
+      pib: d.pib[id],
+      populacao: d.populacao[id],
+      perCapita: d.perCapita[id],
+      agro: d.agro[id],
+      industria: d.industria[id],
+      servicos: d.servicos[id],
+      administracao: d.administracao[id],
+      impostos: d.impostos[id],
+    });
+  };
 
   return (
     <main>
@@ -15,50 +48,85 @@ export default function Home() {
 
       <div className="janela">
         <div className="janela-titulo" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-  <span>🗺️ Mapa do Brasil</span>
-  {estadoHover && (
-    <button
-  onClick={() => setEstadoHover(null)}
-  title="Limpar seleção"
-  style={{
-    fontSize: "12px",
-    fontWeight: "bold",
-    padding: "3px 7px",
-    cursor: "pointer",
-    background: "#d4d0c8",
-    border: "1px solid",
-    borderColor: "#ffffff #808080 #808080 #ffffff",
-    fontFamily: "Verdana, Tahoma, sans-serif",
-    lineHeight: "1",
-  }}
->
-  ↻
-</button>
-  )}
-</div>
+          <span>🗺️ Mapa do Brasil</span>
+          {(estadoHover || regiaoSel) && (
+            <button
+              onClick={() => { setEstadoHover(null); handleRegiao(null); }}
+              title="Limpar seleção"
+              style={{
+                fontSize: "12px",
+                fontWeight: "bold",
+                padding: "3px 7px",
+                cursor: "pointer",
+                background: "#d4d0c8",
+                border: "1px solid",
+                borderColor: "#ffffff #808080 #808080 #ffffff",
+                fontFamily: "Verdana, Tahoma, sans-serif",
+                lineHeight: "1",
+              }}
+            >
+              ↻
+            </button>
+          )}
+        </div>
         <div className="janela-conteudo">
           <div className="painel painel-mapa">
-            <MapaBrasil onEstadoChange={setEstadoHover} siglaSelecionada={estadoHover ? estadoHover.sigla : null} />
-            <div style={{ marginTop: "8px", fontSize: "12px", color: "#000080", fontWeight: "bold", minHeight: "20px", textAlign: "center" }}>
+            <div style={{ position: "relative" }}>
+              <div style={{ marginTop: "30px" }}> 
+                <MapaBrasil onEstadoChange={setEstadoHover} siglaSelecionada={estadoHover ? estadoHover.sigla : null} regiaoSel={regiaoSel} />
+              </div>
+              <div style={{ position: "absolute", top: "80px", right: "30px", fontSize: "13px" }}> {/* MENU EMPILHADO DE REGIÕES */}
+                {REGIOES.map((r) => (
+                  <div key={r.nome} style={{ marginBottom: "4px" }}>
+                    <a
+                      href="#"
+                      onClick={(e) => { e.preventDefault(); handleRegiao(r.id); }}
+                      style={{
+                        color: "#0000cc",
+                        textDecoration: "underline",
+                        fontWeight: regiaoSel === r.id ? "bold" : "normal",
+                      }}
+                    >
+                      {r.nome}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ position: "absolute", bottom: "10px", left: "0", right: "0", fontSize: "12px", color: "#000080", fontWeight: "bold", textAlign: "center" }}> {/* Hover Inferior */}
               {estadoHover
                 ? estadoHover.nome + " (" + estadoHover.sigla + ")" +
                   (estadoHover.info ? " · Capital: " + estadoHover.info.capital + " · Região: " + estadoHover.info.regiao + " · Fuso: " + estadoHover.info.fuso : "")
-                : "Passe o mouse sobre um estado"}
+                : "Clique em um estado ou em uma região ao lado"}
             </div>
           </div>
         </div>
       </div>
 
       <div className="janela janela-mapa">
-        <div className="janela-titulo">ℹ️ Sobre </div>
+        <div className="janela-titulo">ℹ️ Sobre este painel</div>
         <div className="janela-conteudo">
           <div className="painel">
-              {estadoHover ? (
+            {regiaoSel ? (
+              <>
+                <p><strong>Região {NOME_REGIAO[regiaoSel]}</strong></p>
+                {dadosRegiao && (
+                  <>
+                    <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {Math.round(dadosRegiao.pib / 1000).toLocaleString("pt-BR")} milhões</p>
+                    <p><strong>População:</strong> {dadosRegiao.populacao.toLocaleString("pt-BR")}</p>
+                    <p><strong>PIB per capita:</strong> R$ {dadosRegiao.perCapita.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    <p><strong>Agropecuária:</strong> R$ {Math.round(dadosRegiao.agro / 1000).toLocaleString("pt-BR")} milhões</p>
+                    <p><strong>Indústria:</strong> R$ {Math.round(dadosRegiao.industria / 1000).toLocaleString("pt-BR")} milhões</p>
+                    <p><strong>Serviços:</strong> R$ {Math.round(dadosRegiao.servicos / 1000).toLocaleString("pt-BR")} milhões</p>
+                    <p><strong>Administração pública:</strong> R$ {Math.round(dadosRegiao.administracao / 1000).toLocaleString("pt-BR")} milhões</p>
+                    <p><strong>Impostos líquidos:</strong> R$ {Math.round(dadosRegiao.impostos / 1000).toLocaleString("pt-BR")} milhões</p>
+                  </>
+                )}
+              </>
+            ) : estadoHover ? (
               <>
                 <p><strong>{estadoHover.nome} ({estadoHover.sigla})</strong></p>
-                <p style={{ marginTop: "4px" }}>
-                </p>
-                <p><strong>PIB:</strong> R$ {Math.round(estadoHover.pib / 1000).toLocaleString("pt-BR")} milhões</p>
+                <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {Math.round(estadoHover.pib / 1000).toLocaleString("pt-BR")} milhões</p>
                 <p><strong>População:</strong> {estadoHover.populacao.toLocaleString("pt-BR")}</p>
                 <p><strong>PIB per capita:</strong> R$ {estadoHover.perCapita.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 {estadoHover.agro ? <p><strong>Agropecuária:</strong> R$ {Math.round(estadoHover.agro / 1000).toLocaleString("pt-BR")} milhões</p> : null}
@@ -69,7 +137,7 @@ export default function Home() {
               </>
             ) : (
               <p>
-                Passe o mouse sobre um estado no mapa para ver os indicadores.
+                Clique em um estado no mapa ou em uma região ao lado para ver os indicadores.
                 Todos os dados vêm de fontes públicas oficiais (IBGE, Banco Central).
               </p>
             )}
