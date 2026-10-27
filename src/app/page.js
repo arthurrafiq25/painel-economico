@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import MapaBrasil from "./MapaBrasil";
+import Modal from "./Modal";
 
 const REGIOES = [
   { id: "1", nome: "• Norte" },
@@ -17,6 +18,7 @@ export default function Home() {
   const [estadoHover, setEstadoHover] = useState(null);
   const [regiaoSel, setRegiaoSel] = useState(null);
   const [dadosRegiao, setDadosRegiao] = useState(null);
+  const [modalAberto, setModalAberto] = useState(null);
 
   const handleRegiao = async (id) => {
     setRegiaoSel(id);
@@ -146,8 +148,55 @@ export default function Home() {
       </div>
 
       <footer className="rodape">
-        Painel Brasil · Projeto experimental · Dados de fontes públicas oficiais
-      </footer>
+  <a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("sobre"); }}>Painel Brasil</a>
+  {" · "}
+  <a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("projeto"); }}>Sobre o projeto</a>
+  {" · "}
+  <a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("fontes"); }}>Dados de fontes públicas</a>
+</footer>
+{modalAberto === "sobre" && (
+  <Modal titulo="Painel Brasil" onClose={() => setModalAberto(null)}>
+    <p>
+      Projeto independente de indicadores econômicos e sociais do Brasil,
+      feito por <strong>Arthur Aguiar</strong>.
+    </p>
+    <p style={{ marginTop: "8px" }}>
+      Instagram: <a href="https://www.instagram.com/_arthuraguiar.s" target="_blank" rel="noopener noreferrer">@_arthuraguiar.s</a>
+    </p>
+  </Modal>
+)}
+
+{modalAberto === "projeto" && (
+  <Modal titulo="Sobre o projeto" onClose={() => setModalAberto(null)}>
+    <p>
+      O Painel Brasil reúne indicadores econômicos e sociais oficiais do Brasil,
+      por estado e por período. O objetivo é oferecer informação factual e
+      imparcial, com link para a fonte original em cada dado.
+    </p>
+    <p style={{ marginTop: "8px" }}>
+      Todos os dados vêm de fontes públicas oficiais (IBGE, Banco Central,
+      Tesouro Nacional, ANP, entre outras). O projeto não tem opinião política:
+      apenas apresenta os números, com data de atualização e link para a fonte.
+    </p>
+    <p style={{ marginTop: "8px" }}>
+      Versão 0.1 — projeto em desenvolvimento.
+    </p>
+  </Modal>
+)}
+
+{modalAberto === "fontes" && (
+  <Modal titulo="Fontes dos dados" onClose={() => setModalAberto(null)}>
+    <ul style={{ listStyle: "none", padding: 0 }}>
+      <li><a href="https://sidra.ibge.gov.br" target="_blank" rel="noopener noreferrer">IBGE – SIDRA</a> — PIB, população, setores</li>
+      <li><a href="https://www.bcb.gov.br" target="_blank" rel="noopener noreferrer">Banco Central</a> — Selic, câmbio, crédito</li>
+      <li><a href="https://www.tesourotransparente.gov.br" target="_blank" rel="noopener noreferrer">Tesouro Nacional</a> — gasto público, resultado primário</li>
+      <li><a href="https://www.gov.br/anp" target="_blank" rel="noopener noreferrer">ANP</a> — preço de combustíveis</li>
+      <li><a href="https://comexstat.mdic.gov.br" target="_blank" rel="noopener noreferrer">Comex Stat</a> — exportações e importações</li>
+      <li><a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank" rel="noopener noreferrer">Portal do Empreendedor</a> — MEI</li>
+      <li><a href="https://www.dieese.org.br" target="_blank" rel="noopener noreferrer">DIEESE</a> — cesta básica</li>
+    </ul>
+  </Modal>
+)}
     </main>
   );
 }

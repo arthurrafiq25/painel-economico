@@ -67,3 +67,39 @@ Mostrar no painel de cada estado:
 - Posição do estado no ranking nacional daquele indicador (ex.: "PIB: 3º de 27")
 - Posição da região no ranking das 5 regiões (ex.: "Sudeste: 1ª de 5")
 Objetivo: dar contexto comparativo individual, sem incentivar rivalidade regional.
+
+
+## 10. Regra geral: link e fonte em TODA informação
+Toda informação no site (automatizada ou manual) deve exibir:
+- link para a fonte oficial
+- data da última atualização
+- (quando manual) a data da última verificação legislativa
+
+## 11. Parâmetros para MEI / Simples Nacional (manual)
+Dados que mudam por lei, não por API. Curadoria manual.
+- Teto de faturamento do MEI (atual: R$ 81.000/ano)
+- Valor do DAS mensal do MEI
+- Teto do Simples Nacional (R$ 4,8 milhões/ano)
+- Faixas e alíquotas do Simples
+- Salário mínimo (afeta o DAS do MEI)
+Fontes: Portal do Empreendedor (gov.br), Receita Federal, LC 123/2006.
+
+## 12. Página "Fontes"
+Seção fixa (rodapé ou página própria) com links para as fontes oficiais:
+- IBGE (SIDRA, Cidades)
+- Banco Central (SGS, Focus)
+- Tesouro Nacional
+- Comex Stat
+- ANP (combustíveis)
+- Portal do Empreendedor
+- Receita Federal
+- DIEESE
+- IPEADATA
+Cada link com uma linha do tipo "o que você encontra lá".
+
+## 13. Custo de vida / poder de compra
+- IPCA geral e IPCA Alimentação (IBGE, mensal)
+- Preço médio de combustíveis (ANP, semanal)
+- Renda média real (PNAD Contínua, trimestral)
+- Salário mínimo real
+- Cesta básica (DIEESE)

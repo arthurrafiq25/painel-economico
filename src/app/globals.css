@@ -97,3 +97,42 @@ main {
   max-width: 660px;
   margin: 0 auto;
 }
+
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-janela {
+  background: #d4d0c8;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 2px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.modal-conteudo {
+  padding: 12px;
+  background: #ffffff;
+}
+
+.modal-botao-x {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background: #c92f2f;
+  padding: 2px 3px;
+  cursor: pointer;
+  border: 1px solid;
+  border-color: #ff8080 #800000 #800000 #ff8080;
+  font-family: Verdana, Tahoma, sans-serif;
+  line-height: 1;
+}
