@@ -16,15 +16,23 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada }) {
 const [populacao, setPopulacao] = useState({});
 const [perCapita, setPerCapita] = useState({});
 const [info, setInfo] = useState({});
-const hoverIdRef = useRef(0);
+const [agro, setAgro] = useState({});
+const [industria, setIndustria] = useState({});
+const [servicos, setServicos] = useState({});
+const [administracao, setAdministracao] = useState({});
+const [impostos, setImpostos] = useState({});
 
 useEffect(() => {
   fetch("/pib-uf.json").then((r) => r.json()).then(setPib).catch(() => {});
   fetch("/populacao-uf.json").then((r) => r.json()).then(setPopulacao).catch(() => {});
   fetch("/pib-per-capita-uf.json").then((r) => r.json()).then(setPerCapita).catch(() => {});
+  fetch("/estados-info.json").then((r) => r.json()).then(setInfo).catch(() => {});
+  fetch("/agropecuaria-uf.json").then((r) => r.json()).then(setAgro).catch(() => {});
+  fetch("/industria-uf.json").then((r) => r.json()).then(setIndustria).catch(() => {});
+  fetch("/servicos-uf.json").then((r) => r.json()).then(setServicos).catch(() => {});
+  fetch("/administracao-uf.json").then((r) => r.json()).then(setAdministracao).catch(() => {});
+  fetch("/impostos-uf.json").then((r) => r.json()).then(setImpostos).catch(() => {});
 }, []);
-fetch("/estados-info.json").then((r) => r.json()).then(setInfo).catch(() => {});
-
   return (
   <div>
     <ComposableMap
@@ -49,7 +57,7 @@ fetch("/estados-info.json").then((r) => r.json()).then(setInfo).catch(() => {});
           fill={siglaSelecionada === sigla ? "#000080" : "#728E6D"}
           stroke="#ffffff"
           strokeWidth={1}
-          onClick={() => onEstadoChange({ nome, sigla, id: geo.id, pib: pib[SIGLA_PARA_ID[sigla]], populacao: populacao[SIGLA_PARA_ID[sigla]], perCapita: perCapita[SIGLA_PARA_ID[sigla]], info: info[SIGLA_PARA_ID[sigla]] })}
+          onClick={() => onEstadoChange({ nome, sigla, id: geo.id, pib: pib[SIGLA_PARA_ID[sigla]], populacao: populacao[SIGLA_PARA_ID[sigla]], perCapita: perCapita[SIGLA_PARA_ID[sigla]], info: info[SIGLA_PARA_ID[sigla]], agro: agro[SIGLA_PARA_ID[sigla]], industria: industria[SIGLA_PARA_ID[sigla]], servicos: servicos[SIGLA_PARA_ID[sigla]], administracao: administracao[SIGLA_PARA_ID[sigla]], impostos: impostos[SIGLA_PARA_ID[sigla]] })}
         />
       );
     })

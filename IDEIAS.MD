@@ -60,3 +60,10 @@ Página (ou seção) com rankings por indicador:
 - Maior PIB, PIB per capita
 - Maior/menor desemprego
 - etc.
+
+
+## 9. Comparação individual de estados (anti-briga regional)
+Mostrar no painel de cada estado:
+- Posição do estado no ranking nacional daquele indicador (ex.: "PIB: 3º de 27")
+- Posição da região no ranking das 5 regiões (ex.: "Sudeste: 1ª de 5")
+Objetivo: dar contexto comparativo individual, sem incentivar rivalidade regional.
