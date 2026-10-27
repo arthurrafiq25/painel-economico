@@ -13,6 +13,7 @@ const REGIOES = [
 ];
 
 const NOME_REGIAO = { "1": "Norte", "2": "Nordeste", "3": "Sudeste", "4": "Centro-Oeste", "5": "Sul" };
+const fmt = (n) => Math.round(n).toLocaleString("pt-BR");
 
 export default function Home() {
   const [estadoHover, setEstadoHover] = useState(null);
@@ -114,28 +115,28 @@ export default function Home() {
                 <p><strong>Região {NOME_REGIAO[regiaoSel]}</strong></p>
                 {dadosRegiao && (
                   <>
-                    <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {Math.round(dadosRegiao.pib / 1000).toLocaleString("pt-BR")} milhões</p>
-                    <p><strong>População:</strong> {dadosRegiao.populacao.toLocaleString("pt-BR")}</p>
+                    <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(dadosRegiao.pib * 1000)}</p>
+                    <p><strong>População:</strong> {fmt(dadosRegiao.populacao)}</p>
                     <p><strong>PIB per capita:</strong> R$ {dadosRegiao.perCapita.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                    <p><strong>Agropecuária:</strong> R$ {Math.round(dadosRegiao.agro / 1000).toLocaleString("pt-BR")} milhões</p>
-                    <p><strong>Indústria:</strong> R$ {Math.round(dadosRegiao.industria / 1000).toLocaleString("pt-BR")} milhões</p>
-                    <p><strong>Serviços:</strong> R$ {Math.round(dadosRegiao.servicos / 1000).toLocaleString("pt-BR")} milhões</p>
-                    <p><strong>Administração pública:</strong> R$ {Math.round(dadosRegiao.administracao / 1000).toLocaleString("pt-BR")} milhões</p>
-                    <p><strong>Impostos líquidos:</strong> R$ {Math.round(dadosRegiao.impostos / 1000).toLocaleString("pt-BR")} milhões</p>
+                    <p><strong>Agropecuária:</strong> R$ {fmt(dadosRegiao.agro * 1000)}</p>
+                    <p><strong>Indústria:</strong> R$ {fmt(dadosRegiao.industria * 1000)}</p>
+                    <p><strong>Serviços:</strong> R$ {fmt(dadosRegiao.servicos * 1000)}</p>
+                    <p><strong>Administração pública:</strong> R$ {fmt(dadosRegiao.administracao * 1000)}</p>
+                    <p><strong>Impostos líquidos:</strong> R$ {fmt(dadosRegiao.impostos * 1000)}</p>
                   </>
                 )}
               </>
             ) : estadoHover ? (
               <>
                 <p><strong>{estadoHover.nome} ({estadoHover.sigla})</strong></p>
-                <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {Math.round(estadoHover.pib / 1000).toLocaleString("pt-BR")} milhões</p>
-                <p><strong>População:</strong> {estadoHover.populacao.toLocaleString("pt-BR")}</p>
+                <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(estadoHover.pib * 1000)}</p>
+                <p><strong>População:</strong> {fmt(estadoHover.populacao)}</p>
                 <p><strong>PIB per capita:</strong> R$ {estadoHover.perCapita.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                {estadoHover.agro ? <p><strong>Agropecuária:</strong> R$ {Math.round(estadoHover.agro / 1000).toLocaleString("pt-BR")} milhões</p> : null}
-                {estadoHover.industria ? <p><strong>Indústria:</strong> R$ {Math.round(estadoHover.industria / 1000).toLocaleString("pt-BR")} milhões</p> : null}
-                {estadoHover.servicos ? <p><strong>Serviços:</strong> R$ {Math.round(estadoHover.servicos / 1000).toLocaleString("pt-BR")} milhões</p> : null}
-                {estadoHover.administracao ? <p><strong>Administração pública:</strong> R$ {Math.round(estadoHover.administracao / 1000).toLocaleString("pt-BR")} milhões</p> : null}
-                {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {Math.round(estadoHover.impostos / 1000).toLocaleString("pt-BR")} milhões</p> : null}
+                {estadoHover.agro ? <p><strong>Agropecuária:</strong> R$ {fmt(estadoHover.agro * 1000)}</p> : null}
+                {estadoHover.industria ? <p><strong>Indústria:</strong> R$ {fmt(estadoHover.industria * 1000)}</p> : null}
+                {estadoHover.servicos ? <p><strong>Serviços:</strong> R$ {fmt(estadoHover.servicos * 1000)}</p> : null}
+                {estadoHover.administracao ? <p><strong>Administração pública:</strong> R$ {fmt(estadoHover.administracao * 1000)}</p> : null}
+                {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {fmt(estadoHover.impostos * 1000)}</p> : null}
               </>
             ) : (
               <p>
