@@ -20,6 +20,10 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Testar conexão IBGE
+        run: |
+          curl -sS --max-time 30 "https://apisidra.ibge.gov.br/values/t/5938/n3/all/v/37/p/2021" | head -c 200
+          
       - name: Rodar scripts
         run: |
           python scripts/baixar_pib.py
