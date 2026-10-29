@@ -61,7 +61,7 @@ useEffect(() => {
     <main>
       <h1 className="titulo-pagina">Painel Brasil</h1>
       <p className="subtitulo">
-        Indicadores econômicos por estado — em desenvolvimento
+        Indicadores econômicos por estado (em desenvolvimento)
       </p>
 
       <div className="janela">
@@ -115,19 +115,19 @@ useEffect(() => {
               {estadoHover
                 ? estadoHover.nome + " (" + estadoHover.sigla + ")" +
                   (estadoHover.info ? " · Capital: " + estadoHover.info.capital + " · Região: " + estadoHover.info.regiao + " · Fuso: " + estadoHover.info.fuso : "")
-                : "Clique em um estado ou em uma região ao lado"}
+                : "Escolha um estado ou região."}
             </div>
           </div>
         </div>
       </div>
 
       <div className="janela janela-mapa">
-        <div className="janela-titulo">ℹ️ Sobre este painel</div>
+        <div className="janela-titulo">ℹ️ Painel </div>
         <div className="janela-conteudo">
           <div className="painel">
             {regiaoSel ? (
               <>
-                <p><strong>Região {NOME_REGIAO[regiaoSel]}</strong></p>
+                <div><strong>Região {NOME_REGIAO[regiaoSel]}</strong></div>
                 {dadosRegiao && (
                   <>
                     <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(dadosRegiao.pib * 1000)}</p>
