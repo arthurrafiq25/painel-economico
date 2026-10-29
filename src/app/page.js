@@ -64,6 +64,8 @@ useEffect(() => {
 
   return (
     <main>
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <div style={{ width: "660px" }}>
       <h1 className="titulo-pagina">Painel Brasil</h1>
       <p className="subtitulo">
         Indicadores econômicos por estado (em desenvolvimento)
@@ -239,9 +241,19 @@ useEffect(() => {
                 Todos os dados vêm de fontes públicas oficiais (IBGE, Banco Central).
               </p>
             )}
-          </div>
-        </div>
-      </div>
+                   </div>  {/* fecha painel */}
+        </div>    {/* fecha janela-conteudo */}
+      </div>      {/* fecha janela janela-mapa */}
+    </div>        {/* fecha a caixa de 660px */}
+    
+    <div className="menu-lateral">
+  <div className="menu-titulo">Menu</div>
+  <a href="#" onClick={(e) => { e.preventDefault(); setModalIndicadores(true); }} className="menu-item">
+    <img src="https://www.google.com/s2/favicons?domain=bcb.gov.br&sz=32" alt="" className="menu-icone" />
+    Indicadores econômicos
+  </a>
+</div>
+  </div>          {/* fecha o flex */}
       <footer className="rodape">
   <a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("sobre"); }}>Painel Brasil</a>
   {" · "}
