@@ -28,6 +28,14 @@ export default function Home() {
   fetch("/estados-links.json").then((r) => r.json()).then(setLinksEstados).catch(() => {});
 }, []);
 
+useEffect(() => {
+  const fechar = () => setInfoAberta(false);
+  if (infoAberta) {
+    const timer = setTimeout(() => document.addEventListener("click", fechar), 0);
+    return () => { clearTimeout(timer); document.removeEventListener("click", fechar); };
+  }
+}, [infoAberta]);
+
   const handleRegiao = async (id) => {
     setRegiaoSel(id);
     setEstadoHover(null);
@@ -144,11 +152,73 @@ export default function Home() {
     {estadoHover.nome} ({estadoHover.sigla})
   </a>
   {" "}
+  <span style={{ position: "relative", display: "inline-block", marginLeft: "6px" }}>
   <span
-  onClick={() => setInfoAberta(true)}
-  style={{ cursor: "pointer", color: "#0000cc", marginLeft: "6px" }}
+  onClick={(e) => { e.stopPropagation(); setInfoAberta(!infoAberta); }}
+  style={{
+    cursor: "pointer",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "14px",
+    height: "14px",
+    borderRadius: "50%",
+    background: "#3232e6",
+    color: "#ffffff",
+    fontSize: "10px",
+    fontWeight: "bold",
+    fontFamily: "Verdana, Tahoma, sans-serif",
+    lineHeight: "1",
+    marginLeft: "-5px",
+    verticalAlign: "middle",
+  }}
 >
-  ⓘ
+  i
+</span>
+  {infoAberta && (
+  <div
+    style={{
+      position: "absolute",
+      bottom: "24px",
+      left: "-20px",
+      background: "#ffffff",
+      border: "1px solid #000000",
+      borderRadius: "8px",
+      padding: "6px 10px",
+      fontSize: "11px",
+      whiteSpace: "nowrap",
+      zIndex: 10,
+      color: "#000",
+      fontWeight: "normal",
+    }}
+  >
+    Mais informações
+    <div
+      style={{
+        position: "absolute",
+        bottom: "-8px",
+        left: "24px",
+        width: 0,
+        height: 0,
+        borderLeft: "6px solid transparent",
+        borderRight: "6px solid transparent",
+        borderTop: "8px solid #000000",
+      }}
+    />
+    <div
+      style={{
+        position: "absolute",
+        bottom: "-6px",
+        left: "25px",
+        width: 0,
+        height: 0,
+        borderLeft: "5px solid transparent",
+        borderRight: "5px solid transparent",
+        borderTop: "7px solid #ffffff",
+      }}
+    />
+  </div>
+)}
 </span>
 </p>
                 <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(estadoHover.pib * 1000)}</p>
