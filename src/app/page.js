@@ -66,7 +66,9 @@ useEffect(() => {
     <main>
         <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
           <div style={{ width: "660px" }}>
-      <h1 className="titulo-pagina">Painel Brasil</h1>
+      <div style={{ textAlign: "left", marginBottom: "8px" }}>
+  <img src="/logo site_01.png" alt="Painel Brasil" style={{ height: "45px", width: "auto" }} />
+</div>
       <p className="subtitulo">
         Indicadores econômicos por estado (em desenvolvimento)
       </p>
@@ -344,6 +346,40 @@ useEffect(() => {
   <p>Links em breve.</p>
 )}
    </Modal>
+)}
+{modalIndicadores && (
+  <Modal titulo="Indicadores Econômicos" onClose={() => setModalIndicadores(false)}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      
+      {/* SELIC */}
+      <div style={{ borderBottom: "1px dotted #ccc", paddingBottom: "10px" }}>
+        <div style={{ fontSize: "12px", color: "#666", textTransform: "uppercase" }}>Taxa Selic</div>
+        <div style={{ fontSize: "24px", fontWeight: "bold", color: "#000080", fontFamily: "Verdana, sans-serif" }}>
+          {indicadores.selic ? indicadores.selic.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + "%" : "..."}
+        </div>
+        <div style={{ fontSize: "10px", color: "#999" }}>a.a. — Atualizado em {indicadores.selic ? indicadores.selic.data : "..."}</div>
+      </div>
+
+      {/* IPCA */}
+      <div style={{ borderBottom: "1px dotted #ccc", paddingBottom: "10px" }}>
+        <div style={{ fontSize: "12px", color: "#666", textTransform: "uppercase" }}>IPCA (12 meses)</div>
+        <div style={{ fontSize: "24px", fontWeight: "bold", color: "#000080", fontFamily: "Verdana, sans-serif" }}>
+          {indicadores.ipca ? indicadores.ipca.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + "%" : "..."}
+        </div>
+        <div style={{ fontSize: "10px", color: "#999" }}>Acumulado 12m — Atualizado em {indicadores.ipca ? indicadores.ipca.data : "..."}</div>
+      </div>
+
+      {/* CÂMBIO */}
+      <div style={{ paddingBottom: "10px" }}>
+        <div style={{ fontSize: "12px", color: "#666", textTransform: "uppercase" }}>Dólar (USD/BRL)</div>
+        <div style={{ fontSize: "24px", fontWeight: "bold", color: "#000080", fontFamily: "Verdana, sans-serif" }}>
+          {indicadores.cambio ? "R$ " + indicadores.cambio.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : "..."}
+        </div>
+        <div style={{ fontSize: "10px", color: "#999" }}>Comercial — Atualizado em {indicadores.cambio ? indicadores.cambio.data : "..."}</div>
+      </div>
+
+    </div>
+  </Modal>
 )}
 </main>
   );
