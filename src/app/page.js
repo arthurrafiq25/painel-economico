@@ -26,6 +26,7 @@ export default function Home() {
   const [modalIndicadores, setModalIndicadores] = useState(false);
   const [indicadores, setIndicadores] = useState({});
   const [dadosBrasil, setDadosBrasil] = useState(null);
+  const [brasilLinksAberto, setBrasilLinksAberto] = useState(false);
 
 useEffect(() => {
   fetch("/estados-links.json").then((r) => r.json()).then(setLinksEstados).catch(() => {});
@@ -119,9 +120,9 @@ useEffect(() => {
     Brasil
   </a>
 </span>
-          {(estadoHover || regiaoSel) && (
+          {(estadoHover || regiaoSel || dadosBrasil) && (
             <button
-              onClick={() => { setEstadoHover(null); handleRegiao(null); }}
+              onClick={() => { setEstadoHover(null); handleRegiao(null); setDadosBrasil(null); }}
               title="Limpar seleção"
               style={{
                 fontSize: "12px",
@@ -143,7 +144,7 @@ useEffect(() => {
           <div className="painel painel-mapa">
             <div style={{ position: "relative" }}>
               <div style={{ marginTop: "30px" }}> 
-                <MapaBrasil onEstadoChange={setEstadoHover} siglaSelecionada={estadoHover ? estadoHover.sigla : null} regiaoSel={regiaoSel} />
+                <MapaBrasil onEstadoChange={(estado) => { setEstadoHover(estado); setDadosBrasil(null); setRegiaoSel(null); }} siglaSelecionada={estadoHover ? estadoHover.sigla : null} regiaoSel={regiaoSel} />
               </div>
               <div style={{ position: "absolute", top: "80px", right: "30px", fontSize: "13px" }}> {/* MENU EMPILHADO DE REGIÕES */}
                 {REGIOES.map((r) => (
@@ -178,7 +179,15 @@ useEffect(() => {
           <div className="painel">
   {dadosBrasil ? (
     <>
-      <div><strong>Brasil</strong></div>
+      <div>
+  <a
+    href="#"
+    onClick={(e) => { e.preventDefault(); setBrasilLinksAberto(true); }}
+    style={{ color: "#0000cc", textDecoration: "underline", fontWeight: "bold" }}
+  >
+    Brasil
+  </a>
+</div>
       <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(dadosBrasil.pib * 1000)}</p>
       <p><strong>População:</strong> {fmt(dadosBrasil.populacao)}</p>
       <p><strong>PIB per capita:</strong> R$ {dadosBrasil.perCapita.toLocaleString("pt-BR")}</p>
@@ -187,10 +196,11 @@ useEffect(() => {
       <p><strong>Serviços:</strong> R$ {fmt(dadosBrasil.servicos * 1000)}</p>
       <p><strong>Administração pública:</strong> R$ {fmt(dadosBrasil.administracao * 1000)}</p>
       <p><strong>Impostos líquidos:</strong> R$ {fmt(dadosBrasil.impostos * 1000)}</p>
+      <div><span style={{ fontSize: "11px", color: "#666", fontWeight: "normal" }}>(Dados de 2021)</span></div>
     </>
   ) : regiaoSel ? (
               <>
-                <div><strong>Região {NOME_REGIAO[regiaoSel]}</strong></div>
+                <div><strong>Região {NOME_REGIAO[regiaoSel]}</strong> <span style={{ fontSize: "11px", color: "#666", fontWeight: "normal" }}></span></div>
                 {dadosRegiao && (
                   <>
                     <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(dadosRegiao.pib * 1000)}</p>
@@ -201,6 +211,7 @@ useEffect(() => {
                     <p><strong>Serviços:</strong> R$ {fmt(dadosRegiao.servicos * 1000)}</p>
                     <p><strong>Administração pública:</strong> R$ {fmt(dadosRegiao.administracao * 1000)}</p>
                     <p><strong>Impostos líquidos:</strong> R$ {fmt(dadosRegiao.impostos * 1000)}</p>
+                    <p style={{ marginTop: "10px", fontSize: "11px", color: "#666" }}>(Dados de 2021)</p>
                   </>
                 )}
               </>
@@ -292,6 +303,7 @@ useEffect(() => {
                 {estadoHover.servicos ? <p><strong>Serviços:</strong> R$ {fmt(estadoHover.servicos * 1000)}</p> : null}
                 {estadoHover.administracao ? <p><strong>Administração pública:</strong> R$ {fmt(estadoHover.administracao * 1000)}</p> : null}
                 {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {fmt(estadoHover.impostos * 1000)}</p> : null}
+                <p style={{ marginTop: "10px", fontSize: "11px", color: "#666" }}>(Dados de 2021)</p>
               </>
             ) : (
               <p>
@@ -495,6 +507,44 @@ useEffect(() => {
         <p style={{ marginTop: "10px", fontSize: "10px", color: "#666" }}>
       Última atualização: 29/10/2026.
     </p>
+    </Modal>
+)}
+    {brasilLinksAberto && (
+  <Modal titulo="Mais Informações · Brasil" onClose={() => setBrasilLinksAberto(false)}>
+    <div>
+      {[
+        { chave: "governo", rotulo: "Governo Federal", url: "https://www.gov.br" },
+        { chave: "camara", rotulo: "Câmara dos Deputados", url: "https://www.camara.leg.br" },
+        { chave: "senado", rotulo: "Senado Federal", url: "https://www12.senado.leg.br" },
+        { chave: "stf", rotulo: "Supremo Tribunal Federal", url: "https://portal.stf.jus.br" },
+        { chave: "transparencia", rotulo: "Portal da Transparência", url: "https://www.portaltransparencia.gov.br" },
+        { chave: "receita", rotulo: "Receita Federal", url: "https://www.gov.br/receitafederal" },
+      ].map((item) => {
+        const dominio = new URL(item.url).hostname;
+        return (
+          <div key={item.chave} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+            <img
+              src={`https://www.google.com/s2/favicons?domain=${dominio}&sz=64`}
+              alt=""
+              width="32"
+              height="32"
+              style={{ marginRight: "10px", border: "1px solid #808080", background: "#fff" }}
+            />
+            <div>
+              <div style={{ fontSize: "11px", color: "#444" }}>{item.rotulo}</div>
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#0000cc", fontWeight: "bold", textDecoration: "underline" }}
+              >
+                {dominio} ›
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   </Modal>
 )}
 </main>
