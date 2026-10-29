@@ -140,7 +140,7 @@ main {
 .menu-lateral {
   width: 220px;
   align-self: stretch;
-  margin-top: 83px;
+  margin-top: 27px;
   margin-bottom: 12px;
   border-left: 1px dotted #808080;
   border-right: 1px dotted #808080;
@@ -189,4 +189,12 @@ main {
   margin-right: 8px;
   border: 1px solid #ccc;
   background: #fff;
+}
+
+.barra-topo {
+  height: 2px;
+  background-color: #000080;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  width: 100%;
 }

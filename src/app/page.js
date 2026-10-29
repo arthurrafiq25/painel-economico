@@ -64,11 +64,14 @@ useEffect(() => {
 
   return (
     <main>
-        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-          <div style={{ width: "660px" }}>
-      <div style={{ textAlign: "left", marginBottom: "8px" }}>
+      <div style={{ maxWidth: "890px", margin: "0 auto", textAlign: "left", paddingLeft: "10px", marginBottom: "8px" }}>
   <img src="/logo site_01.png" alt="Painel Brasil" style={{ height: "45px", width: "auto" }} />
 </div>
+<div style={{ maxWidth: "890px", margin: "0 auto" }}>
+  <div className="barra-topo"></div>
+</div>
+<div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <div style={{ width: "660px" }}>
       <p className="subtitulo">
         Indicadores econômicos por estado (em desenvolvimento)
       </p>
@@ -272,9 +275,12 @@ useEffect(() => {
     <p style={{ marginTop: "8px" }}>
       Instagram: <a href="https://www.instagram.com/_arthuraguiar.s" target="_blank" rel="noopener noreferrer">@_arthuraguiar.s</a>
     </p>
+
+    <div style={{ textAlign: "center", marginTop: "15px" }}>
+      <img src="/outronome.gif" alt="Brasil" style={{ maxWidth: "100%", height: "100px", display: "block", margin: "15px auto" }} />
+    </div>
   </Modal>
 )}
-
 {modalAberto === "projeto" && (
   <Modal titulo="Sobre o projeto" onClose={() => setModalAberto(null)}>
     <p>
