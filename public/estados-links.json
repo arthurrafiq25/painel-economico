@@ -1,0 +1,111 @@
+{
+  "AC": {
+    "governo": "https://www.ac.gov.br",
+    "prefeitura": "https://www.riobranco.ac.gov.br"
+  },
+  "AL": {
+    "governo": "https://www.al.gov.br",
+    "prefeitura": "https://www.maceio.al.gov.br"
+  },
+  "AP": {
+    "governo": "https://www.ap.gov.br",
+    "prefeitura": "https://www.macapa.ap.gov.br"
+  },
+  "AM": {
+    "governo": "https://www.am.gov.br",
+    "prefeitura": "https://www.manaus.am.gov.br"
+  },
+  "BA": {
+    "governo": "https://www.ba.gov.br",
+    "prefeitura": "https://www.salvador.ba.gov.br"
+  },
+  "CE": {
+    "governo": "https://www.ceara.gov.br",
+    "prefeitura": "https://www.fortaleza.ce.gov.br"
+  },
+  "DF": {
+    "governo": "https://www.df.gov.br",
+    "prefeitura": "https://www.df.gov.br"
+  },
+  "ES": {
+    "governo": "https://www.es.gov.br",
+    "prefeitura": "https://www.vitoria.es.gov.br"
+  },
+  "GO": {
+    "governo": "https://www.go.gov.br",
+    "prefeitura": "https://www.goiania.go.gov.br"
+  },
+  "MA": {
+    "governo": "https://www.ma.gov.br",
+    "prefeitura": "https://www.saoluis.ma.gov.br"
+  },
+  "MT": {
+    "governo": "https://www.mt.gov.br",
+    "prefeitura": "https://www.cuiaba.mt.gov.br"
+  },
+  "MS": {
+    "governo": "https://www.ms.gov.br",
+    "prefeitura": "https://www.campogrande.ms.gov.br"
+  },
+  "MG": {
+    "governo": "https://www.mg.gov.br",
+    "prefeitura": "https://www.pbh.gov.br"
+  },
+  "PA": {
+    "governo": "https://www.pa.gov.br",
+    "prefeitura": "https://www.belem.pa.gov.br"
+  },
+  "PB": {
+    "governo": "https://www.pb.gov.br",
+    "prefeitura": "https://www.joaopessoa.pb.gov.br"
+  },
+  "PR": {
+    "governo": "https://www.pr.gov.br",
+    "prefeitura": "https://www.curitiba.pr.gov.br"
+  },
+  "PE": {
+    "governo": "https://www.pe.gov.br",
+    "prefeitura": "https://www.recife.pe.gov.br"
+  },
+  "PI": {
+    "governo": "https://www.pi.gov.br",
+    "prefeitura": "https://www.teresina.pi.gov.br"
+  },
+  "RJ": {
+    "governo": "https://www.rj.gov.br",
+    "prefeitura": "https://www.rio.rj.gov.br"
+  },
+  "RN": {
+    "governo": "https://www.rn.gov.br",
+    "prefeitura": "https://www.natal.rn.gov.br"
+  },
+  "RS": {
+    "governo": "https://www.rs.gov.br",
+    "prefeitura": "https://www.prefeitura.poa.br"
+  },
+  "RO": {
+    "governo": "https://www.ro.gov.br",
+    "prefeitura": "https://www.portovelho.ro.gov.br"
+  },
+  "RR": {
+    "governo": "https://www.rr.gov.br",
+    "prefeitura": "https://www.boavista.rr.gov.br"
+  },
+  "SC": {
+    "governo": "https://www.sc.gov.br",
+    "prefeitura": "https://www.pmf.sc.gov.br"
+  },
+  "SP": {
+    "governo": "https://www.saopaulo.sp.gov.br",
+    "prefeitura": "https://www.prefeitura.sp.gov.br",
+    "transporte": "https://www.sptrans.com.br"
+  },
+  "SE": {
+    "governo": "https://www.se.gov.br",
+    "prefeitura": "https://www.aracaju.se.gov.br"
+  },
+  "TO": {
+    "governo": "https://www.to.gov.br",
+    "prefeitura": "https://www.palmas.to.gov.br"
+  }
+}
