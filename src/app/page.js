@@ -119,7 +119,7 @@ useEffect(() => {
               {estadoHover
                 ? estadoHover.nome + " (" + estadoHover.sigla + ")" +
                   (estadoHover.info ? " · Capital: " + estadoHover.info.capital + " · Região: " + estadoHover.info.regiao + " · Fuso: " + estadoHover.info.fuso : "")
-                : "Escolha um estado ou região."}
+                : "Selecione um estado ou região."}
             </div>
           </div>
         </div>
