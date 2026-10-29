@@ -23,11 +23,15 @@ export default function Home() {
   const [estadoLinksAberto, setEstadoLinksAberto] = useState(null);
   const [linksEstados, setLinksEstados] = useState({});
   const [infoAberta, setInfoAberta] = useState(false);
+  const [modalIndicadores, setModalIndicadores] = useState(false);
+  const [indicadores, setIndicadores] = useState({});
 
-  useEffect(() => {
+useEffect(() => {
   fetch("/estados-links.json").then((r) => r.json()).then(setLinksEstados).catch(() => {});
+  fetch("/selic.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, selic: d }))).catch(() => {});
+  fetch("/ipca.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipca: d }))).catch(() => {});
+  fetch("/cambio.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, cambio: d }))).catch(() => {});
 }, []);
-
 useEffect(() => {
   const fechar = () => setInfoAberta(false);
   if (infoAberta) {
@@ -35,6 +39,7 @@ useEffect(() => {
     return () => { clearTimeout(timer); document.removeEventListener("click", fechar); };
   }
 }, [infoAberta]);
+
 
   const handleRegiao = async (id) => {
     setRegiaoSel(id);
@@ -63,7 +68,6 @@ useEffect(() => {
       <p className="subtitulo">
         Indicadores econômicos por estado (em desenvolvimento)
       </p>
-
       <div className="janela">
         <div className="janela-titulo" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span>🗺️ Mapa do Brasil</span>
@@ -120,7 +124,6 @@ useEffect(() => {
           </div>
         </div>
       </div>
-
       <div className="janela janela-mapa">
         <div className="janela-titulo">ℹ️ Painel </div>
         <div className="janela-conteudo">
@@ -239,7 +242,6 @@ useEffect(() => {
           </div>
         </div>
       </div>
-
       <footer className="rodape">
   <a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("sobre"); }}>Painel Brasil</a>
   {" · "}
@@ -329,8 +331,8 @@ useEffect(() => {
 ) : (
   <p>Links em breve.</p>
 )}
-  </Modal>
+   </Modal>
 )}
-    </main>
+</main>
   );
 }
