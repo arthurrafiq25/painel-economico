@@ -144,3 +144,14 @@ Calendário no site (design XP). Cada dia é clicável e abre um modal com:
 - Seção "abre e fecha" com estados em ordem alfabética; ao clicar, exibe feriados/datas estaduais daquele estado
 Objetivo: visão nacional + estadual sem poluir a tela.
 Fontes: manuais com link oficial (Planalto, governos estaduais).
+
+## 19. Contas Públicas e Setor Bancário
+- Tesouro Nacional: Dívida Pública Federal, Resultado Primário, Arrecadação.
+- Banco Central: Crédito total (% do PIB), Inadimplência, Endividamento das famílias.
+- Foco no impacto sistêmico e no bolso do trabalhador (não em balanços de empresas individuais).
+
+## 20. Questões Sociais (Indígenas e ONGs Humanitárias)
+- Posicionamento editorial: dar visibilidade a povos indígenas e ONGs humanitárias.
+- Fontes: IBGE (Censo Indígena), FUNAI, ISA, dados de ONGs reconhecidas.
+- Formato: modal "Questões Sociais" no menu lateral, com dados factuais e links.
+- Transparência: assumir a curadoria no "Sobre o Projeto" (ex: "priorizamos dados humanitários").
