@@ -265,6 +265,12 @@ useEffect(() => {
   <a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("projeto"); }}>Sobre o projeto</a>
   {" · "}
   <a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("fontes"); }}>Dados de fontes públicas</a>
+  <br />
+  {" · "}
+<a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("termos"); }}>Termos e Licenças</a>
+  <span style={{ fontSize: "10px", color: "#666", marginTop: "8px", display: "inline-block" }}>
+    © 2026 Painel Brasil. Todos os direitos reservados. Proibida a reprodução sem autorização.
+  </span>
 </footer>
 {modalAberto === "sobre" && (
   <Modal titulo="Painel Brasil" onClose={() => setModalAberto(null)}>
@@ -276,8 +282,8 @@ useEffect(() => {
       Instagram: <a href="https://www.instagram.com/_arthuraguiar.s" target="_blank" rel="noopener noreferrer">@_arthuraguiar.s</a>
     </p>
 
-    <div style={{ textAlign: "center", marginTop: "15px" }}>
-      <img src="/outronome.gif" alt="Brasil" style={{ maxWidth: "100%", height: "100px", display: "block", margin: "15px auto" }} />
+    <div style={{ textAlign: "left", marginTop: "15px" }}>
+      <img src="/outronome.gif" alt="Brasil" style={{ maxWidth: "100%", height: "100px", display: "block", margin: "15px 0" }} />
     </div>
   </Modal>
 )}
@@ -383,8 +389,59 @@ useEffect(() => {
         </div>
         <div style={{ fontSize: "10px", color: "#999" }}>Comercial — Atualizado em {indicadores.cambio ? indicadores.cambio.data : "..."}</div>
       </div>
-
     </div>
+  </Modal>
+)}
+
+{modalAberto === "termos" && (
+  <Modal titulo="Termos e Licenças" onClose={() => setModalAberto(null)}>
+    <p><strong>1. Natureza do projeto</strong></p>
+    <p>
+      O Painel Brasil é um projeto independente, experimental e sem fins lucrativos.
+      Não possui vínculo com governos, partidos políticos ou instituições privadas.
+      Não emite opinião política ou ideológica.
+    </p>
+
+    <p style={{ marginTop: "10px" }}><strong>2. Origem dos dados</strong></p>
+    <p>
+      Todos os indicadores são provenientes de fontes públicas oficiais
+      (IBGE, Banco Central, Tesouro Nacional, ANP, entre outras) e são reproduzidos
+      sem alteração. Cada indicador exibe a data de referência e link para a fonte original.
+    </p>
+
+    <p style={{ marginTop: "10px" }}><strong>3. Direitos autorais</strong></p>
+    <p>
+      O código-fonte, o design, a organização visual e a curadoria deste site são
+      de autoria de Arthur Aguiar. É proibida a reprodução total ou parcial,
+      por qualquer meio, sem autorização prévia por escrito. Sites inspirados no
+      conceito são bem-vindos, desde que não copiem o código ou o layout.
+    </p>
+
+    <p style={{ marginTop: "10px" }}><strong>4. Dados públicos</strong></p>
+    <p>
+      Os dados numéricos em si (PIB, população, indicadores) são de domínio público,
+      conforme a Lei de Acesso à Informação (Lei 12.527/2011) e a natureza factual
+      das estatísticas oficiais. A proteção autoral recai sobre a forma de apresentação,
+      não sobre os números.
+    </p>
+
+    <p style={{ marginTop: "10px" }}><strong>5. Isenção de responsabilidade</strong></p>
+    <p>
+      O site não se responsabiliza por decisões tomadas com base nas informações
+      apresentadas. Os dados podem conter atrasos inerentes às fontes oficiais.
+      Consulte sempre a fonte original antes de qualquer decisão relevante.
+    </p>
+
+    <p style={{ marginTop: "10px" }}><strong>6. Marcas e logotipos</strong></p>
+    <p>
+      Favicons e logotipos de terceiros exibidos no site pertencem aos seus
+      respectivos proprietários e são usados apenas para identificação e link
+      à fonte oficial (uso nominativo).
+    </p>
+
+        <p style={{ marginTop: "10px", fontSize: "10px", color: "#666" }}>
+      Última atualização: 29/10/2026.
+    </p>
   </Modal>
 )}
 </main>
