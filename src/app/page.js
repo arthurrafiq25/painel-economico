@@ -25,6 +25,7 @@ export default function Home() {
   const [infoAberta, setInfoAberta] = useState(false);
   const [modalIndicadores, setModalIndicadores] = useState(false);
   const [indicadores, setIndicadores] = useState({});
+  const [dadosBrasil, setDadosBrasil] = useState(null);
 
 useEffect(() => {
   fetch("/estados-links.json").then((r) => r.json()).then(setLinksEstados).catch(() => {});
@@ -41,9 +42,10 @@ useEffect(() => {
 }, [infoAberta]);
 
 
-  const handleRegiao = async (id) => {
+    const handleRegiao = async (id) => {
     setRegiaoSel(id);
     setEstadoHover(null);
+    setDadosBrasil(null);
     if (id === null) {
       setDadosRegiao(null);
       return;
@@ -62,6 +64,36 @@ useEffect(() => {
     });
   };
 
+  const handleBrasil = async () => {
+    setRegiaoSel(null);
+    setEstadoHover(null);
+    const [pib, pop, perCapita, agro, industria, servicos, adm, impostos] = await Promise.all([
+      fetch("/pib-uf.json").then((r) => r.json()),
+      fetch("/populacao-uf.json").then((r) => r.json()),
+      fetch("/pib-per-capita-uf.json").then((r) => r.json()),
+      fetch("/agropecuaria-uf.json").then((r) => r.json()),
+      fetch("/industria-uf.json").then((r) => r.json()),
+      fetch("/servicos-uf.json").then((r) => r.json()),
+      fetch("/administracao-uf.json").then((r) => r.json()),
+      fetch("/impostos-uf.json").then((r) => r.json()),
+    ]);
+
+    const somar = (obj) => Object.values(obj).reduce((acc, v) => acc + (v || 0), 0);
+    const pibTotal = somar(pib);
+    const popTotal = somar(pop);
+
+    setDadosBrasil({
+      pib: pibTotal,
+      populacao: popTotal,
+      perCapita: popTotal ? Math.round((pibTotal * 1000) / popTotal) : 0,
+      agro: somar(agro),
+      industria: somar(industria),
+      servicos: somar(servicos),
+      administracao: somar(adm),
+      impostos: somar(impostos),
+    });
+  };
+
   return (
     <main>
       <div style={{ maxWidth: "890px", margin: "0 auto", textAlign: "left", paddingLeft: "10px", marginBottom: "8px" }}>
@@ -77,7 +109,16 @@ useEffect(() => {
       </p>
       <div className="janela">
         <div className="janela-titulo" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span>🗺️ Mapa do Brasil</span>
+          <span>
+  🗺️ {" "}
+  <a
+    href="#"
+    onClick={(e) => { e.preventDefault(); handleBrasil(); }}
+    style={{ color: "#ffffff", textDecoration: "underline", cursor: "pointer", fontWeight: "bold" }}
+  >
+    Brasil
+  </a>
+</span>
           {(estadoHover || regiaoSel) && (
             <button
               onClick={() => { setEstadoHover(null); handleRegiao(null); }}
@@ -135,7 +176,19 @@ useEffect(() => {
         <div className="janela-titulo">ℹ️ Painel </div>
         <div className="janela-conteudo">
           <div className="painel">
-            {regiaoSel ? (
+  {dadosBrasil ? (
+    <>
+      <div><strong>Brasil</strong></div>
+      <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(dadosBrasil.pib * 1000)}</p>
+      <p><strong>População:</strong> {fmt(dadosBrasil.populacao)}</p>
+      <p><strong>PIB per capita:</strong> R$ {dadosBrasil.perCapita.toLocaleString("pt-BR")}</p>
+      <p><strong>Agropecuária:</strong> R$ {fmt(dadosBrasil.agro * 1000)}</p>
+      <p><strong>Indústria:</strong> R$ {fmt(dadosBrasil.industria * 1000)}</p>
+      <p><strong>Serviços:</strong> R$ {fmt(dadosBrasil.servicos * 1000)}</p>
+      <p><strong>Administração pública:</strong> R$ {fmt(dadosBrasil.administracao * 1000)}</p>
+      <p><strong>Impostos líquidos:</strong> R$ {fmt(dadosBrasil.impostos * 1000)}</p>
+    </>
+  ) : regiaoSel ? (
               <>
                 <div><strong>Região {NOME_REGIAO[regiaoSel]}</strong></div>
                 {dadosRegiao && (
