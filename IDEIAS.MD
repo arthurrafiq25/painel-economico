@@ -103,3 +103,44 @@ Cada link com uma linha do tipo "o que você encontra lá".
 - Renda média real (PNAD Contínua, trimestral)
 - Salário mínimo real
 - Cesta básica (DIEESE)
+
+
+## 14. Câmbio em tempo real + calculadora
+- Cotação de moedas (BCB PTAX e/ou exchangerate.host)
+- Atualização a cada poucas horas (não segundo a segundo — indisponível grátis)
+- Cada card exibe horário da última cotação
+- Calculadora de conversão entre moedas (valor + moeda origem + moeda destino)
+
+## 15. Conteúdo institucional (manual, com link para fonte oficial)
+- Constituição Federal (link para o texto no Planalto)
+- Temas constitucionais organizados:
+  - Direitos e Garantias Fundamentais (Art. 5º)
+  - Educação (Art. 205-208) e Lei 8.080 (SUS)
+  - Previdência Social
+  - Direitos Trabalhistas (férias, 13º, licenças, FGTS)
+  - Organização do Estado (União/Estados/Municípios + três poderes)
+- Sistema Tributário: tipos de tributos, quem cobra, Reforma Tributária (CBS/IBS/IS)
+- Estrutura do Executivo: ministérios
+- Estrutura do Legislativo: 513 deputados federais, 81 senadores, assembleias estaduais
+
+## 16. Informações geográficas por estado (manual)
+- Bioma predominante
+- Relevo principal
+- Clima predominante
+- Área territorial (km²)
+- Fronteiras/divisas (estados vizinhos e fronteira internacional)
+
+## 17. Notícias (embeds oficiais)
+- Nacionais: Agência Brasil, IBGE Notícias, BCB (RSS)
+- Por estado: RSS oficial filtrado por UF (se disponível)
+- Apenas fontes oficiais, com link e data
+- Nunca agregadores comerciais (direitos autorais + risco de viés)
+
+## 18. Calendário histórico
+Calendário no site (design XP). Cada dia é clicável e abre um modal com:
+- Feriados nacionais
+- Datas comemorativas nacionais
+- Eventos históricos relevantes ocorridos naquela data
+- Seção "abre e fecha" com estados em ordem alfabética; ao clicar, exibe feriados/datas estaduais daquele estado
+Objetivo: visão nacional + estadual sem poluir a tela.
+Fontes: manuais com link oficial (Planalto, governos estaduais).

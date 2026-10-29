@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MapaBrasil from "./MapaBrasil";
 import Modal from "./Modal";
 
@@ -20,6 +20,13 @@ export default function Home() {
   const [regiaoSel, setRegiaoSel] = useState(null);
   const [dadosRegiao, setDadosRegiao] = useState(null);
   const [modalAberto, setModalAberto] = useState(null);
+  const [estadoLinksAberto, setEstadoLinksAberto] = useState(null);
+  const [linksEstados, setLinksEstados] = useState({});
+  const [infoAberta, setInfoAberta] = useState(false);
+
+  useEffect(() => {
+  fetch("/estados-links.json").then((r) => r.json()).then(setLinksEstados).catch(() => {});
+}, []);
 
   const handleRegiao = async (id) => {
     setRegiaoSel(id);
@@ -128,7 +135,22 @@ export default function Home() {
               </>
             ) : estadoHover ? (
               <>
-                <p><strong>{estadoHover.nome} ({estadoHover.sigla})</strong></p>
+               <p>
+  <a
+    href="#"
+    onClick={(e) => { e.preventDefault(); setEstadoLinksAberto(estadoHover.sigla); }}
+    style={{ color: "#0000cc", textDecoration: "underline", fontWeight: "bold" }}
+  >
+    {estadoHover.nome} ({estadoHover.sigla})
+  </a>
+  {" "}
+  <span
+  onClick={() => setInfoAberta(true)}
+  style={{ cursor: "pointer", color: "#0000cc", marginLeft: "6px" }}
+>
+  ⓘ
+</span>
+</p>
                 <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(estadoHover.pib * 1000)}</p>
                 <p><strong>População:</strong> {fmt(estadoHover.populacao)}</p>
                 <p><strong>PIB per capita:</strong> R$ {estadoHover.perCapita.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -196,6 +218,25 @@ export default function Home() {
       <li><a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank" rel="noopener noreferrer">Portal do Empreendedor</a> — MEI</li>
       <li><a href="https://www.dieese.org.br" target="_blank" rel="noopener noreferrer">DIEESE</a> — cesta básica</li>
     </ul>
+  </Modal>
+)}
+{estadoLinksAberto && (
+  <Modal titulo={`Links úteis — ${estadoLinksAberto}`} onClose={() => setEstadoLinksAberto(null)}>
+    {linksEstados[estadoLinksAberto] ? (
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {linksEstados[estadoLinksAberto].governo && (
+          <li><a href={linksEstados[estadoLinksAberto].governo} target="_blank" rel="noopener noreferrer">Site do governo estadual</a></li>
+        )}
+        {linksEstados[estadoLinksAberto].prefeitura && (
+          <li><a href={linksEstados[estadoLinksAberto].prefeitura} target="_blank" rel="noopener noreferrer">Prefeitura da capital</a></li>
+        )}
+        {linksEstados[estadoLinksAberto].transporte && (
+          <li><a href={linksEstados[estadoLinksAberto].transporte} target="_blank" rel="noopener noreferrer">Transporte público</a></li>
+        )}
+      </ul>
+    ) : (
+      <p>Links em breve.</p>
+    )}
   </Modal>
 )}
     </main>
