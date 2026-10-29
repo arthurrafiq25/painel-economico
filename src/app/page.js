@@ -291,22 +291,44 @@ useEffect(() => {
   </Modal>
 )}
 {estadoLinksAberto && (
-  <Modal titulo={`Links úteis — ${estadoLinksAberto}`} onClose={() => setEstadoLinksAberto(null)}>
+  <Modal titulo={`Mais Informações · ${estadoLinksAberto}`} onClose={() => setEstadoLinksAberto(null)}>
     {linksEstados[estadoLinksAberto] ? (
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {linksEstados[estadoLinksAberto].governo && (
-          <li><a href={linksEstados[estadoLinksAberto].governo} target="_blank" rel="noopener noreferrer">Site do governo estadual</a></li>
-        )}
-        {linksEstados[estadoLinksAberto].prefeitura && (
-          <li><a href={linksEstados[estadoLinksAberto].prefeitura} target="_blank" rel="noopener noreferrer">Prefeitura da capital</a></li>
-        )}
-        {linksEstados[estadoLinksAberto].transporte && (
-          <li><a href={linksEstados[estadoLinksAberto].transporte} target="_blank" rel="noopener noreferrer">Transporte público</a></li>
-        )}
-      </ul>
-    ) : (
-      <p>Links em breve.</p>
-    )}
+  <div>
+    {[
+      { chave: "governo", rotulo: "Governo estadual" },
+      { chave: "prefeitura", rotulo: "Prefeitura da capital" },
+      { chave: "transporte", rotulo: "Transporte público" },
+    ].map((item) => {
+      const url = linksEstados[estadoLinksAberto][item.chave];
+      if (!url) return null;
+      const dominio = new URL(url).hostname;
+      return (
+        <div key={item.chave} style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+          <img
+            src={`https://www.google.com/s2/favicons?domain=${dominio}&sz=64`}
+            alt=""
+            width="32"
+            height="32"
+            style={{ marginRight: "10px", border: "1px solid #808080", background: "#fff" }}
+          />
+          <div>
+            <div style={{ fontSize: "11px", color: "#444" }}>{item.rotulo}</div>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#0000cc", fontWeight: "bold", textDecoration: "underline" }}
+            >
+              {dominio} ›
+            </a>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+) : (
+  <p>Links em breve.</p>
+)}
   </Modal>
 )}
     </main>
