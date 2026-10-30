@@ -1,4 +1,6 @@
 import json
+import os
+from comum import RAIZ
 
 estados = {
   "11": {"capital": "Porto Velho", "regiao": "Norte", "fuso": "UTC−4"},
@@ -30,7 +32,7 @@ estados = {
   "53": {"capital": "Brasília", "regiao": "Centro-Oeste", "fuso": "UTC−3"},
 }
 
-with open("public/estados-info.json", "w", encoding="utf-8") as f:
-    json.dump(estados, f, ensure_ascii=False, indent=2)
+with open(os.path.join(RAIZ, "public", "estados-info.json"), "w", encoding="utf-8") as f:
+        json.dump(estados, f, ensure_ascii=False, indent=2)
 
 print(f"Gerado public/estados-info.json com {len(estados)} UFs")
