@@ -27,20 +27,20 @@ jobs:
       - name: Rodar scripts
         working-directory: ./scripts 
         run: |
-          python scripts/baixar_pib.py
-          python scripts/baixar_populacao.py
-          python scripts/baixar_pib_per_capita.py
-          python scripts/gerar_estados_info.py
-          python scripts/baixar_agropecuaria.py
-          python scripts/baixar_industria.py
-          python scripts/baixar_servicos.py
-          python scripts/baixar_administracao.py
-          python scripts/baixar_impostos.py
-          python scripts/baixar_regiao.py
-          python scripts/baixar_selic.py
-          python scripts/baixar_ipca.py
-          python scripts/baixar_cambio.py
-          python scripts/baixar_desemprego.py
+          python baixar_pib.py
+          python baixar_populacao.py
+          python baixar_pib_per_capita.py
+          python gerar_estados_info.py
+          python baixar_agropecuaria.py
+          python baixar_industria.py
+          python baixar_servicos.py
+          python baixar_administracao.py
+          python baixar_impostos.py
+          python baixar_regiao.py
+          python baixar_selic.py
+          python baixar_ipca.py
+          python baixar_cambio.py
+          python baixar_desemprego.py
 
       - name: Commit e push
         run: |
