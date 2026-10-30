@@ -52,6 +52,7 @@ useEffect(() => {
   fetch("/selic.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, selic: d }))).catch(() => {});
   fetch("/ipca.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipca: d }))).catch(() => {});
   fetch("/cambio.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, cambio: d }))).catch(() => {});
+  fetch("/desemprego.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, desemprego: d }))).catch(() => {});
 }, []);
 
 // Fecha o balão 'Mais informações' ao clicar fora.
@@ -498,6 +499,15 @@ useEffect(() => {
         <div style={{ fontSize: "10px", color: "#999" }}>Comercial — Atualizado em {indicadores.cambio ? indicadores.cambio.data : "..."}</div>
       </div>
     </div>
+
+    {/* DESEMPREGO */}
+      <div style={{ paddingBottom: "10px" }}>
+        <div style={{ fontSize: "12px", color: "#666", textTransform: "uppercase" }}>Taxa de Desemprego</div>
+        <div style={{ fontSize: "24px", fontWeight: "bold", color: "#000080", fontFamily: "Verdana, sans-serif" }}>
+         {indicadores.desemprego ? indicadores.desemprego.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + "%" : "..."}
+        </div>
+       <div style={{ fontSize: "10px", color: "#999" }}>Taxa de desocupação — Período: {indicadores.desemprego ? indicadores.desemprego.periodo : "..."}</div>
+      </div>
   </Modal>
 )}
 {/* --- 8.6 Modal: Termos e Licenças --- */}

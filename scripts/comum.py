@@ -1,6 +1,10 @@
 import json
 import time
 import urllib.request
+import os
+
+# Descobre a raiz do projeto (um nível acima de /scripts)
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def fetch_json(url, tentativas=5, timeout=60):
     for i in range(tentativas):
@@ -36,6 +40,6 @@ def baixar_sidra(tabela, variavel, periodo, nivel="n3"):
     return resultado
 
 def salvar(nome_arquivo, dados):
-    with open(f"public/{nome_arquivo}", "w", encoding="utf-8") as f:
+    with open(os.path.join(RAIZ, "public", nome_arquivo), "w", encoding="utf-8") as f:
         json.dump(dados, f, ensure_ascii=False)
     print(f"Gerado public/{nome_arquivo} com {len(dados)} registros")

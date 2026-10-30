@@ -1,9 +1,11 @@
 import json
-from comum import salvar
+import os
+from comum import salvar, RAIZ
 
-with open("public/pib-uf.json", encoding="utf-8") as f:
+with open(os.path.join(RAIZ, "public", "pib-uf.json"), encoding="utf-8") as f:
     pib = json.load(f)
-with open("public/populacao-uf.json", encoding="utf-8") as f:
+
+with open(os.path.join(RAIZ, "public", "populacao-uf.json"), encoding="utf-8") as f:
     pop = json.load(f)
 
 per_capita = {}

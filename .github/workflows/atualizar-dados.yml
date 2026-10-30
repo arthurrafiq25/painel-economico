@@ -25,6 +25,7 @@ jobs:
           curl -sS --max-time 30 "https://apisidra.ibge.gov.br/values/t/5938/n3/all/v/37/p/2021" | head -c 200
           
       - name: Rodar scripts
+        working-directory: ./scripts 
         run: |
           python scripts/baixar_pib.py
           python scripts/baixar_populacao.py
@@ -36,6 +37,10 @@ jobs:
           python scripts/baixar_administracao.py
           python scripts/baixar_impostos.py
           python scripts/baixar_regiao.py
+          python scripts/baixar_selic.py
+          python scripts/baixar_ipca.py
+          python scripts/baixar_cambio.py
+          python scripts/baixar_desemprego.py
 
       - name: Commit e push
         run: |
