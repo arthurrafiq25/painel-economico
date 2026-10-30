@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import MapaBrasil from "./MapaBrasil";
 import Modal from "./Modal";
 
+// =========================================
+// 1. DADOS FIXOS (Não mudam com frequência)
+// =========================================
+
 const REGIOES = [
   { id: "1", nome: "• Norte" },
   { id: "2", nome: "• Nordeste" },
@@ -13,8 +17,18 @@ const REGIOES = [
 ];
 
 const NOME_REGIAO = { "1": "Norte", "2": "Nordeste", "3": "Sudeste", "4": "Centro-Oeste", "5": "Sul" };
+
+// =========================================
+// 2. FUNÇÕES AUXILIARES
+// =========================================
+
 const fmt = (n) => Math.round(n).toLocaleString("pt-BR");
 
+// =========================================
+// 3. ESTADOS (Controle da Página)
+// =========================================
+
+// -- Seleção no Mapa --
 export default function Home() {
   const [estadoHover, setEstadoHover] = useState(null);
   const [regiaoSel, setRegiaoSel] = useState(null);
@@ -28,12 +42,19 @@ export default function Home() {
   const [dadosBrasil, setDadosBrasil] = useState(null);
   const [brasilLinksAberto, setBrasilLinksAberto] = useState(false);
 
+// =========================================
+// 4. EFEITOS (Carregamento inicial)
+// =========================================
+
+// Carrega os dados dos JSONs assim que a página abre.
 useEffect(() => {
   fetch("/estados-links.json").then((r) => r.json()).then(setLinksEstados).catch(() => {});
   fetch("/selic.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, selic: d }))).catch(() => {});
   fetch("/ipca.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipca: d }))).catch(() => {});
   fetch("/cambio.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, cambio: d }))).catch(() => {});
 }, []);
+
+// Fecha o balão 'Mais informações' ao clicar fora.
 useEffect(() => {
   const fechar = () => setInfoAberta(false);
   if (infoAberta) {
@@ -42,7 +63,11 @@ useEffect(() => {
   }
 }, [infoAberta]);
 
+// =========================================
+// 5. AÇÔES (Cliques do usuário)
+// =========================================
 
+   // Ação: clicar em uma região no menu.
     const handleRegiao = async (id) => {
     setRegiaoSel(id);
     setEstadoHover(null);
@@ -65,6 +90,7 @@ useEffect(() => {
     });
   };
 
+ // Ação: clicar no nome "Brasil" no topo do mapa.
   const handleBrasil = async () => {
     setRegiaoSel(null);
     setEstadoHover(null);
@@ -97,6 +123,10 @@ useEffect(() => {
 
   return (
     <main>
+      {/* ======================================*/}
+      {/*   6. LAYOUT PRINCIPAL (Mapa + Menu)   */}
+      {/* ======================================*/}
+
       <div style={{ maxWidth: "890px", margin: "0 auto", textAlign: "left", paddingLeft: "10px", marginBottom: "8px" }}>
   <img src="/logo site_01.png" alt="Painel Brasil" style={{ height: "45px", width: "auto" }} />
 </div>
@@ -108,6 +138,7 @@ useEffect(() => {
       <p className="subtitulo">
         Indicadores econômicos por estado (em desenvolvimento)
       </p>
+      {/* --- 6.1 Janela do Mapa --- */}
       <div className="janela">
         <div className="janela-titulo" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span>
@@ -173,6 +204,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
+      {/* --- 6.2 Janela do Painel de Informações --- */}
       <div className="janela janela-mapa">
         <div className="janela-titulo">ℹ️ Painel </div>
         <div className="janela-conteudo">
@@ -315,7 +347,7 @@ useEffect(() => {
         </div>    {/* fecha janela-conteudo */}
       </div>      {/* fecha janela janela-mapa */}
     </div>        {/* fecha a caixa de 660px */}
-    
+    {/* --- 6.3 Menu Lateral (Esquerda do site) --- */}
     <div className="menu-lateral">
   <div className="menu-titulo">Menu</div>
   <a href="#" onClick={(e) => { e.preventDefault(); setModalIndicadores(true); }} className="menu-item">
@@ -323,7 +355,10 @@ useEffect(() => {
     Indicadores econômicos
   </a>
 </div>
-  </div>          {/* fecha o flex */}
+  </div> 
+  {/* ========================================== */}
+  {/*               7. RODAPÉ                    */}
+  {/* ========================================== */}
       <footer className="rodape">
   <a href="#" onClick={(e) => { e.preventDefault(); setModalAberto("sobre"); }}>Painel Brasil</a>
   {" · "}
@@ -337,6 +372,11 @@ useEffect(() => {
     © 2026 Painel Brasil. Todos os direitos reservados. Proibida a reprodução sem autorização.
   </span>
 </footer>
+{/* ========================================== */}
+{/*        8. MODAIS (Janelas que abrem)       */}
+{/* ========================================== */}
+
+{/* ---  8.1 Modal: Sobre o Painel Brasil  --- */}
 {modalAberto === "sobre" && (
   <Modal titulo="Painel Brasil" onClose={() => setModalAberto(null)}>
     <p>
@@ -352,6 +392,7 @@ useEffect(() => {
     </div>
   </Modal>
 )}
+{/* ---     8.2 Modal: Sobre o Projeto     --- */}
 {modalAberto === "projeto" && (
   <Modal titulo="Sobre o projeto" onClose={() => setModalAberto(null)}>
     <p>
@@ -369,7 +410,7 @@ useEffect(() => {
     </p>
   </Modal>
 )}
-
+{/* ---    8.3 Modal: Fontes dos Dados    --- */}
 {modalAberto === "fontes" && (
   <Modal titulo="Fontes dos dados" onClose={() => setModalAberto(null)}>
     <ul style={{ listStyle: "none", padding: 0 }}>
@@ -383,6 +424,7 @@ useEffect(() => {
     </ul>
   </Modal>
 )}
+{/* ---    8.4 Modal: Links do Estado    --- */}
 {estadoLinksAberto && (
   <Modal titulo={`Mais Informações · ${estadoLinksAberto}`} onClose={() => setEstadoLinksAberto(null)}>
     {linksEstados[estadoLinksAberto] ? (
@@ -424,6 +466,7 @@ useEffect(() => {
 )}
    </Modal>
 )}
+{/* --- 8.5 Modal: Indicadores Econômicos (Menu Lateral) --- */}
 {modalIndicadores && (
   <Modal titulo="Indicadores Econômicos" onClose={() => setModalIndicadores(false)}>
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -457,7 +500,7 @@ useEffect(() => {
     </div>
   </Modal>
 )}
-
+{/* --- 8.6 Modal: Termos e Licenças --- */}
 {modalAberto === "termos" && (
   <Modal titulo="Termos e Licenças" onClose={() => setModalAberto(null)}>
     <p><strong>1. Natureza do projeto</strong></p>
@@ -509,6 +552,7 @@ useEffect(() => {
     </p>
     </Modal>
 )}
+{/* --- 8.7 Modal: Links do 'Brasil' --- */}
     {brasilLinksAberto && (
   <Modal titulo="Mais Informações · Brasil" onClose={() => setBrasilLinksAberto(false)}>
     <div>

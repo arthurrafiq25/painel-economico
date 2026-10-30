@@ -1,5 +1,10 @@
 # Ideias futuras — Painel Brasil
 
+## 0. Menos delegações a IA.
+Facilitar as linhas de códigos ou processos para que eu possa adicionar 
+quantos itens forem necessários no menu.
+São muitas possibilidades, então eu fique meses ou anos acrescentando ideias.
+
 ## 1. Notícias por estado no mapa
 Links/cards flutuantes sobre cada UF com notícias relevantes daquele estado.
 Fontes: RSS oficiais (Agência Brasil, IBGE Notícias) filtrados por UF.
