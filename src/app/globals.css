@@ -198,3 +198,807 @@ main {
   margin-bottom: 12px;
   width: 100%;
 }
+/* Codigo do Claude
+/* ==========================================================
+   Navegador de Notícias (estilo CatScape / Netscape / IE4)
+   Cole no seu globals.css.
+   ========================================================== */
+
+/* --- Ajustes na janela do <Modal> só quando ele contém o navegador ---
+   (usa :has(), suportado em Chrome/Edge/Safari/Firefox atuais)
+   Para trocar a cor da barra de título, mude --nav-titulo. */
+.modal-janela:has(.nav-antigo) {
+  --nav-titulo: #14566b; /* use #d4d0c8 para título cinza (e texto preto) */
+  width: min(940px, 94vw);
+  max-width: 94vw;
+  height: min(82vh, 660px);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* a janela nunca rola: só a "página" lá dentro */
+  padding: 0;
+  border-radius: 0;
+  border: 1px solid #000;
+  background: #d4d0c8;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45);
+}
+
+.modal-janela:has(.nav-antigo) .janela-titulo {
+  flex: 0 0 auto;
+  background: var(--nav-titulo);
+  background-image: none;
+  border: 0;
+  border-bottom: 1px solid #000;
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff;
+  font: bold 14px Arial, Helvetica, sans-serif;
+}
+
+.modal-janela:has(.nav-antigo) .modal-conteudo {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden; /* só a "página" rola, como num navegador de verdade */
+}
+
+/* --- Estrutura do navegador --- */
+.nav-antigo {
+  --cinza: #d4d0c8;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--cinza);
+  color: #000;
+  font: 12px Arial, Helvetica, sans-serif;
+}
+
+/* Topo: plano, cinza, sem bordas 3D de janela */
+.nav-topo {
+  display: flex;
+  align-items: stretch;
+  background: var(--cinza);
+  border-bottom: 1px solid #808080;
+}
+
+.nav-topo-barras {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-barra {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 3px 3px;
+  min-height: 28px;
+}
+
+.nav-barra + .nav-barra {
+  border-top: 1px solid #fff;
+  box-shadow: inset 0 1px 0 #808080;
+}
+
+/* "Alça" vertical à esquerda de cada barra */
+.nav-alca {
+  align-self: stretch;
+  width: 3px;
+  margin-right: 4px;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #808080;
+}
+
+/* Botões de atalho (links com cara de botão clássico) */
+.nav-botao {
+  display: inline-block;
+  padding: 2px 9px;
+  background: var(--cinza);
+  color: #000;
+  font: 12px Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid;
+  border-color: #fff #404040 #404040 #fff;
+  box-shadow: inset -1px -1px 0 #808080;
+  cursor: default;
+}
+
+.nav-botao:active {
+  border-color: #404040 #fff #fff #404040;
+  box-shadow: inset 1px 1px 0 #808080;
+  padding: 3px 8px 1px 10px;
+}
+
+.nav-botao:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+/* Barra de endereço */
+.nav-rotulo {
+  padding: 0 4px 0 2px;
+  white-space: nowrap;
+}
+
+.nav-campo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 4px;
+  background: #fff;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  box-shadow: inset 1px 1px 0 #404040;
+}
+
+.nav-campo:focus-within {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+.nav-icone {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.nav-campo input {
+  flex: 1;
+  min-width: 0;
+  padding: 2px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #000;
+  font: 13px Arial, Helvetica, sans-serif;
+  cursor: default;
+}
+
+/* Gif animado no canto, ao lado das barras */
+.nav-gif {
+  align-self: center;
+  display: block;
+  margin: 3px 4px 3px 2px;
+  border: 1px solid;
+  border-color: #808080 #fff #fff #808080;
+  image-rendering: pixelated;
+}
+
+/* --- Página: jornal antigo --- */
+.nav-pagina {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 14px 10px;
+  background: #fff;
+  border-top: 1px solid #fff;
+  box-shadow: inset 1px 1px 0 #808080;
+  font-family: "Times New Roman", Times, serif;
+  color: #000;
+}
+
+.nav-pagina:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -3px;
+}
+
+.nav-titulo {
+  margin: 0;
+  font: bold 20px/1.2 "Times New Roman", Times, serif;
+}
+
+.nav-linha {
+  margin: 4px 0 6px;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #fff;
+}
+
+.nav-lista {
+  margin: 0;
+  padding: 0 0 0 20px;
+  list-style: disc;
+}
+
+.nav-lista li {
+  margin: 0 0 3px;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.nav-pagina a {
+  color: #0000ee;
+  text-decoration: underline;
+}
+
+.nav-pagina a:visited {
+  color: #551a8b;
+}
+
+.nav-pagina a:hover,
+.nav-pagina a:active {
+  color: #ee0000;
+}
+
+.nav-data {
+  margin-left: 6px;
+  color: #808080;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.nav-vazio {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #808080;
+}
+
+/* Barra de rolagem clássica (Chrome/Edge/Safari) */
+.nav-pagina::-webkit-scrollbar {
+  width: 16px;
+}
+.nav-pagina::-webkit-scrollbar-track {
+  background-color: #e8e6e0;
+  background-image: repeating-conic-gradient(#fff 0% 25%, #d4d0c8 0% 50%);
+  background-size: 2px 2px;
+}
+.nav-pagina::-webkit-scrollbar-thumb {
+  background: var(--cinza, #d4d0c8);
+  border: 1px solid;
+  border-color: #fff #404040 #404040 #fff;
+  box-shadow: inset -1px -1px 0 #808080;
+}
+.nav-pagina::-webkit-scrollbar-button {
+  height: 16px;
+  background: #d4d0c8;
+  border: 1px solid;
+  border-color: #fff #404040 #404040 #fff;
+  box-shadow: inset -1px -1px 0 #808080;
+}
+
+/* Firefox */
+@supports (-moz-appearance: none) {
+  .nav-pagina {
+    scrollbar-color: #d4d0c8 #e8e6e0;
+  }
+}
+
+/* --- Barra de status --- */
+.nav-status {
+  display: flex;
+  gap: 3px;
+  padding: 2px 3px;
+  background: var(--cinza);
+  border-top: 1px solid #fff;
+  font: 12px Arial, Helvetica, sans-serif;
+}
+
+.nav-status-texto,
+.nav-status-zona {
+  padding: 1px 6px;
+  border: 1px solid;
+  border-color: #808080 #fff #fff #808080;
+  white-space: nowrap;
+}
+
+.nav-status-texto {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-status-zona {
+  width: 120px;
+}
+
+/* --- Telas pequenas / movimento reduzido --- */
+@media (max-width: 560px) {
+  .nav-rotulo,
+  .nav-status-zona {
+    display: none;
+  }
+  .nav-gif {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-gif {
+    display: none; /* o gif repete sem parar; esconde para quem pede menos movimento */
+  }
+}
+
+/* --- Seletor de região (dropdown) --- */
+.nav-select {
+  flex: 0 0 auto;
+  width: 150px;
+  max-width: 40%;
+  padding: 2px 2px;
+  background: #fff;
+  color: #000;
+  font: 13px Arial, Helvetica, sans-serif;
+  border: 2px solid;
+  border-color: #808080 #fff #fff #808080;
+  border-radius: 0;
+  cursor: default;
+}
+
+.nav-select:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+.nav-barra .nav-campo {
+  margin-right: 4px;
+}
+
+@media (max-width: 560px) {
+  .nav-select {
+    width: 120px;
+  }
+}
+
+/* --- Barra de endereço agora é um link clicável --- */
+a.nav-campo {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.nav-campo:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+.nav-url {
+  flex: 1;
+  min-width: 0;
+  padding: 2px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 13px Arial, Helvetica, sans-serif;
+}
+
+a.nav-campo:hover .nav-url {
+  text-decoration: underline;
+}
+
+/* --- Feed: títulos + resumos selecionáveis --- */
+.nav-lista {
+  padding: 0;
+  list-style: none;
+}
+
+.nav-lista li {
+  margin: 0;
+  border-bottom: 1px dotted #c0c0c0;
+}
+
+.nav-item {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 4px 6px 5px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: #000;
+  font: inherit;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: #eeeeee;
+}
+
+.nav-item:focus-visible {
+  outline: 1px dotted currentColor;
+  outline-offset: -2px;
+}
+
+.nav-item-titulo {
+  color: #0000cc;
+  font: bold 15px/1.25 "Times New Roman", Times, serif;
+}
+
+.nav-item:hover .nav-item-titulo {
+  text-decoration: underline;
+}
+
+.nav-item-resumo {
+  display: block;
+  margin-top: 1px;
+  color: #000;
+  font: 14px/1.25 "Times New Roman", Times, serif;
+}
+
+/* Notícia selecionada: seleção clássica azul-marinho */
+.nav-item[aria-pressed="true"] {
+  background: #000080;
+}
+
+.nav-item[aria-pressed="true"] .nav-item-titulo,
+.nav-item[aria-pressed="true"] .nav-item-resumo {
+  color: #fff;
+}
+
+.nav-item[aria-pressed="true"] .nav-data {
+  color: #c0c0c0;
+}
+
+/* ==========================================================
+   PORTAL DE NOTÍCIAS (manchete, destaques, últimas)
+   ========================================================== */
+
+/* --- Cabeçalho do portal --- */
+.pt-cabecalho {
+  margin: 0 0 8px;
+}
+
+.pt-faixa {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 0 3px;
+  border-bottom: 1px solid #c0c0c0;
+  color: #555;
+  font: 11px Arial, Helvetica, sans-serif;
+}
+
+.pt-marca {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 0 3px;
+  border-bottom: 3px double #000080;
+}
+
+.pt-nome {
+  margin: 0;
+  color: #000080;
+  font: bold 30px/1 "Times New Roman", Times, serif;
+  letter-spacing: -0.5px;
+}
+
+.pt-edicao {
+  padding: 2px 8px;
+  background: #000080;
+  color: #fff;
+  font: bold 12px Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Barra de edições (atalhos entre regiões) */
+.pt-edicoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 3px;
+  margin-top: 4px;
+  padding: 2px 4px;
+  background: #e4e1d8;
+  border: 1px solid #808080;
+}
+
+.pt-edicoes-rotulo {
+  margin-right: 2px;
+  color: #404040;
+  font: bold 11px Arial, Helvetica, sans-serif;
+}
+
+.pt-edicao-link {
+  padding: 1px 5px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: #0000cc;
+  font: 12px Arial, Helvetica, sans-serif;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pt-edicao-link:hover {
+  color: #ee0000;
+}
+
+.pt-edicao-link[aria-current="page"] {
+  background: #000080;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.pt-edicao-link:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: 1px;
+}
+
+/* --- Corpo: coluna principal + "últimas" --- */
+.pt-corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  gap: 0 12px;
+  align-items: start;
+}
+
+.pt-corpo-unico {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* --- Matéria (botão que seleciona e atualiza o endereço) --- */
+.pt-materia {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 5px 6px 6px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: #000;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pt-materia span {
+  display: block;
+}
+
+.pt-materia:hover {
+  background: #f0f0f0;
+}
+
+.pt-materia[aria-pressed="true"] {
+  background: #ffffe0;
+  box-shadow: inset 0 0 0 2px #000080;
+}
+
+.pt-materia:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -3px;
+}
+
+.pt-tag {
+  margin-bottom: 1px;
+  color: #cc0000;
+  font: bold 10px/1.2 Arial, Helvetica, sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pt-titulo {
+  color: #0000cc;
+  font: bold 16px/1.2 "Times New Roman", Times, serif;
+}
+
+.pt-materia:hover .pt-titulo {
+  text-decoration: underline;
+}
+
+.pt-resumo {
+  margin-top: 2px;
+  color: #000;
+  font: 14px/1.3 "Times New Roman", Times, serif;
+}
+
+.pt-meta {
+  margin-top: 2px;
+  color: #808080;
+  font: 12px "Times New Roman", Times, serif;
+}
+
+.pt-foto {
+  display: block;
+  border: 1px solid #808080;
+  object-fit: cover;
+}
+
+/* --- Manchete --- */
+.pt-manchete-bloco {
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #808080;
+}
+
+.pt-manchete .pt-titulo {
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.pt-manchete .pt-resumo {
+  margin-top: 4px;
+  font-size: 15px;
+}
+
+.pt-manchete {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pt-manchete .pt-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.pt-manchete .pt-foto {
+  flex: 0 0 190px;
+  width: 190px;
+  height: 120px;
+  margin: 2px 0 0;
+}
+
+/* --- Destaques --- */
+.pt-destaques {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0 4px;
+}
+
+.pt-destaques > div + div {
+  border-left: 1px dotted #808080;
+}
+
+.pt-destaque .pt-resumo {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+}
+
+.pt-destaque .pt-foto {
+  width: 100%;
+  height: 84px;
+  margin-bottom: 3px;
+}
+
+/* --- Últimas notícias (coluna lateral) --- */
+.pt-ultimas {
+  border: 1px solid #808080;
+  background: #f7f6f2;
+}
+
+.pt-ultimas-titulo {
+  margin: 0;
+  padding: 2px 6px;
+  background: #000080;
+  color: #fff;
+  font: bold 12px Arial, Helvetica, sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pt-ultimas ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pt-ultimas li + li {
+  border-top: 1px dotted #808080;
+}
+
+.pt-ultima .pt-titulo {
+  font-size: 14px;
+}
+
+.pt-vazio {
+  margin: 12px 0;
+  color: #808080;
+  font: 15px "Times New Roman", Times, serif;
+}
+
+/* --- Telas estreitas --- */
+@media (max-width: 720px) {
+  .pt-corpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pt-nome {
+    font-size: 24px;
+  }
+  .pt-manchete .pt-titulo {
+    font-size: 21px;
+  }
+  .pt-manchete {
+    display: block;
+  }
+  .pt-manchete .pt-foto {
+    width: 100%;
+    height: 110px;
+    margin: 0 0 4px;
+  }
+}
+
+/* ==========================================================
+   BOTÃO HOME + TELA HOME
+   ========================================================== */
+
+/* Botão Home (reaproveita o visual de .nav-botao, mas é um <button>) */
+button.nav-botao {
+  margin: 0;
+  line-height: normal;
+}
+
+.nav-botao-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 6px;
+}
+
+.nav-botao-home svg {
+  display: block;
+}
+
+/* Na tela Home a área é toda sua: sem margens internas.
+   O elemento raiz da sua home estica para preencher a área. */
+.nav-pagina-home {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.nav-home {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-home > * {
+  flex: 1 1 auto;
+}
+
+/* Home provisória (some quando você passar a prop telaHome) */
+.nav-home-padrao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  font: 16px "Times New Roman", Times, serif;
+  color: #404040;
+}
+
+.nav-home-padrao-titulo {
+  margin: 0 0 6px;
+  color: #000080;
+  font: bold 30px/1 "Times New Roman", Times, serif;
+}
+
+.nav-home-padrao p {
+  margin: 0;
+}
+
+/* --- Home em imagem (prop imagemHome) --- */
+.nav-home-foto {
+  position: relative;
+  min-height: 200px;
+  background: var(--home-fundo, #000); /* cor das faixas se usar "contain" */
+}
+
+.nav-home-foto-img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}

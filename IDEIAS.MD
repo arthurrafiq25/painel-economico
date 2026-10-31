@@ -1,9 +1,9 @@
 # Ideias futuras — Painel Brasil
 
-## 0. Menos delegações a IA.
-Facilitar as linhas de códigos ou processos para que eu possa adicionar 
-quantos itens forem necessários no menu.
-São muitas possibilidades, então eu fique meses ou anos acrescentando ideias.
+Inspirações fundamentais:
+- https://oldweb.today/#19960101/http://geocities.com/
+- https://www.cameronsworld.net/
+- https://gifcities.org/search?q=paper&offset=0&page_size=200
 
 ## 1. Notícias por estado no mapa
 Links/cards flutuantes sobre cada UF com notícias relevantes daquele estado.
