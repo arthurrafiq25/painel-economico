@@ -3,7 +3,7 @@
 export default function Modal({ titulo, onClose, children }) {
   return (
     <div className="modal-fundo">
-      <div className="modal-janela">
+      <div className="modal-janela" style={{ display: "flex", flexDirection: "column" }}>
         <div
           className="janela-titulo"
           style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
