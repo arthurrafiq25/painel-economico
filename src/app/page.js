@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import MapaBrasil from "./MapaBrasil";
 import Modal from "./Modal";
+import NavegadorNoticias from "./NavegadorNoticias";
 
 // =========================================
 // 1. DADOS FIXOS (Não mudam com frequência)
@@ -41,6 +42,8 @@ export default function Home() {
   const [indicadores, setIndicadores] = useState({});
   const [dadosBrasil, setDadosBrasil] = useState(null);
   const [brasilLinksAberto, setBrasilLinksAberto] = useState(false);
+  const [modalNoticias, setModalNoticias] = useState(false);
+  const [noticias, setNoticias] = useState([]);
 
 // =========================================
 // 4. EFEITOS (Carregamento inicial)
@@ -53,6 +56,7 @@ useEffect(() => {
   fetch("/ipca.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipca: d }))).catch(() => {});
   fetch("/cambio.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, cambio: d }))).catch(() => {});
   fetch("/desemprego.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, desemprego: d }))).catch(() => {});
+  fetch("/noticias.json").then((r) => r.json()).then(setNoticias).catch(() => {});
 }, []);
 
 // Fecha o balão 'Mais informações' ao clicar fora.
@@ -348,15 +352,24 @@ useEffect(() => {
         </div>    {/* fecha janela-conteudo */}
       </div>      {/* fecha janela janela-mapa */}
     </div>        {/* fecha a caixa de 660px */}
+
     {/* --- 6.3 Menu Lateral (Esquerda do site) --- */}
     <div className="menu-lateral">
   <div className="menu-titulo">Menu</div>
+
   <a href="#" onClick={(e) => { e.preventDefault(); setModalIndicadores(true); }} className="menu-item">
     <img src="https://www.google.com/s2/favicons?domain=bcb.gov.br&sz=32" alt="" className="menu-icone" />
     Indicadores econômicos
   </a>
-</div>
-  </div> 
+
+      <a href="#" onClick={(e) => { e.preventDefault(); setModalNoticias(true); }} className="menu-item">
+        <img src="https://www.google.com/s2/favicons?domain=agenciabrasil.ebc.com.br&sz=32" alt="" className="menu-icone" />
+       Notícias
+      </a>
+    </div>
+
+  </div> {/* fecha o flex */}
+
   {/* ========================================== */}
   {/*               7. RODAPÉ                    */}
   {/* ========================================== */}
@@ -599,6 +612,12 @@ useEffect(() => {
         );
       })}
     </div>
+  </Modal>
+)}
+{/* --- 8.8 Modal: Notícias --- */}
+{modalNoticias && (
+  <Modal titulo="Navegador de Notícias" onClose={() => setModalNoticias(false)}>
+    <NavegadorNoticias noticias={noticias} />
   </Modal>
 )}
 </main>

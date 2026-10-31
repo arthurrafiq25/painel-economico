@@ -41,6 +41,7 @@ jobs:
           python baixar_ipca.py
           python baixar_cambio.py
           python baixar_desemprego.py
+          python baixar_noticias.py
 
       - name: Commit e push
         run: |
