@@ -34,6 +34,7 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
   const [servicos, setServicos] = useState({});
   const [administracao, setAdministracao] = useState({});
   const [impostos, setImpostos] = useState({});
+  const [idhGini, setIdhGini] = useState({});
 
   // ==========================================
   // 3. EFEITOS (Carregamento inicial)
@@ -48,6 +49,7 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
     fetch("/servicos-uf.json").then((r) => r.json()).then(setServicos).catch(() => {});
     fetch("/administracao-uf.json").then((r) => r.json()).then(setAdministracao).catch(() => {});
     fetch("/impostos-uf.json").then((r) => r.json()).then(setImpostos).catch(() => {});
+    fetch("/idh-gini.json").then((r) => r.json()).then(setIdhGini).catch(() => {});
   }, []);
 
   // ==========================================
@@ -103,7 +105,9 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
                     industria: industria[SIGLA_PARA_ID[sigla]], 
                     servicos: servicos[SIGLA_PARA_ID[sigla]], 
                     administracao: administracao[SIGLA_PARA_ID[sigla]], 
-                    impostos: impostos[SIGLA_PARA_ID[sigla]] 
+                    impostos: impostos[SIGLA_PARA_ID[sigla]],
+                    idh: idhGini[SIGLA_PARA_ID[sigla]]?.idh, 
+                    gini: idhGini[SIGLA_PARA_ID[sigla]]?.gini
                   })}
                 />
               );

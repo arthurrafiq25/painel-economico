@@ -117,11 +117,14 @@ main {
   width: 90%;
   max-height: 80vh;
   overflow: auto;
+  overflow: hidden;
 }
 
 .modal-conteudo {
   padding: 12px;
   background: #ffffff;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .modal-botao-x {

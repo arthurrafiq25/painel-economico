@@ -44,6 +44,7 @@ export default function Home() {
   const [brasilLinksAberto, setBrasilLinksAberto] = useState(false);
   const [modalNoticias, setModalNoticias] = useState(false);
   const [noticias, setNoticias] = useState([]);
+  const [modalGlossario, setModalGlossario] = useState(false);
 
 // =========================================
 // 4. EFEITOS (Carregamento inicial)
@@ -233,7 +234,7 @@ useEffect(() => {
       <p><strong>Serviços:</strong> R$ {fmt(dadosBrasil.servicos * 1000)}</p>
       <p><strong>Administração pública:</strong> R$ {fmt(dadosBrasil.administracao * 1000)}</p>
       <p><strong>Impostos líquidos:</strong> R$ {fmt(dadosBrasil.impostos * 1000)}</p>
-      <div><span style={{ fontSize: "11px", color: "#666", fontWeight: "normal" }}>(Dados de 2021)</span></div>
+      <div><span style={{ fontSize: "11px", color: "#666", fontWeight: "normal" }}>(Indicadores econômicos: 2021 · IDH e Gini: 2010)</span></div>
     </>
   ) : regiaoSel ? (
               <>
@@ -248,7 +249,7 @@ useEffect(() => {
                     <p><strong>Serviços:</strong> R$ {fmt(dadosRegiao.servicos * 1000)}</p>
                     <p><strong>Administração pública:</strong> R$ {fmt(dadosRegiao.administracao * 1000)}</p>
                     <p><strong>Impostos líquidos:</strong> R$ {fmt(dadosRegiao.impostos * 1000)}</p>
-                    <p style={{ marginTop: "10px", fontSize: "11px", color: "#666" }}>(Dados de 2021)</p>
+                    <p style={{ marginTop: "10px", fontSize: "11px", color: "#666" }}>(Indicadores econômicos: 2021 · IDH e Gini: 2010)</p>
                   </>
                 )}
               </>
@@ -340,7 +341,10 @@ useEffect(() => {
                 {estadoHover.servicos ? <p><strong>Serviços:</strong> R$ {fmt(estadoHover.servicos * 1000)}</p> : null}
                 {estadoHover.administracao ? <p><strong>Administração pública:</strong> R$ {fmt(estadoHover.administracao * 1000)}</p> : null}
                 {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {fmt(estadoHover.impostos * 1000)}</p> : null}
-                <p style={{ marginTop: "10px", fontSize: "11px", color: "#666" }}>(Dados de 2021)</p>
+                {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {fmt(estadoHover.impostos * 1000)}</p> : null}
+                {estadoHover.idh ? <p><strong>IDH:</strong> {estadoHover.idh}</p> : null}
+                {estadoHover.gini ? <p><strong>Gini:</strong> {estadoHover.gini}</p> : null}
+                <p style={{ marginTop: "10px", fontSize: "11px", color: "#666" }}>(Indicadores econômicos: 2021 · IDH e Gini: 2010)</p>
               </>
             ) : (
               <p>
@@ -365,6 +369,11 @@ useEffect(() => {
       <a href="#" onClick={(e) => { e.preventDefault(); setModalNoticias(true); }} className="menu-item">
         <img src="https://www.google.com/s2/favicons?domain=agenciabrasil.ebc.com.br&sz=32" alt="" className="menu-icone" />
        Notícias
+      </a>
+
+      <a href="#" onClick={(e) => { e.preventDefault(); setModalGlossario(true); }} className="menu-item">
+       <img src="https://www.google.com/s2/favicons?domain=ibge.gov.br&sz=32" alt="" className="menu-icone" />
+       Glossário
       </a>
     </div>
 
@@ -618,6 +627,54 @@ useEffect(() => {
 {modalNoticias && (
   <Modal titulo="Navegador de Notícias" onClose={() => setModalNoticias(false)}>
     <NavegadorNoticias noticias={noticias} />
+  </Modal>
+)}
+{/* --- 8.9 Modal: Glossário --- */}
+{modalGlossario && (
+  <Modal titulo="Glossário" onClose={() => setModalGlossario(false)}>
+    <div style={{ fontFamily: "Verdana, sans-serif", fontSize: "13px", lineHeight: "1.6" }}>
+      
+      <p style={{ marginBottom: "12px" }}>
+        Este site reúne números oficiais, mas números sozinhos não dizem muita coisa.
+        Abaixo, uma explicação simples do que cada indicador significa.
+      </p>
+
+      <div style={{ marginBottom: "10px" }}>
+        <strong>PIB (Produto Interno Bruto)</strong><br />
+        É a soma de tudo que o estado produz em um ano. Quanto maior, mais rica é a economia. 
+        Mas cuidado: um PIB grande não significa que a população vive bem.
+      </div>
+
+      <div style={{ marginBottom: "10px" }}>
+        <strong>PIB per capita</strong><br />
+        É o PIB dividido pela população. Mostra quanto, em média, cada pessoa "produziria" se a riqueza fosse dividida igualmente. 
+        Quanto maior, melhor. Mas também não significa que a renda é bem distribuída.
+      </div>
+
+      <div style={{ marginBottom: "10px" }}>
+        <strong>IDH (Índice de Desenvolvimento Humano)</strong><br />
+        Vai de 0 a 1. Mede saúde, educação e renda. Referência:
+        <p style={{ marginTop: "4px" }}>Acima de 0,800: muito alto · 0,700 a 0,799: alto · 0,600 a 0,699: médio · 0,500 a 0,599: baixo · Abaixo de 0,500: muito baixo.</p>
+      </div>
+
+      <div style={{ marginBottom: "10px" }}>
+        <strong>Gini (Índice de Gini)</strong><br />
+        Vai de 0 a 1. Mede a desigualdade de renda. Quanto <strong>mais perto de 0</strong>, mais igualitário. 
+        Quanto <strong>mais perto de 1</strong>, mais desigual. O Brasil historicamente fica entre 0,50 e 0,60.
+      </div>
+
+      <div style={{ marginBottom: "10px" }}>
+        <strong>Setores da economia</strong><br />
+        <ul style={{ marginTop: "4px", marginBottom: "4px", paddingLeft: "20px" }}>
+          <li><strong>Agropecuária:</strong> produção agrícola e pecuária.</li>
+          <li><strong>Indústria:</strong> transformação de matéria-prima (fábricas, construção, etc).</li>
+          <li><strong>Serviços:</strong> comércio, transporte, educação privada, saúde privada, etc.</li>
+          <li><strong>Administração pública:</strong> gastos do governo com servidores, saúde e educação públicas.</li>
+          <li><strong>Impostos líquidos:</strong> tributos arrecadados menos subsídios.</li>
+        </ul>
+      </div>
+
+    </div>
   </Modal>
 )}
 </main>
