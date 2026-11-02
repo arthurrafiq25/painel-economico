@@ -72,7 +72,7 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
         projectionConfig={{ scale: 400, center: [-55, -15] }}
         width={400}
         height={300}
-        style={{ width: "100%", maxWidth: "550px", height: "auto", display: "block", margin: "0" }}
+        style={{ width: "100%", maxWidth: "550px", height: "auto", display: "block", margin: "0", marginLeft: "-20px" }}
       >
         <Geographies geography={GEO_URL}>
           {({ geographies }) =>

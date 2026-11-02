@@ -145,7 +145,7 @@ useEffect(() => {
   <div className="barra-topo"></div>
 </div>
 <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-          <div style={{ width: "660px" }}>
+          <div style={{ width: "600px" }}>
       <p className="subtitulo">
         Indicadores econômicos por estado (em desenvolvimento)
       </p>
@@ -179,7 +179,7 @@ useEffect(() => {
         <div style={{ marginTop: "30px" }}> 
           <MapaBrasil onEstadoChange={(estado) => { setEstadoHover(estado); setDadosBrasil(null); setRegiaoSel(null); }} siglaSelecionada={estadoHover ? estadoHover.sigla : null} regiaoSel={regiaoSel} />
         </div>
-        <div style={{ position: "absolute", top: "80px", right: "30px", fontSize: "13px" }}>
+        <div style={{ position: "absolute", top: "80px", right: "5px", fontSize: "15px" }}>
           {REGIOES.map((r) => (
             <div key={r.nome} style={{ marginBottom: "4px" }}>
               <a
