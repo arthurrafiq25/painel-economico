@@ -138,10 +138,10 @@ useEffect(() => {
       {/*   6. LAYOUT PRINCIPAL (Mapa + Menu)   */}
       {/* ======================================*/}
 
-      <div style={{ maxWidth: "890px", margin: "0 auto", textAlign: "left", paddingLeft: "10px", marginBottom: "8px" }}>
+      <div style={{ maxWidth: "890px", margin: "0 auto", textAlign: "left", paddingLeft: "20px", marginBottom: "8px" }}>
   <img src="/logo site_01.png" alt="Painel Brasil" style={{ height: "45px", width: "auto" }} />
 </div>
-<div style={{ maxWidth: "890px", margin: "0 auto" }}>
+<div style={{ maxWidth: "830px", margin: "0 auto" }}>
   <div className="barra-topo"></div>
 </div>
 <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
