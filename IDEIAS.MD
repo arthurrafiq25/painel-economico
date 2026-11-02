@@ -18,6 +18,11 @@ Cards fixos no site com panorama do país:
 - PIB (IBGE, trimestral)
 - Desemprego, etc.
 
+## 2.1 Indicadores pendentes (aguardando estabilidade da API)
+- **Caged (emprego formal):** API mudou recentemente, precisa de nova documentação.
+- **Comex Stat (exportações/importações por UF):** API com instabilidade (DNS getaddrinfo failed).
+Verificar novamente quando os endpoints oficiais estabilizarem.
+
 ## 3. Outros indicadores por UF (além do PIB)
 - PIB per capita
 - População
@@ -160,3 +165,27 @@ Fontes: manuais com link oficial (Planalto, governos estaduais).
 - Fontes: IBGE (Censo Indígena), FUNAI, ISA, dados de ONGs reconhecidas.
 - Formato: modal "Questões Sociais" no menu lateral, com dados factuais e links.
 - Transparência: assumir a curadoria no "Sobre o Projeto" (ex: "priorizamos dados humanitários").
+
+## 21. Blog dentro do site (Leitor de Artigos)
+- Escrita no Blogger (PC ou celular).
+- Script Python para extrair os posts via Scraping (texto completo, sem depender do feed limitado).
+- Modal com estética de "leitor de artigos" anos 2000 (design a cargo do Claude).
+- Requisito: todo o conteúdo dentro do site, sem links para fora.
+- Depende: criação do blog no Blogger pelo autor.
+
+## 22. Órgãos Estatais e Institucionais ("Quem é Quem")
+- Lista manual (JSON) organizada por Poder e Esfera:
+  - Executivo Federal (Ministérios)
+  - Legislativo (Câmara, Senado, TCU)
+  - Judiciário (STF, STJ, TST, TSE, STM, Justiças estaduais)
+  - Funções Essenciais (MPF, MPT, AGU, Defensoria)
+  - Autarquias e Agências (BCB, IBGE, INSS, ANVISA, ANEEL, ANATEL, ANP)
+  - Órgãos Colegiados (CONFAZ, CMN)
+- Modal simples com nome, sigla e descrição curta.
+
+## 23. Monitoramento de Políticos Eleitos
+- Fonte: API de Dados Abertos da Câmara dos Deputados (dadosabertos.camara.leg.br).
+- Fase 1: lista de deputados (nome, partido, estado) + busca/filtro.
+- Fase 2: projetos de lei, presença em sessões, gastos (CEAP).
+- Dificuldade alta (API robusta, exige filtros e sub-páginas).
+
