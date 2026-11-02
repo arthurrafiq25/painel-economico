@@ -201,11 +201,6 @@ useEffect(() => {
       </div>
     </div>
   </div>
-
-  <div className="rodape-win95">
-    <div className="celula-win95">{RODAPE_ESQUERDO}</div>
-    <div className="celula-win95">{RODAPE_DIREITO}</div>
-  </div>
 </div>
       {/* --- 6.2 Janela do Painel de Informações --- */}
       <div className="janela-win95">
