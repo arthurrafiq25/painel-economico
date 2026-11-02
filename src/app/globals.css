@@ -1070,3 +1070,21 @@ button.nav-botao {
   border: 1px solid;
   border-color: #808080 #ffffff #ffffff #808080;
 }
+
+/* --- ESTILO WINDOWS 95 EXCLUSIVO PARA O PAINEL DE INFORMAÇÕES --- */
+.conteudo-win95-painel {
+  margin-top: 2px;
+  background: #ffffff; /* O painel de dados precisa de fundo branco para leitura */
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.conteudo-win95-painel > .painel {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0;
+}

@@ -197,7 +197,7 @@ useEffect(() => {
         {estadoHover
           ? estadoHover.nome + " (" + estadoHover.sigla + ")" +
             (estadoHover.info ? " · Capital: " + estadoHover.info.capital + " · Região: " + estadoHover.info.regiao + " · Fuso: " + estadoHover.info.fuso : "")
-          : "Selecione um estado ou região."}
+          : " "}
       </div>
     </div>
   </div>
@@ -208,9 +208,11 @@ useEffect(() => {
   </div>
 </div>
       {/* --- 6.2 Janela do Painel de Informações --- */}
-      <div className="janela janela-mapa">
-        <div className="janela-titulo">ℹ️ Painel </div>
-        <div className="janela-conteudo">
+      <div className="janela-win95">
+        <div className="janela-titulo-win95">
+          <span>ℹ️ Painel</span>
+        </div>
+        <div className="conteudo-win95-painel">
           <div className="painel">
   {dadosBrasil ? (
     <>
@@ -349,9 +351,10 @@ useEffect(() => {
                 Todos os dados vêm de fontes públicas oficiais (IBGE, Banco Central).
               </p>
             )}
-                   </div>  {/* fecha painel */}
-        </div>    {/* fecha janela-conteudo */}
-      </div>      {/* fecha janela janela-mapa */}
+                            </div>  {/* fecha painel */}
+        </div>    {/* fecha conteudo-win95-painel */}
+  
+      </div>      {/* fecha janela-win95 */}
     </div>        {/* fecha a caixa de 660px */}
 
     {/* --- 6.3 Menu Lateral (Esquerda do site) --- */}
