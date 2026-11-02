@@ -9,6 +9,11 @@ import NavegadorNoticias from "./NavegadorNoticias";
 // 1. DADOS FIXOS (Não mudam com frequência)
 // =========================================
 
+const EMOJI_TITULO = "🗺️";
+const TITULO_JANELA = "Brasil";
+const RODAPE_ESQUERDO = "©2026 Painel Brasil";
+const RODAPE_DIREITO = "Dados de fontes oficiais";
+
 const REGIOES = [
   { id: "1", nome: "• Norte" },
   { id: "2", nome: "• Nordeste" },
@@ -145,71 +150,63 @@ useEffect(() => {
         Indicadores econômicos por estado (em desenvolvimento)
       </p>
       {/* --- 6.1 Janela do Mapa --- */}
-      <div className="janela">
-        <div className="janela-titulo" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span>
-  🗺️ {" "}
-  <a
-    href="#"
-    onClick={(e) => { e.preventDefault(); handleBrasil(); }}
-    style={{ color: "#ffffff", textDecoration: "underline", cursor: "pointer", fontWeight: "bold" }}
-  >
-    Brasil
-  </a>
-</span>
-          {(estadoHover || regiaoSel || dadosBrasil) && (
-            <button
-              onClick={() => { setEstadoHover(null); handleRegiao(null); setDadosBrasil(null); }}
-              title="Limpar seleção"
-              style={{
-                fontSize: "12px",
-                fontWeight: "bold",
-                padding: "3px 7px",
-                cursor: "pointer",
-                background: "#d4d0c8",
-                border: "1px solid",
-                borderColor: "#ffffff #808080 #808080 #ffffff",
-                fontFamily: "Verdana, Tahoma, sans-serif",
-                lineHeight: "1",
-              }}
-            >
-              ↻
-            </button>
-          )}
+<div className="janela-win95">
+  <div className="janela-titulo-win95">
+    <span>
+      {EMOJI_TITULO}{" "}
+      <a
+        href="#"
+        onClick={(e) => { e.preventDefault(); handleBrasil(); }}
+        style={{ color: "#ffffff", textDecoration: "underline", cursor: "pointer", fontWeight: "bold" }}
+      >
+        {TITULO_JANELA}
+      </a>
+    </span>
+    {(estadoHover || regiaoSel || dadosBrasil) && (
+      <button
+        className="botao-win95"
+        onClick={() => { setEstadoHover(null); handleRegiao(null); setDadosBrasil(null); }}
+        title="Limpar seleção"
+      >
+        ↻
+      </button>
+    )}
+  </div>
+
+  <div className="conteudo-win95">
+    <div className="painel painel-mapa">
+      <div style={{ position: "relative" }}>
+        <div style={{ marginTop: "30px" }}> 
+          <MapaBrasil onEstadoChange={(estado) => { setEstadoHover(estado); setDadosBrasil(null); setRegiaoSel(null); }} siglaSelecionada={estadoHover ? estadoHover.sigla : null} regiaoSel={regiaoSel} />
         </div>
-        <div className="janela-conteudo">
-          <div className="painel painel-mapa">
-            <div style={{ position: "relative" }}>
-              <div style={{ marginTop: "30px" }}> 
-                <MapaBrasil onEstadoChange={(estado) => { setEstadoHover(estado); setDadosBrasil(null); setRegiaoSel(null); }} siglaSelecionada={estadoHover ? estadoHover.sigla : null} regiaoSel={regiaoSel} />
-              </div>
-              <div style={{ position: "absolute", top: "80px", right: "30px", fontSize: "13px" }}> {/* MENU EMPILHADO DE REGIÕES */}
-                {REGIOES.map((r) => (
-                  <div key={r.nome} style={{ marginBottom: "4px" }}>
-                    <a
-                      href="#"
-                      onClick={(e) => { e.preventDefault(); handleRegiao(r.id); }}
-                      style={{
-                        color: "#0000cc",
-                        textDecoration: "underline",
-                        fontWeight: regiaoSel === r.id ? "bold" : "normal",
-                      }}
-                    >
-                      {r.nome}
-                    </a>
-                  </div>
-                ))}
-              </div>
+        <div style={{ position: "absolute", top: "80px", right: "30px", fontSize: "13px" }}>
+          {REGIOES.map((r) => (
+            <div key={r.nome} style={{ marginBottom: "4px" }}>
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); handleRegiao(r.id); }}
+                style={{ color: "#0000cc", textDecoration: "underline", fontWeight: regiaoSel === r.id ? "bold" : "normal" }}
+              >
+                {r.nome}
+              </a>
             </div>
-            <div style={{ position: "absolute", bottom: "10px", left: "0", right: "0", fontSize: "12px", color: "#000080", fontWeight: "bold", textAlign: "center" }}> {/* Hover Inferior */}
-              {estadoHover
-                ? estadoHover.nome + " (" + estadoHover.sigla + ")" +
-                  (estadoHover.info ? " · Capital: " + estadoHover.info.capital + " · Região: " + estadoHover.info.regiao + " · Fuso: " + estadoHover.info.fuso : "")
-                : "Selecione um estado ou região."}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
+      <div style={{ position: "absolute", bottom: "10px", left: "0", right: "0", fontSize: "12px", color: "#000080", fontWeight: "bold", textAlign: "center" }}>
+        {estadoHover
+          ? estadoHover.nome + " (" + estadoHover.sigla + ")" +
+            (estadoHover.info ? " · Capital: " + estadoHover.info.capital + " · Região: " + estadoHover.info.regiao + " · Fuso: " + estadoHover.info.fuso : "")
+          : "Selecione um estado ou região."}
+      </div>
+    </div>
+  </div>
+
+  <div className="rodape-win95">
+    <div className="celula-win95">{RODAPE_ESQUERDO}</div>
+    <div className="celula-win95">{RODAPE_DIREITO}</div>
+  </div>
+</div>
       {/* --- 6.2 Janela do Painel de Informações --- */}
       <div className="janela janela-mapa">
         <div className="janela-titulo">ℹ️ Painel </div>
