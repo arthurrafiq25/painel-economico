@@ -349,6 +349,8 @@ useEffect(() => {
                 {estadoHover.servicos ? <p><strong>Serviços:</strong> R$ {fmt(estadoHover.servicos * 1000)}</p> : null}
                 {estadoHover.administracao ? <p><strong>Administração pública:</strong> R$ {fmt(estadoHover.administracao * 1000)}</p> : null}
                 {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {fmt(estadoHover.impostos * 1000)}</p> : null}
+                {estadoHover.importacao ? <p><strong>Importações (2026):</strong> US$ {fmt(estadoHover.importacao)}</p> : null}
+                {estadoHover.exportacao ? <p><strong>Exportações (2026):</strong> US$ {fmt(estadoHover.exportacao)}</p> : null}
                 {estadoHover.idh ? <p><strong>IDH:</strong> {estadoHover.idh}</p> : null}
                 {estadoHover.gini ? <p><strong>Gini:</strong> {estadoHover.gini}</p> : null}
                 <p style={{ marginTop: "10px", fontSize: "11px", color: "#666" }}>(Indicadores econômicos: 2021 · IDH e Gini: 2010)</p>
