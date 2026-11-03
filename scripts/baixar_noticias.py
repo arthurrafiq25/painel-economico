@@ -3,11 +3,10 @@ import urllib.request
 import json
 import os
 import re
+from urllib.parse import quote
 from comum import RAIZ
 
-# Dicionário de siglas para os feeds do Sebrae
-SIGLAS_UF = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"]
-
+# Lista de estados com nome e sigla
 ESTADOS = {
     "Acre": "AC", "Alagoas": "AL", "Amapá": "AP", "Amazonas": "AM",
     "Bahia": "BA", "Ceará": "CE", "Distrito Federal": "DF", "Espírito Santo": "ES",
@@ -27,16 +26,20 @@ def fetch_xml(url):
         print(f"Erro ao baixar {url}: {e}")
         return None
 
-def processar_feed(xml_data, sigla_origem=None):
+def processar_feed(xml_data, fonte_nome):
     noticias = []
     if not xml_data: return noticias
     try:
         root = ET.fromstring(xml_data)
-        for item in root.findall(".//item")[:15]:
+        for item in root.findall(".//item")[:10]:
             titulo = item.find("title").text if item.find("title") is not None else ""
             link = item.find("link").text if item.find("link") is not None else ""
             data = item.find("pubDate").text if item.find("pubDate") is not None else ""
             descricao_raw = item.find("description").text if item.find("description") is not None else ""
+            
+            # No Google News, a fonte original vem dentro da tag <source>
+            source_tag = item.find("source")
+            origem_real = source_tag.text if source_tag is not None else fonte_nome
             
             descricao_limpa = re.sub(r'<[^>]+>', '', descricao_raw)
             descricao_limpa = " ".join(descricao_limpa.split())
@@ -45,41 +48,52 @@ def processar_feed(xml_data, sigla_origem=None):
                 "titulo": titulo,
                 "link": link,
                 "data": data,
-                "texto": descricao_limpa,
-                "origem": "Agência Brasil" if not sigla_origem else "Sebrae"
+                "resumo": descricao_limpa,
+                "fonte": origem_real
             })
     except Exception as e:
         print(f"Erro ao processar XML: {e}")
     return noticias
 
-# 1. Baixa Agência Brasil (Nacional)
+# 1. Agência Brasil (Nacional)
 print("Baixando Agência Brasil...")
 xml_brasil = fetch_xml("https://agenciabrasil.ebc.com.br/rss/ultimasnoticias/feed.xml")
-noticias_brasil = processar_feed(xml_brasil)
+noticias_brasil = processar_feed(xml_brasil, "Agência Brasil")
 
-# 2. Baixa Sebrae (Por Estado)
-noticias_por_estado = {sigla: [] for sigla in ESTADOS.values()}
-noticias_por_estado["BR"] = noticias_brasil
+noticias_por_estado = {"BR": noticias_brasil}
 
-for sigla in SIGLAS_UF:
-    print(f"Baixando Sebrae {sigla}...")
-    url = f"https://agenciasebrae.com.br/feed/?uf={sigla.lower()}"
-    xml_estado = fetch_xml(url)
-    noticias_estado = processar_feed(xml_estado, sigla_origem=sigla)
+# 2. Google News + Sebrae (Por Estado)
+for nome, sigla in ESTADOS.items():
+    print(f"Baixando notícias para {nome} ({sigla})...")
+    lista_estado = []
     
-    # Adiciona as notícias do Sebrae à lista do estado
-    noticias_por_estado[sigla].extend(noticias_estado)
+    # Google News
+    termo_busca = quote(f'"{nome}" noticias')
+    url_google = f"https://news.google.com/rss/search?q={termo_busca}&hl=pt-BR&gl=BR&ceid=BR:pt-419"
+    xml_google = fetch_xml(url_google)
+    lista_estado.extend(processar_feed(xml_google, "Google News"))
     
-    # Verifica se o nome do estado aparece nas notícias nacionais e adiciona lá também
-    for nome_estado, s in ESTADOS.items():
-        if s == sigla:
-            for noticia in noticias_brasil:
-                if nome_estado in (noticia["titulo"] + noticia["texto"]):
-                    # Evita duplicar
-                    if not any(n["link"] == noticia["link"] for n in noticias_por_estado[sigla]):
-                        noticias_por_estado[sigla].append(noticia)
+    # Sebrae
+    url_sebrae = f"https://agenciasebrae.com.br/feed/?uf={sigla.lower()}"
+    xml_sebrae = fetch_xml(url_sebrae)
+    lista_estado.extend(processar_feed(xml_sebrae, "Sebrae"))
+    
+    # Agência Brasil (Filtro por nome do estado)
+    for noticia in noticias_brasil:
+        if nome in (noticia["titulo"] + noticia["resumo"]):
+            lista_estado.append(noticia)
+            
+    # Remove duplicatas pelo link
+    lista_unica = []
+    links_vistos = set()
+    for n in lista_estado:
+        if n["link"] not in links_vistos:
+            lista_unica.append(n)
+            links_vistos.add(n["link"])
+            
+    noticias_por_estado[sigla] = lista_unica
 
 with open(os.path.join(RAIZ, "public", "noticias.json"), "w", encoding="utf-8") as f:
     json.dump(noticias_por_estado, f, ensure_ascii=False)
 
-print(f"Concluído! Notícias geradas para 28 chaves (Brasil + 27 estados).")
+print("Concluído! Notícias atualizadas para Brasil + 27 estados.")

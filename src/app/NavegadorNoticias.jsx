@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 
-const URL_PADRAO = "http://www.agenciabrasil.ebc.com.br";
+const URL_PADRAO = "Selecione uma notícia para ver o endereço url";
 const STATUS_PADRAO = "Concluído";
 const NOME_PORTAL_PADRAO = "Portal de Notícias";
 const N_DESTAQUES = 3; // matérias logo abaixo da manchete
@@ -199,7 +199,7 @@ export default function NavegadorNoticias({
   }
 
   // Uma matéria clicável (seleciona e atualiza a barra de endereço)
-  const renderMateria = (n, i, variante) => {
+    const renderMateria = (n, i, variante) => {
     const resumo = n.resumo ?? n.descricao;
     const info = [formatarData(n.data), n.fonte].filter(Boolean).join(" - ");
     return (
@@ -207,7 +207,7 @@ export default function NavegadorNoticias({
         type="button"
         className={`pt-materia pt-${variante}`}
         aria-pressed={selecionado === i}
-        onClick={() => setSelecionado(i)}
+        onClick={(e) => { e.stopPropagation(); setSelecionado(i); }}
         onMouseEnter={() => n.link && mostrar(n.link)}
         onMouseLeave={limpar}
         onFocus={() => n.link && mostrar(n.link)}
@@ -215,7 +215,21 @@ export default function NavegadorNoticias({
       >
         <span className="pt-texto">
           {n.categoria && <span className="pt-tag">{n.categoria}</span>}
-          <span className="pt-titulo">{n.titulo}</span>
+                    <span className="pt-titulo" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            {n.titulo}
+            {n.link && (
+              <a
+                href={n.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Abrir no site original"
+                style={{ marginLeft: "8px", textDecoration: "none", fontSize: "14px", color: "#0000cc" }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                ↗
+              </a>
+            )}
+          </span>
           {resumo && variante !== "ultima" && (
             <span className="pt-resumo">{resumo}</span>
           )}
@@ -226,7 +240,7 @@ export default function NavegadorNoticias({
   };
 
   return (
-    <div className="nav-antigo">
+    <div className="nav-antigo" onClick={() => setSelecionado(null)}>
       {/* Topo: duas barras empilhadas + gif animado à direita */}
       <div className="nav-topo">
         <div className="nav-topo-barras">
@@ -252,18 +266,27 @@ export default function NavegadorNoticias({
           <div className="nav-barra">
             <span className="nav-alca" aria-hidden="true" />
             <span className="nav-rotulo">Endereço</span>
-            <a
-              className="nav-campo"
-              href={urlEndereco}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Abrir em nova aba"
-            >
-              <span className="nav-icone" aria-hidden="true">
-                📄
-              </span>
-              <span className="nav-url">{urlEndereco}</span>
-            </a>
+                        {noticiaAtual ? (
+              <a
+                className="nav-campo"
+                href={urlEndereco}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Abrir em nova aba"
+              >
+                <span className="nav-icone" aria-hidden="true">
+                  📄
+                </span>
+                <span className="nav-url">{urlEndereco}</span>
+              </a>
+            ) : (
+              <div className="nav-campo" style={{ cursor: "default" }}>
+                <span className="nav-icone" aria-hidden="true">
+                  📄
+                </span>
+                <span className="nav-url" style={{ color: "#666" }}>{urlEndereco}</span>
+              </div>
+            )}
 
             <button
               type="button"
