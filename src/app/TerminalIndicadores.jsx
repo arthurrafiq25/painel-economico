@@ -13,8 +13,8 @@ const RODAPE = "FIM DA TRANSMISSÃO";
 const LINHAS = [
   { chave: "selic", codigo: "SELIC", rotulo: "TAXA SELIC", rotuloData: "DATA", prefixo: "", sufixo: "" },
   { chave: "ipca", codigo: "IPCA", rotulo: "INFLAÇÃO (IPCA)", rotuloData: "DATA", prefixo: "", sufixo: "" },
-  { chave: "dolar", codigo: "USD", rotulo: "DÓLAR (USD/BRL)", rotuloData: "DATA", prefixo: "", sufixo: "" },
-  { chave: "desemprego", codigo: "DESEMP", rotulo: "TAXA DE DESEMPREGO", rotuloData: "PERÍODO", prefixo: "", sufixo: "" },
+  { chave: "cambio", codigo: "USD", rotulo: "DÓLAR (USD/BRL)", rotuloData: "DATA", prefixo: "", sufixo: "" },
+  { chave: "desemprego", codigo: "DESEMP.", rotulo: "TAXA DE DESEMPREGO", rotuloData: "PERÍODO", prefixo: "", sufixo: "" },
 ];
 // --------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ const vazio = (v) => v === null || v === undefined || v === "";
  * `indicadores`: {
  *   selic:      { valor, data },
  *   ipca:       { valor, data },
- *   dolar:      { valor, data },
+ *   cambio:     { valor, data },
  *   desemprego: { valor, periodo }
  * }
  * `piscar`: true = cursor do rodapé pisca; false = estático.

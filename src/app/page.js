@@ -5,6 +5,7 @@ import MapaBrasil from "./MapaBrasil";
 import Modal from "./Modal";
 import NavegadorNoticias from "./NavegadorNoticias";
 import TerminalIndicadores from "./TerminalIndicadores";
+import NotePadMac from "./NotePadMac";
 
 // =========================================
 // 1. DADOS FIXOS (Não mudam com frequência)
@@ -591,49 +592,32 @@ useEffect(() => {
 {/* --- 8.9 Modal: Glossário --- */}
 {modalGlossario && (
   <Modal titulo="Glossário" onClose={() => setModalGlossario(false)}>
-    <div style={{ fontFamily: "Verdana, sans-serif", fontSize: "13px", lineHeight: "1.6" }}>
-      
-      <p style={{ marginBottom: "12px" }}>
-        Este site reúne números oficiais, mas números sozinhos não dizem muita coisa.
-        Abaixo, uma explicação simples do que cada indicador significa.
-      </p>
+    <NotePadMac pagina={1}>
+      <div style={{ padding: "10px", fontFamily: "Geneva, Verdana, sans-serif", fontSize: "13px", lineHeight: "1.4" }}>
+        <p style={{ fontWeight: "bold", marginBottom: "10px" }}></p>
+        <p style={{ marginBottom: "10px" }}>Este site reúne números oficiais, mas números sozinhos não dizem muita coisa. Abaixo, uma explicação simples do que cada indicador significa.</p>
+        
+        <p style={{ marginBottom: "8px" }}><strong>· PIB (Produto Interno Bruto)</strong><br/>
+        É a soma de tudo que o estado produz em um ano. Quanto maior, mais rica é a economia. Mas cuidado: um PIB grande não significa que a população vive bem.</p>
 
-      <div style={{ marginBottom: "10px" }}>
-        <strong>PIB (Produto Interno Bruto)</strong><br />
-        É a soma de tudo que o estado produz em um ano. Quanto maior, mais rica é a economia. 
-        Mas cuidado: um PIB grande não significa que a população vive bem.
+        <p style={{ marginBottom: "8px" }}><strong>· PIB per capita</strong><br/>
+        É o PIB dividido pela população. Mostra quanto, em média, cada pessoa "produziria" se a riqueza fosse dividida igualmente. Não significa que a renda é bem distribuída.</p>
+
+        <p style={{ marginBottom: "8px" }}><strong>· IDH (Índice de Desenvolvimento Humano)</strong><br/>
+        Vai de 0 a 1. Mede saúde, educação e renda. Referência: Acima de 0,800 (muito alto) · 0,700 a 0,799 (alto) · 0,600 a 0,699 (médio) · 0,500 a 0,599 (baixo) · Abaixo de 0,500 (muito baixo).</p>
+
+        <p style={{ marginBottom: "8px" }}><strong>· Gini (Índice de Gini)</strong><br/>
+        Vai de 0 a 1. Mede a desigualdade de renda. Quanto mais perto de 0, mais igualitário. Quanto mais perto de 1, mais desigual.</p>
+
+        <p style={{ marginBottom: "8px" }}><strong>· Setores da economia:</strong><br/>
+        <p style={{ marginBottom: "8px" }}></p>
+        <strong>Agropecuária:</strong> Produção agrícola e pecuária.<br/>
+        <strong>Indústria:</strong> Transformação de matéria-prima.<br/>
+        <strong>Serviços:</strong> Comércio, transporte, educação e saúde privada.<br/>
+        <strong>Administração pública:</strong> Gastos do governo com servidores e serviços públicos.<br/>
+        <strong>Impostos líquidos:</strong> Tributos arrecadados menos subsídios.</p>
       </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <strong>PIB per capita</strong><br />
-        É o PIB dividido pela população. Mostra quanto, em média, cada pessoa "produziria" se a riqueza fosse dividida igualmente. 
-        Quanto maior, melhor. Mas também não significa que a renda é bem distribuída.
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <strong>IDH (Índice de Desenvolvimento Humano)</strong><br />
-        Vai de 0 a 1. Mede saúde, educação e renda. Referência:
-        <p style={{ marginTop: "4px" }}>Acima de 0,800: muito alto · 0,700 a 0,799: alto · 0,600 a 0,699: médio · 0,500 a 0,599: baixo · Abaixo de 0,500: muito baixo.</p>
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <strong>Gini (Índice de Gini)</strong><br />
-        Vai de 0 a 1. Mede a desigualdade de renda. Quanto <strong>mais perto de 0</strong>, mais igualitário. 
-        Quanto <strong>mais perto de 1</strong>, mais desigual. O Brasil historicamente fica entre 0,50 e 0,60.
-      </div>
-
-      <div style={{ marginBottom: "10px" }}>
-        <strong>Setores da economia</strong><br />
-        <ul style={{ marginTop: "4px", marginBottom: "4px", paddingLeft: "20px" }}>
-          <li><strong>Agropecuária:</strong> produção agrícola e pecuária.</li>
-          <li><strong>Indústria:</strong> transformação de matéria-prima (fábricas, construção, etc).</li>
-          <li><strong>Serviços:</strong> comércio, transporte, educação privada, saúde privada, etc.</li>
-          <li><strong>Administração pública:</strong> gastos do governo com servidores, saúde e educação públicas.</li>
-          <li><strong>Impostos líquidos:</strong> tributos arrecadados menos subsídios.</li>
-        </ul>
-      </div>
-
-    </div>
+    </NotePadMac>
   </Modal>
 )}
 </main>
