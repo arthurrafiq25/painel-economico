@@ -15,6 +15,8 @@ const LINHAS = [
   { chave: "ipca", codigo: "IPCA", rotulo: "INFLAÇÃO (IPCA)", rotuloData: "DATA", prefixo: "", sufixo: "" },
   { chave: "cambio", codigo: "USD", rotulo: "DÓLAR (USD/BRL)", rotuloData: "DATA", prefixo: "", sufixo: "" },
   { chave: "desemprego", codigo: "DESEMP.", rotulo: "TAXA DE DESEMPREGO", rotuloData: "PERÍODO", prefixo: "", sufixo: "" },
+  { chave: "salario", codigo: "SAL.MIN", rotulo: "SALÁRIO MÍNIMO", rotuloData: "VIGÊNCIA", prefixo: "", sufixo: "" },
+  { chave: "ipcaAlimentacao", codigo: "ALIM.", rotulo: "IPCA ALIMENTAÇÃO", rotuloData: "MÊS", prefixo: "", sufixo: "" },
 ];
 // --------------------------------------------------------------------------
 

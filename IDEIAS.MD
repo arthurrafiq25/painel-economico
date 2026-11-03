@@ -17,7 +17,6 @@ Novos modais:
 ## 1. Notícias por estado no mapa
 Links/cards flutuantes sobre cada UF com notícias relevantes daquele estado.
 Fontes: RSS oficiais (Agência Brasil, IBGE Notícias) filtrados por UF.
-Cuidado: só fontes oficiais, com link direto (imparcialidade).
 
 ## 2. Painel nacional em tempo real
 Cards fixos no site com panorama do país:

@@ -65,6 +65,8 @@ useEffect(() => {
   fetch("/cambio.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, cambio: d }))).catch(() => {});
   fetch("/desemprego.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, desemprego: d }))).catch(() => {});
   fetch("/noticias.json").then((r) => r.json()).then(setNoticias).catch(() => {});
+  fetch("/salario-minimo.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, salario: d }))).catch(() => {});
+  fetch("/ipca-alimentacao.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipcaAlimentacao: d }))).catch(() => {});
 }, []);
 
 // Fecha o balão 'Mais informações' ao clicar fora.
