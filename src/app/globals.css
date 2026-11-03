@@ -1088,3 +1088,237 @@ button.nav-botao {
   border: none;
   padding: 0;
 }
+
+/* ==========================================================
+   TERMINAL DE INDICADORES (estética CRT âmbar dos anos 80)
+   ========================================================== */
+
+.tm-carcaca {
+  --ambar: #ff9900;
+  --ambar-linha: rgba(255, 153, 0, 0.7);
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 10px 6px;
+  background: linear-gradient(#262626, #161616);
+  border: 3px solid;
+  border-color: #404040 #000000 #000000 #404040;
+  border-radius: 6px 6px 10px 10px;
+  box-shadow: inset 1px 1px 0 #555555, inset -1px -1px 0 #050505;
+}
+
+/* --- Barra de título (carcaça do monitor) --- */
+.tm-topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 4px 8px;
+}
+
+.tm-modelo {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: #d0d0d0;
+  font: italic 13px/1 Arial, Helvetica, sans-serif;
+  letter-spacing: 0.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tm-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff9900;
+  box-shadow: 0 0 6px #ff9900, inset 0 0 2px #ffd080;
+}
+
+.tm-selo {
+  padding: 2px 6px;
+  background: #cfcfcf;
+  border: 1px solid #8a8a8a;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #9a9a9a;
+  color: #111111;
+  font: bold 13px/1 Arial, Helvetica, sans-serif;
+}
+
+/* --- Tela --- */
+.tm-tela {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #15110a 0%, #050505 70%, #000000 100%);
+  border: 2px solid;
+  border-color: #000000 #2e2e2e #2e2e2e #000000;
+  border-radius: 8px / 10px;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.95), inset 0 0 0 1px #111111;
+}
+
+.tm-conteudo {
+  position: relative;
+  padding: 12px 16px 14px;
+  color: var(--ambar);
+  font: 14px/1.35 "Courier New", Courier, monospace;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 5px rgba(255, 153, 0, 0.55);
+  animation: tm-tremer 4s ease-in-out infinite;
+}
+
+/* Cabeçalho: linhas contínuas em cima e embaixo, como na tela de referência */
+.tm-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 3px 0 4px;
+  border-top: 1px solid var(--ambar);
+  border-bottom: 1px solid var(--ambar);
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* --- Indicadores --- */
+.tm-lista {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tm-linha {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr) auto auto;
+  align-items: center;
+  column-gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px dotted var(--ambar-linha);
+}
+
+.tm-codigo {
+  font-weight: bold;
+}
+
+/* Valor em "vídeo reverso" (fundo âmbar, texto preto), como os campos da referência */
+.tm-valor {
+  width: 104px;
+  box-sizing: border-box;
+  padding: 1px 8px;
+  background: var(--ambar);
+  color: #000000;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: right;
+  text-shadow: none;
+}
+
+.tm-quando {
+  width: 190px; /* largura fixa: alinha as colunas da direita em todas as linhas */
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tm-quando-rotulo {
+  opacity: 0.7;
+}
+
+/* --- Rodapé --- */
+.tm-rodape {
+  margin: 12px 0 0;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.tm-piscar {
+  animation: tm-piscar 1s steps(1) infinite;
+}
+
+/* --- Efeito CRT: linhas de varredura e vinheta --- */
+.tm-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8);
+}
+
+/* Base da carcaça */
+.tm-base {
+  height: 6px;
+  margin: 6px 40px 0;
+  background: repeating-linear-gradient(to bottom, #0a0a0a 0, #0a0a0a 1px, #2a2a2a 1px, #2a2a2a 2px);
+  border-radius: 2px;
+}
+
+@keyframes tm-piscar {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes tm-tremer {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.97;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tm-piscar,
+  .tm-conteudo {
+    animation: none;
+  }
+}
+
+/* --- Telas estreitas: data desce para uma segunda linha --- */
+@media (max-width: 520px) {
+  .tm-linha {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    row-gap: 4px;
+  }
+  .tm-quando {
+    grid-column: 2 / -1;
+    width: auto;
+    text-align: left;
+  }
+  .tm-valor {
+    width: 88px;
+    font-size: 16px;
+  }
+}
+
+/* --- OPCIONAL: tema do <Modal> que contém o terminal --- */
+.modal-janela:has(.tm-carcaca) {
+  width: min(760px, 94vw);
+  max-width: 94vw;
+  border-radius: 0;
+  border: 2px solid #404040;
+  background: #161616;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.55);
+}
+
+.modal-janela:has(.tm-carcaca) .janela-titulo {
+  background: #000000;
+  background-image: none;
+  border: 0;
+  border-bottom: 1px solid #ff9900;
+  border-radius: 0;
+  box-shadow: none;
+  color: #ff9900;
+  font: bold 13px "Courier New", Courier, monospace;
+  letter-spacing: 1px;
+  text-shadow: none;
+}
+
+.modal-janela:has(.tm-carcaca) .modal-conteudo {
+  padding: 0;
+  background: #161616 !important; /* vence o background branco inline do Modal */
+}

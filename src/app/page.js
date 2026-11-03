@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import MapaBrasil from "./MapaBrasil";
 import Modal from "./Modal";
 import NavegadorNoticias from "./NavegadorNoticias";
+import TerminalIndicadores from "./TerminalIndicadores";
 
 // =========================================
 // 1. DADOS FIXOS (Não mudam com frequência)
@@ -486,45 +487,8 @@ useEffect(() => {
 )}
 {/* --- 8.5 Modal: Indicadores Econômicos (Menu Lateral) --- */}
 {modalIndicadores && (
-  <Modal titulo="Indicadores Econômicos" onClose={() => setModalIndicadores(false)}>
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-      
-      {/* SELIC */}
-      <div style={{ borderBottom: "1px dotted #ccc", paddingBottom: "10px" }}>
-        <div style={{ fontSize: "12px", color: "#666", textTransform: "uppercase" }}>Taxa Selic</div>
-        <div style={{ fontSize: "24px", fontWeight: "bold", color: "#000080", fontFamily: "Verdana, sans-serif" }}>
-          {indicadores.selic ? indicadores.selic.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + "%" : "..."}
-        </div>
-        <div style={{ fontSize: "10px", color: "#999" }}>a.a. — Atualizado em {indicadores.selic ? indicadores.selic.data : "..."}</div>
-      </div>
-
-      {/* IPCA */}
-      <div style={{ borderBottom: "1px dotted #ccc", paddingBottom: "10px" }}>
-        <div style={{ fontSize: "12px", color: "#666", textTransform: "uppercase" }}>IPCA (12 meses)</div>
-        <div style={{ fontSize: "24px", fontWeight: "bold", color: "#000080", fontFamily: "Verdana, sans-serif" }}>
-          {indicadores.ipca ? indicadores.ipca.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + "%" : "..."}
-        </div>
-        <div style={{ fontSize: "10px", color: "#999" }}>Acumulado 12m — Atualizado em {indicadores.ipca ? indicadores.ipca.data : "..."}</div>
-      </div>
-
-      {/* CÂMBIO */}
-      <div style={{ paddingBottom: "10px" }}>
-        <div style={{ fontSize: "12px", color: "#666", textTransform: "uppercase" }}>Dólar (USD/BRL)</div>
-        <div style={{ fontSize: "24px", fontWeight: "bold", color: "#000080", fontFamily: "Verdana, sans-serif" }}>
-          {indicadores.cambio ? "R$ " + indicadores.cambio.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) : "..."}
-        </div>
-        <div style={{ fontSize: "10px", color: "#999" }}>Comercial — Atualizado em {indicadores.cambio ? indicadores.cambio.data : "..."}</div>
-      </div>
-    </div>
-
-    {/* DESEMPREGO */}
-      <div style={{ paddingBottom: "10px" }}>
-        <div style={{ fontSize: "12px", color: "#666", textTransform: "uppercase" }}>Taxa de Desemprego</div>
-        <div style={{ fontSize: "24px", fontWeight: "bold", color: "#000080", fontFamily: "Verdana, sans-serif" }}>
-         {indicadores.desemprego ? indicadores.desemprego.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + "%" : "..."}
-        </div>
-       <div style={{ fontSize: "10px", color: "#999" }}>Taxa de desocupação — Período: {indicadores.desemprego ? indicadores.desemprego.periodo : "..."}</div>
-      </div>
+  <Modal titulo="Terminal Bloomberg" onClose={() => setModalIndicadores(false)}>
+    <TerminalIndicadores indicadores={indicadores} />
   </Modal>
 )}
 {/* --- 8.6 Modal: Termos e Licenças --- */}

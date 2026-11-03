@@ -4,6 +4,14 @@ Inspirações fundamentais:
 - https://oldweb.today/#19960101/http://geocities.com/
 - https://www.cameronsworld.net/
 - https://gifcities.org/search?q=paper&offset=0&page_size=200
+- https://www.glitter-graphics.com/
+- https://cari.institute/aesthetics
+- https://www.webdesignmuseum.org/
+
+Novos modais:
+- https://rockybergen.com/whatsnew/2018/3/30/c64minimonitor
+- https://radio.kwsx.online/
+- https://frutigeraeroarchive.org/images/introduction/thumbnails/windows_7.jpg
 
 ## 1. Notícias por estado no mapa
 Links/cards flutuantes sobre cada UF com notícias relevantes daquele estado.
