@@ -333,6 +333,15 @@ useEffect(() => {
 </p>
                 <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(estadoHover.pib * 1000)}</p>
                 <p><strong>População:</strong> {fmt(estadoHover.populacao)}</p>
+                {estadoHover.combustivel ? <p><strong>Gasolina (média):</strong> R$ {estadoHover.combustivel.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/L</p> : null}
+                {estadoHover.emprego !== undefined ? (
+  <p>
+    <strong>Saldo de empregos (Caged - Ago/26):</strong>{" "}
+    <span style={{ color: estadoHover.emprego >= 0 ? "#006400" : "#cc0000", fontWeight: "bold" }}>
+      {estadoHover.emprego > 0 ? "+" : ""}{fmt(estadoHover.emprego)}
+    </span>
+  </p>
+) : null}
                 {estadoHover.ocupacao ? <p><strong>Pessoas ocupadas:</strong> {fmt(estadoHover.ocupacao)}</p> : null}
                 <p><strong>PIB per capita:</strong> R$ {estadoHover.perCapita.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 {estadoHover.agro ? <p><strong>Agropecuária:</strong> R$ {fmt(estadoHover.agro * 1000)}</p> : null}

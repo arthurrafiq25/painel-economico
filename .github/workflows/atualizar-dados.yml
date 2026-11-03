@@ -43,6 +43,10 @@ jobs:
           python baixar_desemprego.py
           python baixar_noticias.py
           python baixar_ocupacao.py
+          python baixar_salario_minimo.py
+          python baixar_ipca_alimentacao.py
+          python etl_anp.py
+          python baixar_caged.py
 
       - name: Commit e push
         run: |

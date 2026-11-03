@@ -204,3 +204,10 @@ Fontes: manuais com link oficial (Planalto, governos estaduais).
 - Notícias sobre descobertas científicas e inovação (RSS de fontes oficiais, ex: agências de fomento, CAPES, universidades públicas).
 - Fontes: Censo Escolar (INEP), Censo da Educação Superior (INEP), IBGE, CAPES, CNPq.
 - Curadoria e automação a definir.
+
+
+## 25. Metadados Automatizados
+- Criar arquivos `*-meta.json` para cada indicador (ex: `emprego-meta.json`).
+- Os metadados conteriam a competência (data) do dado.
+- O frontend (React) leria esse arquivo para exibir a data dinamicamente, sem precisar ser alterado manualmente (hardcoded) toda vez.
+- Aplicar especialmente no Caged (que muda de mês em mês).

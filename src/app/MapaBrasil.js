@@ -36,6 +36,8 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
   const [impostos, setImpostos] = useState({});
   const [idhGini, setIdhGini] = useState({});
   const [ocupacao, setOcupacao] = useState({});
+  const [combustivel, setCombustivel] = useState({});
+  const [emprego, setEmprego] = useState({});
 
   // ==========================================
   // 3. EFEITOS (Carregamento inicial)
@@ -52,6 +54,8 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
     fetch("/impostos-uf.json").then((r) => r.json()).then(setImpostos).catch(() => {});
     fetch("/idh-gini.json").then((r) => r.json()).then(setIdhGini).catch(() => {});
     fetch("/ocupacao-uf.json").then((r) => r.json()).then(setOcupacao).catch(() => {});
+    fetch("/combustiveis.json").then((r) => r.json()).then(setCombustivel).catch(() => {});
+    fetch("/emprego.json").then((r) => r.json()).then(setEmprego).catch(() => {});
   }, []);
 
   // ==========================================
@@ -110,7 +114,9 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
                     impostos: impostos[SIGLA_PARA_ID[sigla]],
                     idh: idhGini[SIGLA_PARA_ID[sigla]]?.idh, 
                     gini: idhGini[SIGLA_PARA_ID[sigla]]?.gini,
-                    ocupacao: ocupacao[SIGLA_PARA_ID[sigla]]
+                    ocupacao: ocupacao[SIGLA_PARA_ID[sigla]],
+                    combustivel: combustivel[SIGLA_PARA_ID[sigla]],
+                    emprego: emprego[SIGLA_PARA_ID[sigla]]
                   })}
                 />
               );
