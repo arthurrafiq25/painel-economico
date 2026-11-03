@@ -198,3 +198,10 @@ Fontes: manuais com link oficial (Planalto, governos estaduais).
 - Fase 2: projetos de lei, presença em sessões, gastos (CEAP).
 - Dificuldade alta (API robusta, exige filtros e sub-páginas).
 
+
+## 24. Educação, Ciência e Pesquisa (Dados Acadêmicos)
+- Escolas e faculdades (quantidade, matrículas, IDEB).
+- Pesquisas e patentes (INPI, CNPq).
+- Notícias sobre descobertas científicas e inovação (RSS de fontes oficiais, ex: agências de fomento, CAPES, universidades públicas).
+- Fontes: Censo Escolar (INEP), Censo da Educação Superior (INEP), IBGE, CAPES, CNPq.
+- Curadoria e automação a definir.
