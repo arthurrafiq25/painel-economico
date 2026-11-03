@@ -42,6 +42,7 @@ jobs:
           python baixar_cambio.py
           python baixar_desemprego.py
           python baixar_noticias.py
+          python baixar_ocupacao.py
 
       - name: Commit e push
         run: |

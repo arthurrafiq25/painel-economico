@@ -7,6 +7,7 @@ Inspirações fundamentais:
 - https://www.glitter-graphics.com/
 - https://cari.institute/aesthetics
 - https://www.webdesignmuseum.org/
+- https://assets.bbhub.io/image/v1/resize?width=auto&type=webp&url=https://assets.bbhub.io/professional/sites/10/BRAND_35years_Tshirts_1986_FNL.jpg
 
 Novos modais:
 - https://rockybergen.com/whatsnew/2018/3/30/c64minimonitor

@@ -331,12 +331,12 @@ useEffect(() => {
 </p>
                 <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(estadoHover.pib * 1000)}</p>
                 <p><strong>População:</strong> {fmt(estadoHover.populacao)}</p>
+                {estadoHover.ocupacao ? <p><strong>Pessoas ocupadas:</strong> {fmt(estadoHover.ocupacao)}</p> : null}
                 <p><strong>PIB per capita:</strong> R$ {estadoHover.perCapita.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 {estadoHover.agro ? <p><strong>Agropecuária:</strong> R$ {fmt(estadoHover.agro * 1000)}</p> : null}
                 {estadoHover.industria ? <p><strong>Indústria:</strong> R$ {fmt(estadoHover.industria * 1000)}</p> : null}
                 {estadoHover.servicos ? <p><strong>Serviços:</strong> R$ {fmt(estadoHover.servicos * 1000)}</p> : null}
                 {estadoHover.administracao ? <p><strong>Administração pública:</strong> R$ {fmt(estadoHover.administracao * 1000)}</p> : null}
-                {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {fmt(estadoHover.impostos * 1000)}</p> : null}
                 {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {fmt(estadoHover.impostos * 1000)}</p> : null}
                 {estadoHover.idh ? <p><strong>IDH:</strong> {estadoHover.idh}</p> : null}
                 {estadoHover.gini ? <p><strong>Gini:</strong> {estadoHover.gini}</p> : null}

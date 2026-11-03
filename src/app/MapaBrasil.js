@@ -35,6 +35,7 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
   const [administracao, setAdministracao] = useState({});
   const [impostos, setImpostos] = useState({});
   const [idhGini, setIdhGini] = useState({});
+  const [ocupacao, setOcupacao] = useState({});
 
   // ==========================================
   // 3. EFEITOS (Carregamento inicial)
@@ -50,6 +51,7 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
     fetch("/administracao-uf.json").then((r) => r.json()).then(setAdministracao).catch(() => {});
     fetch("/impostos-uf.json").then((r) => r.json()).then(setImpostos).catch(() => {});
     fetch("/idh-gini.json").then((r) => r.json()).then(setIdhGini).catch(() => {});
+    fetch("/ocupacao-uf.json").then((r) => r.json()).then(setOcupacao).catch(() => {});
   }, []);
 
   // ==========================================
@@ -107,7 +109,8 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
                     administracao: administracao[SIGLA_PARA_ID[sigla]], 
                     impostos: impostos[SIGLA_PARA_ID[sigla]],
                     idh: idhGini[SIGLA_PARA_ID[sigla]]?.idh, 
-                    gini: idhGini[SIGLA_PARA_ID[sigla]]?.gini
+                    gini: idhGini[SIGLA_PARA_ID[sigla]]?.gini,
+                    ocupacao: ocupacao[SIGLA_PARA_ID[sigla]]
                   })}
                 />
               );
