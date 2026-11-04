@@ -1,3 +1,5 @@
+// Configuração geral da função Modal Simples
+
 "use client";
 
 export default function Modal({ titulo, onClose, children }) {

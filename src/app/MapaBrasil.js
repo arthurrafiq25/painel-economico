@@ -9,7 +9,8 @@ import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 
 const GEO_URL = "/brasil-ufs.json";
 
-// Converte a sigla (SP) para o ID numérico do IBGE (35)
+// Converte a sigla (UF) para o ID numérico do IBGE.
+
 const SIGLA_PARA_ID = {
   "RO":"11","AC":"12","AM":"13","RR":"14","PA":"15","AP":"16","TO":"17",
   "MA":"21","PI":"22","CE":"23","RN":"24","PB":"25","PE":"26","AL":"27",
@@ -18,13 +19,19 @@ const SIGLA_PARA_ID = {
 };
 
 // Converte o nome da região para o ID numérico do IBGE
+
 const REGIAO_NOME_PARA_ID = { "Norte": "1", "Nordeste": "2", "Sudeste": "3", "Centro-Oeste": "4", "Sul": "5" };
+
+// ==========================================
+// Função principal do componente 'MapaBrasil' (Estado, Sigla e Região).
+// ==========================================
 
 export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel }) {
 
   // ==========================================
-  // 2. ESTADOS (Dados dos JSONs)
+  // 2. ESTADOS (const)
   // ==========================================
+
   const [pib, setPib] = useState({});
   const [populacao, setPopulacao] = useState({});
   const [perCapita, setPerCapita] = useState({});
@@ -42,8 +49,9 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
   const [importacoes, setImportacoes] = useState({});
 
   // ==========================================
-  // 3. EFEITOS (Carregamento inicial)
+  // 3. EFEITOS (fetch)
   // ==========================================
+
   useEffect(() => {
     fetch("/pib-uf.json").then((r) => r.json()).then(setPib).catch(() => {});
     fetch("/populacao-uf.json").then((r) => r.json()).then(setPopulacao).catch(() => {});
@@ -66,15 +74,17 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
   // 4. FUNÇÕES AUXILIARES
   // ==========================================
   
-  // Descobre a qual região o estado pertence, baseado na sigla
+  // Função que descobre a qual região o estado pertence, baseado na sigla
+
   const regiaoDoEstado = (sigla) => {
     const i = info[SIGLA_PARA_ID[sigla]];
     return i ? REGIAO_NOME_PARA_ID[i.regiao] : null;
   };
 
   // ==========================================
-  // 5. RENDERIZAÇÃO (O Mapa)
+  // 5. RENDERIZAÇÃO DO MAPA (ComposableMap, Geographies, Geography)
   // ==========================================
+
   return (
     <div>
       <ComposableMap
@@ -95,12 +105,17 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
                   key={geo.rsmKey}
                   geography={geo}
                   style={{ outline: "none" }}
-                  // A cor do estado muda se for da região selecionada, se for o estado clicado, ou o padrão.
+
+                  // Cor do estado ao selecionar região.
+
                   fill={
                     regiaoSel
                       ? (regiaoDoEstado(sigla) === regiaoSel ? "#000080" : "#c8c8c8")
                       : (siglaSelecionada === sigla ? "#000080" : "#728E6D")
                   }
+
+                  // Infos do 'Painel' na ordem exata
+
                   stroke="#ffffff"
                   strokeWidth={1}
                   onClick={() => onEstadoChange({ 
@@ -131,7 +146,7 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
         </Geographies>
       </ComposableMap>
 
-      {/* Rodapé do mapa (Hover inferior) */}
+      {/* Configuração do Rodapé do mapa (Hover inferior) */}
       <div style={{ marginTop: "8px", fontSize: "12px", color: "#000080", fontWeight: "bold", minHeight: "20px", textAlign: "center" }}>
       </div>
     </div>

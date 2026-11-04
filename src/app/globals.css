@@ -1602,3 +1602,539 @@ button.npm-dobra:focus-visible {
 .npm-seta:disabled svg {
   fill: #8a8a8a;
 }
+
+/* ==========================================================
+   MODAL COMMODORE 64  (ModalCommodore.jsx)
+   Fonte opcional (visual mais fiel): "Press Start 2P" (Google Fonts, licença OFL).
+   ========================================================== */
+
+.c64-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(14, 10, 44, 0.8);
+}
+
+/* Tela: miolo azul escuro + "borda" azul clara, como o C64 */
+.c64-tela {
+  --c64-azul: #352879;
+  --c64-claro: #6c5eb5;
+  --c64-lavanda: #dcd8ff;
+  box-sizing: border-box;
+  width: min(660px, 100%);
+  max-height: 94vh;
+  overflow-y: auto;
+  padding: 14px 16px 16px;
+  background: var(--c64-azul);
+  border: 16px solid var(--c64-claro);
+  border-radius: 10px;
+  box-shadow: 0 0 0 3px #000000, 0 14px 34px rgba(0, 0, 0, 0.6);
+  color: var(--c64-claro);
+  font: 14px/1.4 "Press Start 2P", "Courier New", Courier, monospace;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Barra de ferramentas no topo */
+.c64-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 8px 10px;
+  background: var(--c64-claro);
+  color: #ffffff;
+}
+
+.c64-barra-titulo {
+  font-weight: bold;
+}
+
+.c64-botao {
+  margin: 0;
+  padding: 4px 12px;
+  background: var(--c64-lavanda);
+  border: 2px solid #000000;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 #000000;
+  color: #000000;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.c64-botao:hover,
+.c64-botao:focus-visible {
+  background: #000000;
+  color: var(--c64-lavanda);
+  outline: 0;
+}
+
+.c64-botao:active {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+/* Área das janelas sobrepostas */
+.c64-area {
+  position: relative;
+  min-height: 190px;
+  margin-bottom: 14px;
+}
+
+.c64-janela {
+  box-sizing: border-box;
+  background: var(--c64-lavanda);
+  border: 2px solid #000000;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 #000000;
+  color: #000000;
+  overflow: hidden;
+}
+
+.c64-janela-fundo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+}
+
+.c64-janela-frente {
+  position: relative;
+  width: 62%;
+  margin-top: 34px;
+}
+
+.c64-janela-titulo {
+  padding: 3px 10px;
+  border-bottom: 2px solid #000000;
+  font-weight: bold;
+}
+
+.c64-item {
+  padding: 2px 10px;
+}
+
+.c64-texto {
+  padding: 8px 10px 4px;
+}
+
+.c64-texto p {
+  margin: 0 0 8px;
+}
+
+.c64-cancelar {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 3px 10px;
+  background: transparent;
+  border: 0;
+  border-top: 2px solid #000000;
+  border-radius: 0;
+  color: #000000;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.c64-cancelar:hover,
+.c64-cancelar:focus-visible {
+  background: #000000;
+  color: var(--c64-lavanda);
+  outline: 0;
+}
+
+/* Linhas de prompt */
+.c64-linha {
+  margin: 0;
+}
+
+.c64-linha-clara {
+  color: #ffffff;
+}
+
+.c64-cursor {
+  display: inline-block;
+  width: 1ch;
+  height: 1em;
+  background: var(--c64-claro);
+  vertical-align: -0.15em;
+  animation: c64-piscar 1s steps(1) infinite;
+}
+
+@keyframes c64-piscar {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c64-cursor {
+    animation: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .c64-tela {
+    border-width: 10px;
+    font-size: 12px;
+  }
+  .c64-janela-fundo {
+    display: none;
+  }
+  .c64-janela-frente {
+    width: 100%;
+    margin-top: 0;
+  }
+  .c64-area {
+    min-height: 0;
+  }
+}
+
+
+/* =====================================================
+   MODAL BIOS - JANELA CRT VERDE
+   ===================================================== */
+
+.ibm-fundo {
+  --verde: #3dff7f;
+
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px;
+
+  background: rgba(0, 0, 0, 0.82);
+}
+
+/* JANELA PRINCIPAL */
+.ibm-menu {
+  position: relative;
+  box-sizing: border-box;
+
+  width: min(450px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.18) 2px,
+      rgba(0, 0, 0, 0.18) 3px
+    ),
+    radial-gradient(
+      ellipse at center,
+      #0c160f 0%,
+      #030805 75%,
+      #000000 100%
+    );
+
+  border: 3px double var(--verde);
+
+  color: var(--verde);
+
+  font: 18px/1.25 "VT323", "Courier New", Courier, monospace;
+
+  text-shadow: 0 0 6px rgba(61, 255, 127, 0.55);
+
+  box-shadow:
+    0 0 6px rgba(61, 255, 127, 0.5),
+    0 0 18px rgba(61, 255, 127, 0.12),
+    8px 8px 0 rgba(61, 255, 127, 0.18);
+}
+
+/* TÍTULO */
+.ibm-menu-titulo {
+  padding: 4px 8px;
+
+  border-bottom: 3px double var(--verde);
+
+  text-align: center;
+}
+
+/* CORPO */
+.ibm-menu-corpo {
+  padding: 10px 12px;
+}
+
+.ibm-menu-corpo p {
+  margin: 0 0 8px;
+}
+
+/* BOTÃO FECHAR */
+.ibm-barra {
+  display: block;
+  box-sizing: border-box;
+
+  width: calc(100% - 20px);
+
+  margin: 4px 10px 8px;
+  padding: 2px 8px;
+
+  background: var(--verde);
+  border: 0;
+  border-radius: 0;
+
+  color: #000;
+
+  font: inherit;
+  text-align: left;
+  text-shadow: none;
+
+  cursor: pointer;
+}
+
+.ibm-barra:hover,
+.ibm-barra:focus-visible {
+  background: #b9ffd0;
+  outline: 1px solid var(--verde);
+}
+
+/* RODAPÉ */
+.ibm-menu-rodape {
+  padding: 5px 8px;
+
+  border-top: 3px double var(--verde);
+}
+
+/* CURSOR PISCANDO */
+.ibm-cursor {
+  animation: ibm-piscar 1s steps(1) infinite;
+}
+
+@keyframes ibm-piscar {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ACESSIBILIDADE */
+@media (prefers-reduced-motion: reduce) {
+  .ibm-cursor {
+    animation: none;
+  }
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 560px) {
+  .ibm-menu {
+    width: 100%;
+    font-size: 16px;
+  }
+}
+
+/* ==========================================================
+   MODAL APPLE II  (ModalApple.jsx)
+   Fonte opcional (visual mais fiel): "VT323" (Google Fonts, licença OFL).
+   ========================================================== */
+
+.ap2-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(4, 22, 8, 0.78);
+}
+
+.ap2-janela {
+  --ap-fundo: #c9f2c9;
+  --ap-tinta: #0f3a1a;
+  --ap-apagado: #78a47e;
+  box-sizing: border-box;
+  width: min(500px, 100%);
+  max-height: 94vh;
+  overflow-y: auto;
+  padding: 10px 14px 14px;
+  background: var(--ap-fundo);
+  border: 2px solid var(--ap-tinta);
+  box-shadow: inset 0 0 0 3px var(--ap-fundo), inset 0 0 0 4px var(--ap-tinta),
+    4px 4px 0 rgba(0, 0, 0, 0.5);
+  color: var(--ap-tinta);
+  font: 18px/1.2 "VT323", "Courier New", Courier, monospace;
+}
+
+.ap2-titulo {
+  margin: 4px 0 8px;
+  font: inherit;
+  font-weight: bold;
+}
+
+/* Linha "pasta atual" + "unidade" */
+.ap2-caminho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.ap2-caminho-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ap2-icone {
+  flex: 0 0 auto;
+  color: var(--ap-tinta);
+}
+
+/* Corpo: lista à esquerda, botões à direita */
+.ap2-corpo {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.ap2-lista {
+  flex: 1;
+  min-width: 0;
+  height: 176px;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  list-style: none;
+  border: 2px solid var(--ap-tinta);
+}
+
+.ap2-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 1px 8px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--ap-tinta);
+  font: inherit;
+  text-align: left;
+  cursor: default;
+}
+
+.ap2-item-nome {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Seleção em vídeo reverso */
+.ap2-item[aria-pressed="true"],
+.ap2-item:focus-visible {
+  background: var(--ap-tinta);
+  color: var(--ap-fundo);
+  outline: 0;
+}
+
+.ap2-item[aria-pressed="true"] .ap2-icone,
+.ap2-item:focus-visible .ap2-icone {
+  color: var(--ap-fundo);
+}
+
+/* Barra de rolagem estilo DeskTop (Chrome/Edge/Safari) */
+.ap2-lista::-webkit-scrollbar {
+  width: 18px;
+}
+
+.ap2-lista::-webkit-scrollbar-track {
+  background: repeating-conic-gradient(#0f3a1a 0% 25%, #c9f2c9 0% 50%) 0 0 / 2px 2px;
+  border-left: 2px solid #0f3a1a;
+}
+
+.ap2-lista::-webkit-scrollbar-thumb {
+  background: #c9f2c9;
+  border: 2px solid #0f3a1a;
+}
+
+.ap2-lista::-webkit-scrollbar-button:single-button {
+  display: block;
+  height: 18px;
+  background-color: #c9f2c9;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 2px solid #0f3a1a;
+}
+
+.ap2-lista::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpolygon points='4.5,0 9,6 0,6' fill='%230f3a1a'/%3E%3C/svg%3E");
+}
+
+.ap2-lista::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpolygon points='0,0 9,0 4.5,6' fill='%230f3a1a'/%3E%3C/svg%3E");
+}
+
+/* Firefox */
+@supports (-moz-appearance: none) {
+  .ap2-lista {
+    scrollbar-color: #0f3a1a #c9f2c9;
+  }
+}
+
+/* Botões à direita */
+.ap2-botoes {
+  display: flex;
+  flex: 0 0 128px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ap2-botao {
+  margin: 0;
+  padding: 2px 8px;
+  background: var(--ap-fundo);
+  border: 2px solid var(--ap-tinta);
+  border-radius: 7px;
+  color: var(--ap-tinta);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.ap2-botao:hover:not(:disabled),
+.ap2-botao:focus-visible {
+  background: var(--ap-tinta);
+  color: var(--ap-fundo);
+  outline: 0;
+}
+
+.ap2-botao:disabled {
+  border-color: var(--ap-apagado);
+  color: var(--ap-apagado);
+  cursor: default;
+}
+
+.ap2-separador {
+  margin: 2px 0;
+  border: 0;
+  border-top: 2px dotted var(--ap-tinta);
+}
+
+@media (max-width: 520px) {
+  .ap2-corpo {
+    flex-direction: column;
+  }
+  .ap2-botoes {
+    flex-basis: auto;
+  }
+}

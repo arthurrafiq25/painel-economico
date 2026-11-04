@@ -8,6 +8,7 @@ Inspirações fundamentais:
 - https://cari.institute/aesthetics
 - https://www.webdesignmuseum.org/
 - https://assets.bbhub.io/image/v1/resize?width=auto&type=webp&url=https://assets.bbhub.io/professional/sites/10/BRAND_35years_Tshirts_1986_FNL.jpg
+- https://www.versionmuseum.com/
 
 Novos modais:
 - https://rockybergen.com/whatsnew/2018/3/30/c64minimonitor
@@ -25,11 +26,8 @@ Cards fixos no site com panorama do país:
 - IPCA (IBGE, mensal)
 - PIB (IBGE, trimestral)
 - Desemprego, etc.
-
-## 2.1 Indicadores pendentes (aguardando estabilidade da API)
-- **Caged (emprego formal):** API mudou recentemente, precisa de nova documentação.
-- **Comex Stat (exportações/importações por UF):** API com instabilidade (DNS getaddrinfo failed).
-Verificar novamente quando os endpoints oficiais estabilizarem.
+- Caged (emprego formal)
+- Comex Stat (exportações/importações por UF)
 
 ## 3. Outros indicadores por UF (além do PIB)
 - PIB per capita
@@ -50,6 +48,10 @@ Vercel (grátis). Domínio próprio opcional (~R$40/ano).
 Mini calendário no topo do site (design Windows XP).
 Usuário escolhe ano/década/século/período total.
 O mapa se adapta ao período escolhido.
+
+Principais referencias:
+- https://ensinarhistoria.com.br/linha-do-tempo/
+- https://atlas.fgv.br/capitulos/preliminares-antes-de-1500
 
 Limitações reais (para respeitar):
 - PIB por UF: 1939+ (reconstrução), oficial 2002+

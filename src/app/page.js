@@ -6,15 +6,18 @@ import Modal from "./Modal";
 import NavegadorNoticias from "./NavegadorNoticias";
 import TerminalIndicadores from "./TerminalIndicadores";
 import NotePadMac from "./NotePadMac";
+import ModalCommodore from "./ModalCommodore";
+import ModalIBM from "./ModalIBM";
+import ModalApple from "./ModalApple";
 
 // =========================================
 // 1. DADOS FIXOS (Não mudam com frequência)
 // =========================================
 
+// Janela Principal (Titulos)
+
 const EMOJI_TITULO = "🗺️";
 const TITULO_JANELA = "Brasil";
-const RODAPE_ESQUERDO = "©2026 Painel Brasil";
-const RODAPE_DIREITO = "Dados de fontes oficiais";
 
 const REGIOES = [
   { id: "1", nome: "• Norte" },
@@ -36,7 +39,7 @@ const fmt = (n) => Math.round(n).toLocaleString("pt-BR");
 // 3. ESTADOS (Controle da Página)
 // =========================================
 
-// -- Seleção no Mapa --
+// -- Seleção no Mapa e Menu Lateral --
 export default function Home() {
   const [estadoHover, setEstadoHover] = useState(null);
   const [regiaoSel, setRegiaoSel] = useState(null);
@@ -57,7 +60,7 @@ export default function Home() {
 // 4. EFEITOS (Carregamento inicial)
 // =========================================
 
-// Carrega os dados dos JSONs assim que a página abre.
+// Efeitos (Carrega os dados dos JSONs assim que a página abre).
 useEffect(() => {
   fetch("/estados-links.json").then((r) => r.json()).then(setLinksEstados).catch(() => {});
   fetch("/selic.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, selic: d }))).catch(() => {});
@@ -69,7 +72,8 @@ useEffect(() => {
   fetch("/ipca-alimentacao.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipcaAlimentacao: d }))).catch(() => {});
 }, []);
 
-// Fecha o balão 'Mais informações' ao clicar fora.
+// Função de fechar o balão 'Mais informações' ao clicar fora.
+
 useEffect(() => {
   const fechar = () => setInfoAberta(false);
   if (infoAberta) {
@@ -83,6 +87,7 @@ useEffect(() => {
 // =========================================
 
    // Ação: clicar em uma região no menu.
+
     const handleRegiao = async (id) => {
     setRegiaoSel(id);
     setEstadoHover(null);
@@ -106,6 +111,7 @@ useEffect(() => {
   };
 
  // Ação: clicar no nome "Brasil" no topo do mapa.
+ 
   const handleBrasil = async () => {
     setRegiaoSel(null);
     setEstadoHover(null);
@@ -411,51 +417,15 @@ useEffect(() => {
 
 {/* ---  8.1 Modal: Sobre o Painel Brasil  --- */}
 {modalAberto === "sobre" && (
-  <Modal titulo="Painel Brasil" onClose={() => setModalAberto(null)}>
-    <p>
-      Projeto independente de indicadores econômicos e sociais do Brasil,
-      feito por <strong>Arthur Aguiar</strong>.
-    </p>
-    <p style={{ marginTop: "8px" }}>
-      Instagram: <a href="https://www.instagram.com/_arthuraguiar.s" target="_blank" rel="noopener noreferrer">@_arthuraguiar.s</a>
-    </p>
-
-    <div style={{ textAlign: "left", marginTop: "15px" }}>
-      <img src="/outronome.gif" alt="Brasil" style={{ maxWidth: "100%", height: "100px", display: "block", margin: "15px 0" }} />
-    </div>
-  </Modal>
+  <ModalCommodore onClose={() => setModalAberto(null)} />
 )}
 {/* ---     8.2 Modal: Sobre o Projeto     --- */}
 {modalAberto === "projeto" && (
-  <Modal titulo="Sobre o projeto" onClose={() => setModalAberto(null)}>
-    <p>
-      O Painel Brasil reúne indicadores econômicos e sociais oficiais do Brasil,
-      por estado e por período. O objetivo é oferecer informação factual e
-      imparcial, com link para a fonte original em cada dado.
-    </p>
-    <p style={{ marginTop: "8px" }}>
-      Todos os dados vêm de fontes públicas oficiais (IBGE, Banco Central,
-      Tesouro Nacional, ANP, entre outras). O projeto não tem opinião política:
-      apenas apresenta os números, com data de atualização e link para a fonte.
-    </p>
-    <p style={{ marginTop: "8px" }}>
-      Versão 0.1 — projeto em desenvolvimento.
-    </p>
-  </Modal>
+  <ModalIBM onClose={() => setModalAberto(null)} />
 )}
 {/* ---    8.3 Modal: Fontes dos Dados    --- */}
 {modalAberto === "fontes" && (
-  <Modal titulo="Fontes dos dados" onClose={() => setModalAberto(null)}>
-    <ul style={{ listStyle: "none", padding: 0 }}>
-      <li><a href="https://sidra.ibge.gov.br" target="_blank" rel="noopener noreferrer">IBGE – SIDRA</a> — PIB, população, setores</li>
-      <li><a href="https://www.bcb.gov.br" target="_blank" rel="noopener noreferrer">Banco Central</a> — Selic, câmbio, crédito</li>
-      <li><a href="https://www.tesourotransparente.gov.br" target="_blank" rel="noopener noreferrer">Tesouro Nacional</a> — gasto público, resultado primário</li>
-      <li><a href="https://www.gov.br/anp" target="_blank" rel="noopener noreferrer">ANP</a> — preço de combustíveis</li>
-      <li><a href="https://comexstat.mdic.gov.br" target="_blank" rel="noopener noreferrer">Comex Stat</a> — exportações e importações</li>
-      <li><a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank" rel="noopener noreferrer">Portal do Empreendedor</a> — MEI</li>
-      <li><a href="https://www.dieese.org.br" target="_blank" rel="noopener noreferrer">DIEESE</a> — cesta básica</li>
-    </ul>
-  </Modal>
+  <ModalApple onClose={() => setModalAberto(null)} />
 )}
 {/* ---    8.4 Modal: Links do Estado    --- */}
 {estadoLinksAberto && (
