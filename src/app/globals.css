@@ -2138,3 +2138,44 @@ button.npm-dobra:focus-visible {
     flex-basis: auto;
   }
 }
+
+/* ==========================================
+   RESPONSIVIDADE (CELULAR E TABLET)
+   ========================================== */
+
+@media (max-width: 900px) {
+  /* 1. O container principal (mapa + menu) para de ficar lado a lado */
+  .janela-conteudo > div[style*="display: flex"] {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* 2. O menu lateral (que hoje é absoluto) vira um bloco normal embaixo do mapa */
+  .menu-lateral {
+    position: relative !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin-top: 20px !important;
+    align-self: center !important;
+  }
+
+  /* 3. O mapa diminui para caber na tela */
+  .painel-mapa {
+    height: auto !important;
+    min-height: 400px !important;
+  }
+  
+  /* 4. O hover e o menu de regiões se ajustam */
+  div[style*="position: absolute"][style*="top: 80px"] {
+    position: relative !important;
+    top: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+  }
+}
