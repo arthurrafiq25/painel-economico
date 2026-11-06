@@ -85,6 +85,7 @@ useEffect(() => {
   fetch("/noticias.json").then((r) => r.json()).then(setNoticias).catch(() => {});
   fetch("/salario-minimo.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, salario: d }))).catch(() => {});
   fetch("/ipca-alimentacao.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipcaAlimentacao: d }))).catch(() => {});
+  fetch("/divida-publica.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, divida: d }))).catch(() => {});
 }, []);
 
 // Função de fechar o balão 'Mais informações' ao clicar fora.
@@ -269,6 +270,7 @@ useEffect(() => {
       <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(dadosBrasil.pib * 1000)}</p>
       <p><strong>População:</strong> {fmt(dadosBrasil.populacao)}</p>
       <p><strong>PIB per capita:</strong> R$ {dadosBrasil.perCapita.toLocaleString("pt-BR")}</p>
+      {indicadores.divida ? <p><strong>Dívida Pública:</strong> {indicadores.divida.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}% do PIB <span style={{fontSize: "11px", color: "#666"}}>({indicadores.divida.data})</span></p> : null}
       <p><strong>Agropecuária:</strong> R$ {fmt(dadosBrasil.agro * 1000)}</p>
       <p><strong>Indústria:</strong> R$ {fmt(dadosBrasil.industria * 1000)}</p>
       <p><strong>Serviços:</strong> R$ {fmt(dadosBrasil.servicos * 1000)}</p>

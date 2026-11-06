@@ -51,6 +51,7 @@ jobs:
           python baixar_ipca_alimentacao.py
           python etl_anp.py
           python baixar_caged.py
+          python baixar_tesouro.py
 
       - name: Commit e push
         run: |
