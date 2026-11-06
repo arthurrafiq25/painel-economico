@@ -38,7 +38,7 @@ const fmt = (n) => Math.round(n).toLocaleString("pt-BR");
 
 const ABAS = [
   { id: "painel", rotulo: "Painel Principal", icone: "🗺️" },
-  { id: "blog", rotulo: "Blog Histórico", icone: "📝" },
+  { id: "blog", rotulo: "Blog", icone: "📝" },
 ];
 
 // =========================================
