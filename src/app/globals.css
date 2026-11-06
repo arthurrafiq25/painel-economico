@@ -2892,6 +2892,7 @@ button.npm-dobra:focus-visible {
   --tam: 100px;
   --giro: 10deg;
   top: -15px; /* Ajuste esse valor para cima ou para baixo */
+  right: -2%;
 }
 
 /* 4. O GIF lateral (abaixo do menu) */
