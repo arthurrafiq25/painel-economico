@@ -2,16 +2,16 @@ import os
 import re
 import json
 import requests
-import xml.etree.ElementTree as ET
 from comum import RAIZ
 
 # Configurações
+# Para rodar no GitHub Actions, ele puxa das variáveis de ambiente.
+# Para rodar localmente, descomente e preencha as duas linhas abaixo:
+# API_KEY = "AIzaSyCnszizaJEbpznbJOiVpfU1AKNJQhU2o0w"
+# BLOG_ID = "2795541267460103925"
+
 API_KEY = "AIzaSyCnszizaJEbpznbJOiVpfU1AKNJQhU2o0w"
 BLOG_ID = "2795541267460103925"
-
-# Se estiver rodando localmente, você pode colar as chaves aqui para testar:
-# API_KEY = ""
-# BLOG_ID = ""
 
 SAIDA = os.path.join(RAIZ, "public", "artigos_historicos.json")
 
@@ -35,8 +35,15 @@ def main():
     
     try:
         resposta = requests.get(url, timeout=30)
+        
+        # Se o Blogger disser que nada mudou (304), paramos sem erro
+        if resposta.status_code == 304:
+            print("Nenhuma alteração detectada no Blogger desde a última atualização.")
+            return
+            
         resposta.raise_for_status()
         dados = resposta.json()
+        
     except Exception as e:
         print(f"Erro ao acessar a API do Blogger: {e}")
         return
