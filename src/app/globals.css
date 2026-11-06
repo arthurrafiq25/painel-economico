@@ -2752,8 +2752,12 @@ button.npm-dobra:focus-visible {
 .blog-post-conteudo img,
 .blog-post-conteudo video,
 .blog-post-conteudo iframe {
-  max-width: 100%;
-  height: auto;
+  width: 100%; /* Força a imagem a ocupar toda a largura do post */
+  max-width: 600px; /* Define um limite máximo para não ficar gigante no PC */
+  height: auto; /* Mantém a proporção */
+  display: block;
+   margin: -20px auto 15px auto; /* Centraliza a imagem no meio do texto */
+  border-radius: 6px; /* Deixa as bordas arredondadas, combinando com o blog */
 }
 
 .blog-post-conteudo ul,

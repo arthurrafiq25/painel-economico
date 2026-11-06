@@ -59,3 +59,7 @@ jobs:
           git add public/
           git diff --quiet && git diff --staged --quiet || git commit -m "atualização automática de dados"
           git push
+
+      - name: Avisar Vercel para atualizar o site
+        run: |
+          curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}
