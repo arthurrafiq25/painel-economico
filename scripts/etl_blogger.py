@@ -33,17 +33,25 @@ def main():
     url = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&maxResults=500"
     print("Buscando artigos no Blogger...")
     
-    try:
+       try:
         resposta = requests.get(url, timeout=30)
         
-        # Se o Blogger disser que nada mudou (304), paramos sem erro
+        # Verifica o código ANTES de qualquer outra coisa
         if resposta.status_code == 304:
             print("Nenhuma alteração detectada no Blogger desde a última atualização.")
             return
             
+        # Se não for 304, aí sim verificamos se é um erro de verdade
         resposta.raise_for_status()
         dados = resposta.json()
         
+    except requests.exceptions.HTTPError as e:
+        # Se o erro for 304, ignoramos (não é um erro de verdade)
+        if e.response is not None and e.response.status_code == 304:
+            print("Nenhuma alteração detectada no Blogger.")
+            return
+        print(f"Erro HTTP ao acessar a API do Blogger: {e}")
+        return
     except Exception as e:
         print(f"Erro ao acessar a API do Blogger: {e}")
         return
