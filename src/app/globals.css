@@ -2179,3 +2179,750 @@ button.npm-dobra:focus-visible {
     margin-bottom: 20px !important;
   }
 }
+
+/* ==========================================================
+   NAVEGADOR DE ABAS (estilo Chrome / Internet Explorer dos anos 2000)
+   Cole no globals.css.
+   Para combinar com o site, mude só as variáveis do bloco :root do navegador.
+   ========================================================== */
+
+.navegador {
+  /* Faixa onde ficam as abas */
+  --nav-faixa-topo: #dde5f1;
+  --nav-faixa-base: #b6c3d8;
+  /* Abas inativas */
+  --nav-inativa-topo: #eef2f9;
+  --nav-inativa-base: #c3cee1;
+  --nav-inativa-hover-topo: #f7f9fd;
+  --nav-inativa-hover-base: #d6dfee;
+  /* Linhas e texto */
+  --nav-borda: #6c7c98;
+  --nav-texto: #1c2433;
+  /* Fundo da página: a aba ativa usa EXATAMENTE esta cor para se conectar */
+  --nav-pagina: #ffffff;
+
+  /* PRESET Windows 95 (descomente para usar):
+  --nav-faixa-topo: #d4d0c8; --nav-faixa-base: #c0c0c0;
+  --nav-inativa-topo: #dcd8d0; --nav-inativa-base: #bdb9b0;
+  --nav-inativa-hover-topo: #e8e4dc; --nav-inativa-hover-base: #cfcbc2;
+  --nav-borda: #404040; --nav-pagina: #c0c0c0; */
+
+  width: 100%;
+}
+
+/* --- Faixa de abas --- */
+.navegador-faixa {
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 10px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: linear-gradient(var(--nav-faixa-topo), var(--nav-faixa-base));
+  border: 1px solid var(--nav-borda);
+  border-bottom: 1px solid var(--nav-borda);
+  border-radius: 8px 8px 0 0;
+  scrollbar-width: none;
+}
+
+.navegador-faixa::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Aba (trapézio com topo arredondado) --- */
+.aba {
+  position: relative;
+  z-index: 1; /* cria o contexto de empilhamento do ::before */
+  flex: 0 1 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 130px;
+  margin: 0 -9px 0 0; /* abas vizinhas se sobrepõem um pouco, como no Chrome */
+  padding: 8px 28px 7px;
+  background: none;
+  border: 0;
+  color: var(--nav-texto);
+  font: 12px/1.2 Tahoma, Verdana, Arial, sans-serif;
+  white-space: nowrap;
+  cursor: default;
+}
+
+/* O desenho da aba: um retângulo inclinado em 3D vira trapézio */
+.aba::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(var(--nav-inativa-topo), var(--nav-inativa-base));
+  border: 1px solid var(--nav-borda);
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
+  transform: perspective(14px) rotateX(2deg);
+  transform-origin: bottom;
+}
+
+.aba:hover:not(.aba-ativa)::before {
+  background: linear-gradient(var(--nav-inativa-hover-topo), var(--nav-inativa-hover-base));
+}
+
+.aba:focus-visible {
+  outline: 1px dotted var(--nav-texto);
+  outline-offset: -5px;
+}
+
+.aba-icone {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* --- Aba ativa: mesma cor da página e cobre a linha da faixa --- */
+.aba-ativa {
+  z-index: 3;
+  font-weight: bold;
+}
+
+.aba-ativa::before {
+  bottom: -1px; /* "apaga" a linha de baixo da faixa */
+  background: var(--nav-pagina);
+}
+
+/* --- Página --- */
+.navegador-pagina {
+  box-sizing: border-box;
+  padding: 12px;
+  background: var(--nav-pagina);
+  border: 1px solid var(--nav-borda);
+  border-top: 0;
+}
+
+@media (max-width: 520px) {
+  .aba {
+    min-width: 0;
+    padding: 8px 20px 7px;
+  }
+}
+
+/* ==========================================================
+   BLOG "CALENDÁRIO HISTÓRICO"
+   Estrutura inspirada em blogs dos anos 2000 (menu lateral + posts) e
+   estética de colagem: papel quadriculado, máquina de escrever, cores quentes.
+   Cole no globals.css.
+
+   FONTES (opcional): para o visual de máquina de escrever mais fiel, importe
+   "Special Elite" (Google Fonts, licença OFL) com next/font. Sem ela, o
+   navegador usa Courier New.
+   ========================================================== */
+
+.blog {
+  /* ---- PALETA (mude aqui) ---- */
+  --papel: #f3efe8;
+  --papel-linha: rgba(205, 140, 110, 0.17);
+  --cartao: #fffdf9;
+  --marrom: #7a4528;
+  --marrom-claro: #a8643a;
+  --laranja: #cf8c4d;
+  --tinta: #4a2f1f;
+  --fonte-maquina: "Special Elite", "Courier New", Courier, monospace;
+
+  /* ---- FUNDO DA PÁGINA (bem personalizável) ----
+     Padrão: papel quadriculado em CSS puro. Para usar a sua arte, defina por ex.:
+       --blog-fundo-imagem: url("/meu-fundo.png");  --blog-fundo-tamanho: auto;
+     ou use o espaço .espaco-textura-fundo para uma camada extra por cima. */
+  --blog-fundo-cor: var(--papel);
+  --blog-fundo-cor: #fcfbf7; /* Cor do papel */
+  --blog-fundo-imagem: 
+    repeating-linear-gradient(transparent, transparent 27px, #d0dff0 27px, #d0dff0 28px); /* Linhas azuis */
+  --blog-fundo-tamanho: 100% 100%;
+
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip; /* figurinhas que passam da borda não criam rolagem lateral */
+  box-sizing: border-box;
+  padding: 18px 12px 36px;
+  background-color: var(--blog-fundo-cor);
+  background-image: var(--blog-fundo-imagem);
+  background-size: var(--blog-fundo-tamanho);
+  color: var(--tinta);
+  font-family: var(--fonte-maquina);
+}
+
+.blog *,
+.blog *::before,
+.blog *::after {
+  box-sizing: border-box;
+}
+
+.somente-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================
+   ESPAÇOS PARA A SUA ARTE (divs vazias)
+   ========================================================== */
+
+/* Camada de textura sobre o fundo, atrás do conteúdo (página inteira) */
+.espaco-textura-fundo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Colagem gigante do topo */
+.espaco-banner-topo {
+  width: 100%;
+  height: clamp(220px, 34vw, 340px);
+}
+
+/* Título animado, sobreposto ao banner (canto inferior esquerdo) */
+.titulo-animado {
+  position: absolute;
+  left: 0%;
+  top: -21%;
+  width: min(520px, 39%);
+  height: clamp(70px, 11vw, 120px);
+}
+
+/* Faixa onde corre o banner animado (direita → esquerda) */
+.espaco-faixa-rolante {
+  height: 32px;
+  margin-top: 8px;
+  overflow: hidden;
+  background-color: var(--faixa-cor, rgba(207, 140, 77, 0.35));
+}
+
+/* GIF/figurinha embaixo do menu lateral */
+.espaco-gif-lateral {
+  width: 100%;
+  height: 150px;
+  margin-top: 14px;
+}
+
+/* Figurinhas soltas (colagem): posição, tamanho e giro ajustáveis por variável */
+.espaco-figurinha {
+  position: absolute;
+  z-index: 4;
+  width: var(--tam, 100px);
+  height: var(--tam, 100px);
+  transform: rotate(var(--giro, 0deg));
+  pointer-events: none;
+}
+
+.espaco-figurinha-topo-esq {
+  --tam: 120px;
+  --giro: -8deg;
+  top: 229px;
+  left: -18px;
+}
+
+.espaco-figurinha-topo-dir {
+  --tam: 130px;
+  --giro: 6deg;
+  top: -12px;
+  right: 2%;
+}
+
+.espaco-figurinha-menu {
+  --tam: 64px;
+  --giro: 10deg;
+  top: -34px;
+  right: -22px;
+}
+
+.espaco-figurinha-principal-inf-esq {
+  --tam: 90px;
+  --giro: -10deg;
+  bottom: -28px;
+  left: -20px;
+}
+
+/* Fileira de ícones no rodapé (como a linha de ícones do site de referência) */
+.espaco-icones-rodape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1040px;
+  margin: 38px auto 6px;
+}
+
+.espaco-icone-rodape {
+  width: 72px;
+  height: 72px;
+}
+
+/* ---- Guias visuais: contornos tracejados só nos espaços VAZIOS ----
+   Desligue com MODO_GUIA = false no .jsx quando colocar a sua arte.
+   (usa background-color, nunca "background", para não apagar sua imagem) */
+.blog-modo-guia [data-rotulo]:empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: 2px dashed rgba(122, 69, 40, 0.55);
+  outline-offset: -2px;
+  background-color: rgba(207, 140, 77, 0.12);
+  color: var(--marrom);
+  font: 11px/1.2 var(--fonte-maquina);
+  text-align: center;
+}
+
+.blog-modo-guia [data-rotulo]:empty::before {
+  content: attr(data-rotulo);
+  padding: 4px 6px;
+}
+
+/* A camada de textura é grande demais para rótulo: só um tom bem leve */
+.blog-modo-guia .espaco-textura-fundo:empty {
+  outline: 0;
+  background-color: transparent;
+}
+
+.blog-modo-guia .espaco-textura-fundo:empty::before {
+  content: none;
+}
+
+/* ==========================================================
+   TOPO
+   ========================================================== */
+
+.blog-topo,
+.blog-corpo {
+  max-width: 1040px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: -55px; /* Ajuste esse valor (ex: -20px, -50px) até ficar bom */
+}
+
+.blog-topo-colagem {
+  position: relative;
+  margin-top: 107px; /* Adicione esta linha e ajuste o valor como quiser */
+}
+
+/* ==========================================================
+   CORPO: menu lateral + posts
+   ========================================================== */
+
+.blog-corpo {
+  display: grid;
+  grid-template-columns: 196px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.blog-lateral {
+  position: relative;
+}
+
+/* Caixinha tracejada de apresentação */
+.blog-sobre {
+  margin-top: 8px; /* Adicione esta linha */
+  margin-bottom: 28px;
+  padding: 9px 10px;
+  background: var(--cartao);
+  border: 1px dashed var(--marrom-claro);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* Menu de anos */
+.blog-menu-caixa {
+  position: relative;
+  background: var(--cartao);
+  border: 2px solid var(--marrom);
+  border-radius: 12px;
+  box-shadow: 3px 3px 0 rgba(122, 69, 40, 0.18);
+}
+
+.blog-menu-caixa > :first-child {
+  border-radius: 10px 10px 0 0;
+}
+
+.blog-menu-todos,
+.blog-menu-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 4px 10px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--marrom);
+  font: 13px/1.3 var(--fonte-maquina);
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.blog-menu-todos {
+  background: #f3e6d2;
+  font-weight: bold;
+}
+
+.blog-menu-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.blog-menu-lista li:nth-child(odd) .blog-menu-item {
+  background: #f8f1e6;
+}
+
+.blog-menu-lista li:nth-child(even) .blog-menu-item {
+  background: #efe3d0;
+}
+
+.blog-menu-todos:hover,
+.blog-menu-item:hover {
+  color: #b5481a;
+}
+
+.blog-menu-todos:focus-visible,
+.blog-menu-item:focus-visible {
+  outline: 1px dotted var(--marrom);
+  outline-offset: -3px;
+}
+
+.blog-menu-n {
+  color: var(--marrom-claro);
+  font-size: 11px;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+/* Item/grupo selecionado */
+.blog-menu-todos[aria-current="true"],
+.blog-menu-item[aria-current="true"] {
+  background: var(--laranja);
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.blog-menu-todos[aria-current="true"] .blog-menu-n,
+.blog-menu-item[aria-current="true"] .blog-menu-n {
+  color: #ffffff;
+}
+
+/* Cabeçalho colorido de cada década (como as seções do site de referência) */
+.blog-menu-titulo {
+  padding: 3px 8px;
+  background: var(--cor, var(--laranja));
+  border-top: 1px solid var(--marrom);
+  border-bottom: 1px solid var(--marrom);
+  color: var(--marrom);
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.blog-menu-grupo:last-of-type .blog-menu-lista li:last-child .blog-menu-item {
+  border-radius: 0 0 10px 10px;
+}
+
+/* ==========================================================
+   POSTS
+   ========================================================== */
+
+.blog-principal {
+  position: relative;
+  min-width: 0;
+}
+
+.blog-secao-titulo {
+  display: inline-block;
+  margin: 4px 0 2px;
+  padding: 0 2px 3px;
+  border-bottom: 3px solid var(--marrom-claro);
+  color: var(--marrom);
+  font: bold 20px/1.2 var(--fonte-maquina);
+  letter-spacing: 2px;
+}
+
+.blog-secao-ano {
+  font-weight: normal;
+}
+
+.blog-post {
+  position: relative;
+  z-index: 1; /* Fica no fundo */
+  margin: 0 0 26px;
+  padding: 18px 20px 16px;
+  background: var(--cartao);
+  border: 1px solid rgba(122, 69, 40, 0.28);
+  border-radius: 14px;
+  box-shadow: 0 2px 0 rgba(122, 69, 40, 0.14), 4px 5px 0 rgba(122, 69, 40, 0.06);
+}
+
+/* Fita adesiva no topo de cada post (colagem em CSS) */
+.blog-post::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -11px;
+  left: 50%;
+  width: 86px;
+  height: 22px;
+  background: rgba(240, 176, 96, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+  transform: translateX(-50%) rotate(-2deg);
+}
+
+.blog-post:nth-of-type(even)::before {
+  background: rgba(232, 167, 160, 0.55);
+  transform: translateX(-50%) rotate(2.5deg);
+}
+
+.blog-post-cabecalho {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px dashed rgba(122, 69, 40, 0.5);
+}
+
+.blog-post-titulo {
+  margin: 0;
+  color: var(--marrom);
+  font: bold 18px/1.25 var(--fonte-maquina);
+}
+
+.blog-post-ano {
+  flex: 0 0 auto;
+  border-bottom: 1px dotted var(--marrom-claro);
+  color: var(--marrom-claro);
+  font-size: 12px;
+}
+
+/* Tipografia do conteúdo HTML que vem do JSON */
+.blog-post-conteudo {
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.blog-post-conteudo > :first-child {
+  margin-top: 0;
+}
+
+.blog-post-conteudo > :last-child {
+  margin-bottom: 0;
+}
+
+.blog-post-conteudo p {
+  margin: 0 0 0.85em;
+}
+
+.blog-post-conteudo h1,
+.blog-post-conteudo h2,
+.blog-post-conteudo h3,
+.blog-post-conteudo h4 {
+  margin: 1.1em 0 0.4em;
+  color: var(--marrom);
+  font-family: var(--fonte-maquina);
+  line-height: 1.25;
+}
+
+.blog-post-conteudo a {
+  color: #a0471d;
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+}
+
+.blog-post-conteudo a:hover {
+  color: #d1561a;
+}
+
+.blog-post-conteudo img,
+.blog-post-conteudo video,
+.blog-post-conteudo iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+.blog-post-conteudo ul,
+.blog-post-conteudo ol {
+  margin: 0 0 0.85em;
+  padding-left: 1.5em;
+}
+
+.blog-post-conteudo blockquote {
+  margin: 0.9em 0;
+  padding: 6px 12px;
+  background: #fbf4e9;
+  border-left: 4px solid var(--laranja);
+}
+
+.blog-post-conteudo hr {
+  border: 0;
+  border-top: 1px dashed #b98c63;
+}
+
+.blog-post-conteudo table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.blog-post-conteudo td,
+.blog-post-conteudo th {
+  padding: 3px 7px;
+  border: 1px solid #e0cdb5;
+}
+
+.blog-post-conteudo pre,
+.blog-post-conteudo code {
+  background: #f6ecdd;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+}
+
+.blog-post-conteudo pre {
+  padding: 8px 10px;
+  overflow-x: auto;
+}
+
+.blog-vazio {
+  padding: 16px;
+  background: var(--cartao);
+  border: 1px dashed var(--marrom-claro);
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+/* ==========================================================
+   AJUDA OPCIONAL: faixa rolante (direita → esquerda) feita só com CSS.
+   Use se quiser texto correndo; para sua própria arte, ignore.
+     <div className="espaco-faixa-rolante">
+       <span className="faixa-rolante-trilho">seu texto aqui ★ seu texto aqui</span>
+     </div>
+   ========================================================== */
+.faixa-rolante-trilho {
+  display: inline-block;
+  padding-left: 100%;
+  color: var(--marrom);
+  font: 13px/32px var(--fonte-maquina);
+  white-space: nowrap;
+  animation: faixa-rolar 22s linear infinite;
+}
+
+@keyframes faixa-rolar {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faixa-rolante-trilho {
+    animation: none;
+    padding-left: 12px;
+  }
+}
+
+/* ==========================================================
+   TELAS ESTREITAS
+   ========================================================== */
+@media (max-width: 760px) {
+  .blog-corpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .espaco-figurinha-principal-inf-esq {
+    right: 0;
+    left: auto;
+  }
+  .blog-post {
+    padding: 16px 14px 14px;
+  }
+}
+
+ .espaco-figurinha-principal-sup-dir {
+  background: url("/figurinha3.png") center / contain no-repeat;
+  --tam: 85px;
+  --giro: 8deg;
+  top: -19px;
+  right: -20px;
+  z-index: 99999;
+  position: absolute;
+  width: var(--tam);
+  height: var(--tam);
+  pointer-events: none;
+}
+
+.espaco-banner-topo {
+  background: url("/banner-topo.png") center / contain no-repeat;
+}
+
+/* 2. O título animado (GIF) */
+.titulo-animado {
+  background: url("/titulo-animado.gif") center / contain no-repeat;
+
+}
+
+/* 3. As figurinhas soltas (exemplo para as duas do topo) */
+.espaco-figurinha-topo-esq {
+  background: url("/figurinha2.png") center / contain no-repeat;
+  --tam: 98px; /* Tamanho */
+  --giro: -15deg; /* Inclinação */
+}
+
+.espaco-figurinha-topo-dir {
+  background: url("/figurinha.png") center / contain no-repeat;
+  --tam: 100px;
+  --giro: 10deg;
+  top: -15px; /* Ajuste esse valor para cima ou para baixo */
+}
+
+/* 4. O GIF lateral (abaixo do menu) */
+.espaco-gif-lateral {
+  background: url("/gif-lateral.gif") center / contain no-repeat;
+}
+
+/* 5. A textura de fundo da página inteira */
+:root {
+  --blog-fundo-imagem: url("/textura-papel.jpg");
+  --blog-fundo-tamanho: 400px;
+}
+
+/* --- EFEITO DE FAIXA ROLANTE INFINITA --- */
+.espaco-faixa-rolante {
+  overflow: hidden;
+  display: flex; /* Coloca as imagens lado a lado */
+  width: 100%;
+  margin: -20px 0 10px 0;
+}
+
+.faixa-img {
+  flex-shrink: 0;
+  height: 100%; /* Mantém a altura da faixa */
+  width: auto;  /* Usa a largura natural da imagem */
+  
+  /* A animação dura 15s e move a imagem inteira para a esquerda */
+  animation: rolar-infinito 15s linear infinite;
+}
+
+@keyframes rolar-infinito {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%); /* Move o tamanho exato da imagem */
+  }
+}

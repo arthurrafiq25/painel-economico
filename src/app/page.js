@@ -9,6 +9,7 @@ import NotePadMac from "./NotePadMac";
 import ModalCommodore from "./ModalCommodore";
 import ModalIBM from "./ModalIBM";
 import ModalApple from "./ModalApple";
+import CalendarioHistorico from "./CalendarioHistorico";
 
 // =========================================
 // 1. DADOS FIXOS (Não mudam com frequência)
@@ -35,6 +36,11 @@ const NOME_REGIAO = { "1": "Norte", "2": "Nordeste", "3": "Sudeste", "4": "Centr
 
 const fmt = (n) => Math.round(n).toLocaleString("pt-BR");
 
+const ABAS = [
+  { id: "painel", rotulo: "Painel Principal", icone: "🗺️" },
+  { id: "blog", rotulo: "Blog Histórico", icone: "📝" },
+];
+
 // =========================================
 // 3. ESTADOS (Controle da Página)
 // =========================================
@@ -55,6 +61,15 @@ export default function Home() {
   const [modalNoticias, setModalNoticias] = useState(false);
   const [noticias, setNoticias] = useState([]);
   const [modalGlossario, setModalGlossario] = useState(false);
+  const [abaAtiva, setAbaAtiva] = useState("painel");
+  const aoTeclarNaAba = (e) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+  const i = ABAS.findIndex((a) => a.id === abaAtiva);
+  const passo = e.key === "ArrowRight" ? 1 : -1;
+    setAbaAtiva(ABAS[(i + passo + ABAS.length) % ABAS.length].id);
+  };
+  
 
 // =========================================
 // 4. EFEITOS (Carregamento inicial)
@@ -152,9 +167,30 @@ useEffect(() => {
   <img src="/logo site_01.png" alt="Painel Brasil" style={{ height: "45px", width: "auto" }} />
 </div>
 <div style={{ maxWidth: "830px", margin: "0 auto" }}>
-  <div className="barra-topo"></div>
-</div>
-<div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+      {/* NAVEGADOR DE ABAS */}
+    <div className="navegador" style={{ maxWidth: "890px", margin: "20px auto" }}>
+      
+      {/* Faixa de Abas */}
+      <div className="navegador-faixa" role="tablist" onKeyDown={aoTeclarNaAba}>
+        {ABAS.map((a) => (
+          <button
+            key={a.id}
+            type="button"
+            role="tab"
+            aria-selected={abaAtiva === a.id}
+            className={`aba${abaAtiva === a.id ? " aba-ativa" : ""}`}
+            onClick={() => setAbaAtiva(a.id)}
+          >
+            <span className="aba-icone">{a.icone}</span>
+            <span className="aba-rotulo">{a.rotulo}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Página Ativa */}
+      <div className="navegador-pagina">
+        {abaAtiva === "painel" && (
+  <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
           <div style={{ width: "600px" }}>
       <p className="subtitulo">
         Indicadores econômicos por estado (em desenvolvimento)
@@ -369,31 +405,43 @@ useEffect(() => {
             )}
                             </div>  {/* fecha painel */}
         </div>    {/* fecha conteudo-win95-painel */}
-  
+
       </div>      {/* fecha janela-win95 */}
     </div>        {/* fecha a caixa de 660px */}
+    
 
-    {/* --- 6.3 Menu Lateral (Esquerda do site) --- */}
+        {/* --- 6.3 Menu Lateral (Esquerda do site) --- */}
     <div className="menu-lateral">
-  <div className="menu-titulo">Menu</div>
+      <div className="menu-titulo">Menu</div>
 
-  <a href="#" onClick={(e) => { e.preventDefault(); setModalIndicadores(true); }} className="menu-item">
-    <img src="https://www.google.com/s2/favicons?domain=bcb.gov.br&sz=32" alt="" className="menu-icone" />
-    Indicadores econômicos
-  </a>
+      <a href="#" onClick={(e) => { e.preventDefault(); setModalIndicadores(true); }} className="menu-item">
+        <img src="https://www.google.com/s2/favicons?domain=bcb.gov.br&sz=32" alt="" className="menu-icone" />
+        Indicadores econômicos
+      </a>
 
       <a href="#" onClick={(e) => { e.preventDefault(); setModalNoticias(true); }} className="menu-item">
         <img src="https://www.google.com/s2/favicons?domain=agenciabrasil.ebc.com.br&sz=32" alt="" className="menu-icone" />
-       Notícias
+        Notícias
       </a>
 
       <a href="#" onClick={(e) => { e.preventDefault(); setModalGlossario(true); }} className="menu-item">
-       <img src="https://www.google.com/s2/favicons?domain=ibge.gov.br&sz=32" alt="" className="menu-icone" />
-       Glossário
+        <img src="https://www.google.com/s2/favicons?domain=ibge.gov.br&sz=32" alt="" className="menu-icone" />
+        Glossário
       </a>
     </div>
+</div> /* fecha o flex */ 
 
-  </div> {/* fecha o flex */}
+)}
+
+        {abaAtiva === "blog" && (
+          <div>
+            {/* O SEU COMPONENTE DO BLOG FICA AQUI */}
+            <CalendarioHistorico />
+          </div>
+        )}
+      </div>
+    </div>
+</div>
 
   {/* ========================================== */}
   {/*               7. RODAPÉ                    */}

@@ -10,6 +10,9 @@ Inspirações fundamentais:
 - https://assets.bbhub.io/image/v1/resize?width=auto&type=webp&url=https://assets.bbhub.io/professional/sites/10/BRAND_35years_Tshirts_1986_FNL.jpg
 - https://www.versionmuseum.com/
 https://neocities.org/browse
+- https://caehdus.neocities.org/
+- https://nomnomnami.com/
+- https://ezgif.com/
 
 Novos modais:
 - https://rockybergen.com/whatsnew/2018/3/30/c64minimonitor
