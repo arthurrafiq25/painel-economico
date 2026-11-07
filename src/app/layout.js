@@ -1,7 +1,7 @@
 import "./globals.css";
-import { Press_Start_2P } from "next/font/google";
-import "./globals.css";
 import "./mobile.css";
+import "7.css/dist/7.scoped.css";
+import { Press_Start_2P } from "next/font/google";
 
 const pressStart = Press_Start_2P({
   weight: "400",

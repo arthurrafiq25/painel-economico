@@ -10,6 +10,7 @@ import ModalCommodore from "./ModalCommodore";
 import ModalIBM from "./ModalIBM";
 import ModalApple from "./ModalApple";
 import CalendarioHistorico from "./CalendarioHistorico";
+import ModalGeografia from "./ModalGeografia";
 
 // =========================================
 // 1. DADOS FIXOS (Não mudam com frequência)
@@ -62,6 +63,7 @@ export default function Home() {
   const [noticias, setNoticias] = useState([]);
   const [modalGlossario, setModalGlossario] = useState(false);
   const [abaAtiva, setAbaAtiva] = useState("painel");
+  const [modalGeografia, setModalGeografia] = useState(false);
   const aoTeclarNaAba = (e) => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
     e.preventDefault();
@@ -430,7 +432,13 @@ useEffect(() => {
         <img src="https://www.google.com/s2/favicons?domain=ibge.gov.br&sz=32" alt="" className="menu-icone" />
         Glossário
       </a>
-    </div>
+
+      <a href="#" onClick={(e) => { e.preventDefault(); setModalGeografia(true); }} className="menu-item">
+       <img src="https://www.google.com/s2/favicons?domain=ibge.gov.br&sz=32" alt="" className="menu-icone" />
+            Geografia do Brasil
+      </a>
+      
+  </div>
 </div> /* fecha o flex */ 
 
 )}
@@ -653,6 +661,12 @@ useEffect(() => {
     </NotePadMac>
   </Modal>
 )}
+
+{/* --- 9.0 Modal: Geografia --- */}
+{modalGeografia && (
+  <ModalGeografia onClose={() => setModalGeografia(false)} />
+)}
+
 </main>
   );
 }
