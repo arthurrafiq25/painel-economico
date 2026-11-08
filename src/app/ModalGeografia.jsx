@@ -796,10 +796,11 @@ export default function ModalGeografia({ onClose }) {
           background: #9bbbd4;
         }
 
-        /* =========================================
+                /* =========================================
            REMOÇÃO DE EFEITOS E BRILHOS DE HOVER
         ========================================= */
 
+        /* Remove transições */
         .win7 .w7-window *,
         .win7 .w7-window *::before,
         .win7 .w7-window *::after {
@@ -807,13 +808,34 @@ export default function ModalGeografia({ onClose }) {
           animation: none !important;
         }
 
+        /* Remove o brilho/fundo de botões genéricos ao passar o mouse */
         .win7 .w7-window button:hover,
         .win7 .w7-window button:focus,
         .win7 .w7-window button:active {
           filter: none !important;
           transform: none !important;
+          box-shadow: none !important;
         }
 
+        /* Remove especificamente o fundo dos itens do menu e dos cards */
+        .win7 .w7-menu-item:hover,
+        .win7 .w7-menu-item:focus,
+        .win7 .w7-card:hover,
+        .win7 .w7-card:focus {
+          background: transparent !important;
+          border-color: transparent !important;
+          color: inherit !important;
+        }
+
+        /* Remove o fundo azul dos botões de navegação (setas) */
+        .win7 .w7-nav-button:hover,
+        .win7 .w7-nav-button:focus {
+          background: transparent !important;
+          border-color: transparent !important;
+          box-shadow: none !important;
+        }
+
+        /* Mantém o link do endereço sem decoração ao passar o mouse */
         .win7 .w7-breadcrumb:hover {
           color: #374b5d !important;
           text-decoration: none !important;
@@ -916,6 +938,7 @@ export default function ModalGeografia({ onClose }) {
             font-size: 19px !important;
           }
         }
+          
       `}</style>
 
       <div
