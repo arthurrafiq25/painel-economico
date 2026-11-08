@@ -5,18 +5,12 @@ import requests
 from comum import RAIZ
 
 # Configurações
-# Para rodar no GitHub Actions, ele puxa das variáveis de ambiente.
-# Para rodar localmente, descomente e preencha as duas linhas abaixo:
-# API_KEY = "AIzaSyCnszizaJEbpznbJOiVpfU1AKNJQhU2o0w"
-# BLOG_ID = "2795541267460103925"
-
-API_KEY = "AIzaSyCnszizaJEbpznbJOiVpfU1AKNJQhU2o0w"
-BLOG_ID = "2795541267460103925"
+API_KEY = os.environ.get("GOOGLE_API_KEY")
+BLOG_ID = os.environ.get("BLOGGER_BLOG_ID")
 
 SAIDA = os.path.join(RAIZ, "public", "artigos_historicos.json")
 
 def extrair_ano(labels):
-    # Procura etiquetas no formato ano-1822 ou ano-ac-0044
     for label in labels:
         match = re.match(r"ano-(ac-)?(\d+)", label, re.IGNORECASE)
         if match:
@@ -33,27 +27,24 @@ def main():
     url = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&maxResults=500"
     print("Buscando artigos no Blogger...")
     
-       try:
+    try:
         resposta = requests.get(url, timeout=30)
         
-        # Verifica o código ANTES de qualquer outra coisa
         if resposta.status_code == 304:
-            print("Nenhuma alteração detectada no Blogger desde a última atualização.")
+            print("Nenhuma alteração detectada no Blogger.")
             return
             
-        # Se não for 304, aí sim verificamos se é um erro de verdade
         resposta.raise_for_status()
         dados = resposta.json()
         
     except requests.exceptions.HTTPError as e:
-        # Se o erro for 304, ignoramos (não é um erro de verdade)
         if e.response is not None and e.response.status_code == 304:
             print("Nenhuma alteração detectada no Blogger.")
             return
-        print(f"Erro HTTP ao acessar a API do Blogger: {e}")
+        print(f"Erro HTTP: {e}")
         return
     except Exception as e:
-        print(f"Erro ao acessar a API do Blogger: {e}")
+        print(f"Erro ao acessar a API: {e}")
         return
 
     artigos = []
@@ -62,13 +53,12 @@ def main():
     for item in itens:
         labels = item.get("labels", [])
         
-        # Só inclui se tiver a etiqueta 'publicar-no-site'
         if "publicar-no-site" not in labels:
             continue
             
         ano_historico = extrair_ano(labels)
         if ano_historico is None:
-            print(f"Artigo ignorado (sem ano válido): {item.get('title')}")
+            print(f"Artigo ignorado (sem ano): {item.get('title')}")
             continue
 
         artigos.append({
@@ -80,7 +70,6 @@ def main():
             "url": item.get("url")
         })
 
-    # Ordena pelo ano histórico (do mais antigo para o mais recente)
     artigos.sort(key=lambda x: x["ano"])
 
     resultado = {
