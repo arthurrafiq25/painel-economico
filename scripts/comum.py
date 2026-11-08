@@ -13,6 +13,15 @@ def fetch_json(url, tentativas=5, timeout=60):
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 data = r.read()
                 return json.loads(data.decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            # Se a API disser que nada mudou (304), retornamos vazio para não quebrar o script
+            if e.code == 304:
+                print("API retornou 304 (Not Modified). Ignorando...")
+                return []
+            print(f"Tentativa {i+1} falhou: {e}")
+            if i == tentativas - 1:
+                raise
+            time.sleep(5)
         except Exception as e:
             print(f"Tentativa {i+1} falhou: {e}")
             if i == tentativas - 1:
@@ -26,6 +35,11 @@ def baixar_sidra(tabela, variavel, periodo, nivel="n3"):
     """
     url = f"https://apisidra.ibge.gov.br/values/t/{tabela}/{nivel}/all/v/{variavel}/p/{periodo}"
     dados = fetch_json(url)
+    
+    # Se a API retornar 304 (lista vazia), retornamos um dicionário vazio
+    if not dados:
+        return {}
+        
     # Primeira linha é o cabeçalho, não dado
     linhas = dados[1:]
     resultado = {}
