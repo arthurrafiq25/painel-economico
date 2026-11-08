@@ -58,16 +58,7 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           BLOGGER_BLOG_ID: ${{ vars.BLOGGER_BLOG_ID }}
         run: |
-          python -c "import os, requests; k=os.environ.get('GOOGLE_API_KEY'); b=os.environ.get('BLOGGER_BLOG_ID'); r=requests.get(f'https://www.googleapis.com/blogger/v3/blogs/{b}/posts?key={k}&maxResults=500'); print('Status:', r.status_code); print('Total posts:', len(r.json().get('items', []))); [print(p['title'], p.get('labels', [])) for p in r.json().get('items', [])]"
-
-      - name: Commit e push
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/
-          git diff --quiet && git diff --staged --quiet || git commit -m "atualização automática de dados"
-          git push
-
-      - name: Avisar Vercel para atualizar o site
-        run: |
-          curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}
+          echo "--- TESTANDO API DO BLOGGER ---"
+          curl -s "https://www.googleapis.com/blogger/v3/blogs/${{ vars.BLOGGER_BLOG_ID }}/posts?key=${{ secrets.GOOGLE_API_KEY }}&maxResults=500" | head -c 500
+          echo ""
+          echo "--- FIM ---"
