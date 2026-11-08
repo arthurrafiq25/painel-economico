@@ -47,6 +47,7 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
   const [emprego, setEmprego] = useState({});
   const [exportacoes, setExportacoes] = useState({});
   const [importacoes, setImportacoes] = useState({});
+  const [rendaMedia, setRendaMedia] = useState({});
 
   // ==========================================
   // 3. EFEITOS (fetch)
@@ -68,6 +69,7 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
     fetch("/emprego.json").then((r) => r.json()).then(setEmprego).catch(() => {});
     fetch("/exportacoes.json").then((r) => r.json()).then(setExportacoes).catch(() => {});
     fetch("/importacoes.json").then((r) => r.json()).then(setImportacoes).catch(() => {});
+    fetch("/renda-media-uf.json").then((r) => r.json()).then(setRendaMedia).catch(() => {});  
   }, []);
 
   // ==========================================
@@ -137,7 +139,8 @@ export default function MapaBrasil({ onEstadoChange, siglaSelecionada, regiaoSel
                     combustivel: combustivel[SIGLA_PARA_ID[sigla]],
                     emprego: emprego[SIGLA_PARA_ID[sigla]],
                     exportacao: exportacoes[SIGLA_PARA_ID[sigla]],
-                    importacao: importacoes[SIGLA_PARA_ID[sigla]]
+                    importacao: importacoes[SIGLA_PARA_ID[sigla]],
+                    rendaMedia: rendaMedia[SIGLA_PARA_ID[sigla]]
                   })}
                 />
               );
