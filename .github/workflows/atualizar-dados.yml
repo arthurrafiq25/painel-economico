@@ -53,7 +53,7 @@ jobs:
           python baixar_caged.py
           python baixar_tesouro.py
 
-                - name: Diagnóstico Blogger
+      - name: Diagnóstico Blogger
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           BLOGGER_BLOG_ID: ${{ vars.BLOGGER_BLOG_ID }}
