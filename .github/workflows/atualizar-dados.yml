@@ -53,6 +53,13 @@ jobs:
           python baixar_caged.py
           python baixar_tesouro.py
 
+                - name: Diagnóstico Blogger
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          BLOGGER_BLOG_ID: ${{ vars.BLOGGER_BLOG_ID }}
+        run: |
+          python -c "import os, requests; k=os.environ.get('GOOGLE_API_KEY'); b=os.environ.get('BLOGGER_BLOG_ID'); r=requests.get(f'https://www.googleapis.com/blogger/v3/blogs/{b}/posts?key={k}&maxResults=500'); print('Status:', r.status_code); print('Total posts:', len(r.json().get('items', []))); [print(p['title'], p.get('labels', [])) for p in r.json().get('items', [])]"
+
       - name: Commit e push
         run: |
           git config user.name "github-actions[bot]"
