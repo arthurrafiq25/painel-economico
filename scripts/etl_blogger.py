@@ -5,8 +5,8 @@ import requests
 from comum import RAIZ
 
 # Configurações
-API_KEY = os.environ.get("GOOGLE_API_KEY")
-BLOG_ID = os.environ.get("BLOGGER_BLOG_ID")
+API_KEY = "AIzaSyAze-9l1UpCzbkQuwcfroh_4zjMHylftXU"
+BLOG_ID = "2795541267460103925"
 
 SAIDA = os.path.join(RAIZ, "public", "artigos_historicos.json")
 
