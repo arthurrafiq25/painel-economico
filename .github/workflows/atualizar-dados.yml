@@ -52,13 +52,3 @@ jobs:
           python etl_anp.py
           python baixar_caged.py
           python baixar_tesouro.py
-
-      - name: Diagnóstico Blogger
-        env:
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-          BLOGGER_BLOG_ID: ${{ vars.BLOGGER_BLOG_ID }}
-        run: |
-          echo "--- TESTANDO API DO BLOGGER ---"
-          curl -s "https://www.googleapis.com/blogger/v3/blogs/${{ vars.BLOGGER_BLOG_ID }}/posts?key=${{ secrets.GOOGLE_API_KEY }}&maxResults=500" | head -c 500
-          echo ""
-          echo "--- FIM ---"
