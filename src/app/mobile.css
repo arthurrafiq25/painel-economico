@@ -572,8 +572,8 @@
   /* 3. Modal do Windows 7 (Geografia) */
   .win7.w7-overlay .w7-window {
     width: 95vw !important;
-    max-width: 85vw !important;
-    height: 85vh !important;
+    max-width: 75vw !important;
+    height: 75vh !important;
     margin: 10px auto !important;
   }
 
@@ -586,31 +586,23 @@
     margin: 10px auto !important;
   }
 
-  /* 5. Modal do Terminal Bloomberg */
-  .terminal-bloomberg {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 10px !important;
-  }
-
-  /* 6. Modal do NotePad (Glossário) */
-  .modal-janela:has(.npm-janela) {
-    width: 75vw !important;
+    /* Encolhe o modal do Terminal Bloomberg inteiro para caber na tela */
+  .modal-janela:has(.tm-carcaca) {
+    transform: scale(0.85) !important; /* Ajuste o 0.85 até caber (ex: 0.7 ou 0.9) */
+    transform-origin: center top !important;
+    width: 95vw !important;
     max-width: 95vw !important;
-    height: auto !important;
-    max-height: 90vh !important;
-    padding: 4px 4px 5px;
+    margin: 0 auto !important;
+    overflow: visible !important;
   }
 
-  /* Aumenta a altura do "papel" para o texto caber melhor */
-  .npm-corpo {
-    height: 45vh !important; /* Ajuste para 70vh se quiser ainda maior */
-    max-height: 500px !important;
-  }
-
-  /* Ajusta a fonte do texto para não ficar minúscula no celular */
-  .npm-conteudo {
-    font-size: 13px !important;
-    padding: 10px !important;
+  /* NotePad (Glossário) */
+  .modal-janela:has(.npm-janela) {
+    transform: scale(1) !important;
+    transform-origin: center top !important;
+    width: 65vw !important;
+    max-width: 95vw !important;
+    margin: 0 auto !important;
+    overflow: visible !important;
   }
 }
