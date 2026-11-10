@@ -52,3 +52,9 @@ jobs:
           python etl_anp.py
           python baixar_caged.py
           python baixar_tesouro.py
+          
+      - name: Avisar Vercel
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          curl --fail-with-body -X POST "$VERCEL_DEPLOY_HOOK"
