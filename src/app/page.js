@@ -324,106 +324,115 @@ useEffect(() => {
             ) : estadoHover ? (
               <>
                <p>
-  <a
-    href="#"
-    onClick={(e) => { e.preventDefault(); setEstadoLinksAberto(estadoHover.sigla); }}
-    style={{ color: "#0000cc", textDecoration: "underline", fontWeight: "bold" }}
-  >
-    {estadoHover.nome} ({estadoHover.sigla})
-  </a>
-  {" "}
-  <span style={{ position: "relative", display: "inline-block", marginLeft: "6px" }}>
-  <span
-  onClick={(e) => { e.stopPropagation(); setInfoAberta(!infoAberta); }}
-  style={{
-    cursor: "pointer",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "14px",
-    height: "14px",
-    borderRadius: "50%",
-    background: "#3232e6",
-    color: "#ffffff",
-    fontSize: "10px",
-    fontWeight: "bold",
-    fontFamily: "Verdana, Tahoma, sans-serif",
-    lineHeight: "1",
-    marginLeft: "-5px",
-    verticalAlign: "middle",
-  }}
->
-  i
-</span>
-  {infoAberta && (
-  <div
-    style={{
-      position: "absolute",
-      bottom: "24px",
-      left: "-20px",
-      background: "#ffffff",
-      border: "1px solid #000000",
-      borderRadius: "8px",
-      padding: "6px 10px",
-      fontSize: "11px",
-      whiteSpace: "nowrap",
-      zIndex: 10,
-      color: "#000",
-      fontWeight: "normal",
-    }}
-  >
-    Mais informações
-    <div
-      style={{
-        position: "absolute",
-        bottom: "-8px",
-        left: "24px",
-        width: 0,
-        height: 0,
-        borderLeft: "6px solid transparent",
-        borderRight: "6px solid transparent",
-        borderTop: "8px solid #000000",
-      }}
-    />
-    <div
-      style={{
-        position: "absolute",
-        bottom: "-6px",
-        left: "25px",
-        width: 0,
-        height: 0,
-        borderLeft: "5px solid transparent",
-        borderRight: "5px solid transparent",
-        borderTop: "7px solid #ffffff",
-      }}
-    />
-  </div>
-)}
-</span>
-</p>
+                <a
+                  href="#"
+                  onClick={(e) => { e.preventDefault(); setEstadoLinksAberto(estadoHover.sigla); }}
+                  style={{ color: "#0000cc", textDecoration: "underline", fontWeight: "bold" }}
+                >
+                  {estadoHover.nome} ({estadoHover.sigla})
+                </a>
+                {" "}
+                <span style={{ position: "relative", display: "inline-block", marginLeft: "6px" }}>
+                <span
+                onClick={(e) => { e.stopPropagation(); setInfoAberta(!infoAberta); }}
+                style={{
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "14px",
+                  height: "14px",
+                  borderRadius: "50%",
+                  background: "#3232e6",
+                  color: "#ffffff",
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  fontFamily: "Verdana, Tahoma, sans-serif",
+                  lineHeight: "1",
+                  marginLeft: "-5px",
+                  verticalAlign: "middle",
+                }}
+              >
+                i
+              </span>
+                {infoAberta && (
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "24px",
+                    left: "-20px",
+                    background: "#ffffff",
+                    border: "1px solid #000000",
+                    borderRadius: "8px",
+                    padding: "6px 10px",
+                    fontSize: "11px",
+                    whiteSpace: "nowrap",
+                    zIndex: 10,
+                    color: "#000",
+                    fontWeight: "normal",
+                  }}
+                >
+                  Mais informações
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "-8px",
+                      left: "24px",
+                      width: 0,
+                      height: 0,
+                      borderLeft: "6px solid transparent",
+                      borderRight: "6px solid transparent",
+                      borderTop: "8px solid #000000",
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "-6px",
+                      left: "25px",
+                      width: 0,
+                      height: 0,
+                      borderLeft: "5px solid transparent",
+                      borderRight: "5px solid transparent",
+                      borderTop: "7px solid #ffffff",
+                    }}
+                  />
+                </div>
+              )}
+              </span>
+              </p>
+                {/* --- BLOCO 2: ECONOMIA --- */}
                 <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(estadoHover.pib * 1000)}</p>
-                <p><strong>População:</strong> {fmt(estadoHover.populacao)}</p>
-                {estadoHover.combustivel ? <p><strong>Gasolina (média):</strong> R$ {estadoHover.combustivel.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/L</p> : null}
-                {estadoHover.emprego !== undefined ? (
-  <p>
-    <strong>Saldo de empregos (Caged - Ago/26):</strong>{" "}
-    <span style={{ color: estadoHover.emprego >= 0 ? "#006400" : "#cc0000", fontWeight: "bold" }}>
-      {estadoHover.emprego > 0 ? "+" : ""}{fmt(estadoHover.emprego)}
-    </span>
-  </p>
-) : null}
-                {estadoHover.ocupacao ? <p><strong>Pessoas ocupadas:</strong> {fmt(estadoHover.ocupacao)}</p> : null}
                 <p><strong>PIB per capita:</strong> R$ {estadoHover.perCapita.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                {estadoHover.rendaMedia ? <p><strong>Renda média real:</strong> R$ {fmt(estadoHover.rendaMedia)}</p> : null}
                 {estadoHover.agro ? <p><strong>Agropecuária:</strong> R$ {fmt(estadoHover.agro * 1000)}</p> : null}
                 {estadoHover.industria ? <p><strong>Indústria:</strong> R$ {fmt(estadoHover.industria * 1000)}</p> : null}
                 {estadoHover.servicos ? <p><strong>Serviços:</strong> R$ {fmt(estadoHover.servicos * 1000)}</p> : null}
                 {estadoHover.administracao ? <p><strong>Administração pública:</strong> R$ {fmt(estadoHover.administracao * 1000)}</p> : null}
                 {estadoHover.impostos ? <p><strong>Impostos líquidos:</strong> R$ {fmt(estadoHover.impostos * 1000)}</p> : null}
+
+                <div style={{ borderTop: "1px dashed #ccc", margin: "8px 0" }} />
+
+                 {/* --- BLOCO 3: TRABALHO E RENDA --- */}
+                <p><strong>População:</strong> {fmt(estadoHover.populacao)}</p>
+                {estadoHover.rendaMedia ? <p><strong>Renda média real:</strong> R$ {fmt(estadoHover.rendaMedia)}</p> : null}
+                {estadoHover.emprego !== undefined ? (
+                <p><strong>Saldo de empregos (Caged - Ago/26):</strong>{" "}
+                <span style={{ color: estadoHover.emprego >= 0 ? "#006400" : "#cc0000", fontWeight: "bold" }}>
+                  {estadoHover.emprego > 0 ? "+" : ""}{fmt(estadoHover.emprego)}
+                </span>
+              </p>
+          ) : null}
+                {estadoHover.ocupacao ? <p><strong>Pessoas ocupadas:</strong> {fmt(estadoHover.ocupacao)}</p> : null}
+                {estadoHover.combustivel ? <p><strong>Gasolina (média):</strong> R$ {estadoHover.combustivel.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/L</p> : null}
+
+                <div style={{ borderTop: "1px dashed #ccc", margin: "8px 0" }} />
+
+                {/* --- BLOCO 4: COMÉRCIO E ÍNDICES --- */}
                 {estadoHover.importacao ? <p><strong>Importações (2026):</strong> US$ {fmt(estadoHover.importacao)}</p> : null}
                 {estadoHover.exportacao ? <p><strong>Exportações (2026):</strong> US$ {fmt(estadoHover.exportacao)}</p> : null}
                 {estadoHover.idh ? <p><strong>IDH:</strong> {estadoHover.idh}</p> : null}
                 {estadoHover.gini ? <p><strong>Gini:</strong> {estadoHover.gini}</p> : null}
+
                 <p style={{ marginTop: "10px", fontSize: "11px", color: "#666" }}>(Indicadores econômicos: 2021 · IDH e Gini: 2010)</p>
               </>
             ) : (
@@ -432,7 +441,7 @@ useEffect(() => {
                 Todos os dados vêm de fontes públicas oficiais (IBGE, Banco Central).
               </p>
             )}
-                            </div>  {/* fecha painel */}
+          </div>  {/* fecha painel */}
         </div>    {/* fecha conteudo-win95-painel */}
 
       </div>      {/* fecha janela-win95 */}
