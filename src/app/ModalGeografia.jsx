@@ -255,7 +255,8 @@ export default function ModalGeografia({ onClose }) {
                   style={{ maxWidth: "80%", height: "auto", display: "block" }} 
                   onError={(e) => { e.target.style.display = "none"; }}
                 />
-                </div>
+              </div>
+              
 
               <div className="w7-content-bottom">
                 <span>Geografia do Brasil</span>

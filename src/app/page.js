@@ -90,6 +90,7 @@ useEffect(() => {
   fetch("/salario-minimo.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, salario: d }))).catch(() => {});
   fetch("/ipca-alimentacao.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipcaAlimentacao: d }))).catch(() => {});
   fetch("/divida-publica.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, divida: d }))).catch(() => {});
+  fetch("/renda-brasil.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, rendaBrasil: d["1"] || Object.values(d)[0] }))).catch(() => {});
 }, []);
 
 // Função de fechar o balão 'Mais informações' ao clicar fora.
@@ -260,6 +261,9 @@ useEffect(() => {
         </div>
         <div className="conteudo-win95-painel">
           <div className="painel">
+
+      {/* --- Dados Brasil --- */}
+
   {dadosBrasil ? (
     <>
       <div>
@@ -271,15 +275,33 @@ useEffect(() => {
     Brasil
   </a>
 </div>
+
+      {/* --- BLOCO 1: ECONOMIA --- */}
       <p style={{ marginTop: "4px" }}><strong>PIB:</strong> R$ {fmt(dadosBrasil.pib * 1000)}</p>
-      <p><strong>População:</strong> {fmt(dadosBrasil.populacao)}</p>
       <p><strong>PIB per capita:</strong> R$ {dadosBrasil.perCapita.toLocaleString("pt-BR")}</p>
+
+      <div style={{ borderTop: "1px dashed #ccc", margin: "8px 0" }} />
+
+      {/* --- BLOCO 2: TRABALHADOR --- */}
+      {indicadores.rendaBrasil ? <p><strong>Renda média real:</strong> R$ {fmt(indicadores.rendaBrasil)}</p> : null}
+      {indicadores.desemprego ? <p><strong>Desemprego:</strong> {indicadores.desemprego.valor.toLocaleString("pt-BR", { minimumFractionDigits: 1 })}%</p> : null}
+      {indicadores.ipca ? <p><strong>Inflação (IPCA 12m):</strong> {indicadores.ipca.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}%</p> : null}
+
+      <div style={{ borderTop: "1px dashed #ccc", margin: "8px 0" }} />
+
+      {/* --- BLOCO 3: CONTAS PÚBLICAS E POPULAÇÃO --- */}
+      <p><strong>População:</strong> {fmt(dadosBrasil.populacao)}</p>
       {indicadores.divida ? <p><strong>Dívida Pública:</strong> {indicadores.divida.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}% do PIB <span style={{fontSize: "11px", color: "#666"}}>({indicadores.divida.data})</span></p> : null}
+
+      <div style={{ borderTop: "1px dashed #ccc", margin: "8px 0" }} />
+
+      {/* --- BLOCO 4: SETORES --- */}
       <p><strong>Agropecuária:</strong> R$ {fmt(dadosBrasil.agro * 1000)}</p>
       <p><strong>Indústria:</strong> R$ {fmt(dadosBrasil.industria * 1000)}</p>
       <p><strong>Serviços:</strong> R$ {fmt(dadosBrasil.servicos * 1000)}</p>
       <p><strong>Administração pública:</strong> R$ {fmt(dadosBrasil.administracao * 1000)}</p>
       <p><strong>Impostos líquidos:</strong> R$ {fmt(dadosBrasil.impostos * 1000)}</p>
+
       <div><span style={{ fontSize: "11px", color: "#666", fontWeight: "normal" }}>(Indicadores econômicos: 2021 · IDH e Gini: 2010)</span></div>
     </>
   ) : regiaoSel ? (

@@ -52,6 +52,7 @@ jobs:
           python etl_anp.py
           python baixar_caged.py
           python baixar_tesouro.py
+          python baixar_renda_brasil.py
 
       - name: Avisar Vercel
         if: always()
