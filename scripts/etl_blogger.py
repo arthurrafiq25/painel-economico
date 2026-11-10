@@ -27,7 +27,7 @@ def main():
     with open(SAIDA, "w", encoding="utf-8") as f:
         json.dump({"total": 0, "artigos": []}, f)
 
-    url = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&maxResults=500&fetchImages=false&fetchBodies=false"
+            url = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&maxResults=500&fetchBodies=true"
     print("Buscando artigos no Blogger...")
     
     try:
