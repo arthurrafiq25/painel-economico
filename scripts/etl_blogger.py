@@ -23,11 +23,11 @@ def main():
         print("Erro: Faltam as credenciais.")
         return
 
-            # Limpa o arquivo JSON antes de buscar para evitar cache
+    # Limpa o arquivo JSON antes de buscar para evitar cache
     with open(SAIDA, "w", encoding="utf-8") as f:
         json.dump({"total": 0, "artigos": []}, f)
 
-            url = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&maxResults=500&fetchBodies=true"
+    url = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&maxResults=500&fetchBodies=true"
     print("Buscando artigos no Blogger...")
     
     try:
