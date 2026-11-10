@@ -52,8 +52,9 @@ jobs:
           python etl_anp.py
           python baixar_caged.py
           python baixar_tesouro.py
-          
+
       - name: Avisar Vercel
+        if: always()
         env:
           VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
         run: |
