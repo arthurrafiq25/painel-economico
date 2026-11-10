@@ -49,6 +49,7 @@ const ABAS = [
 
 // -- Seleção no Mapa e Menu Lateral --
 export default function Home() {
+  const [carregado, setCarregado] = useState(false);
   const [estadoHover, setEstadoHover] = useState(null);
   const [regiaoSel, setRegiaoSel] = useState(null);
   const [dadosRegiao, setDadosRegiao] = useState(null);
@@ -91,6 +92,11 @@ useEffect(() => {
   fetch("/ipca-alimentacao.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, ipcaAlimentacao: d }))).catch(() => {});
   fetch("/divida-publica.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, divida: d }))).catch(() => {});
   fetch("/renda-brasil.json").then((r) => r.json()).then((d) => setIndicadores((p) => ({ ...p, rendaBrasil: d["1"] || Object.values(d)[0] }))).catch(() => {});
+}, []);
+
+// Força o recálculo do layout no mobile após o carregamento
+  useEffect(() => {
+  setCarregado(true);
 }, []);
 
 // Função de fechar o balão 'Mais informações' ao clicar fora.
@@ -164,7 +170,7 @@ useEffect(() => {
   };
 
   return (
-    <main>
+    <main key={carregado ? "carregado" : "carregando"}>
       {/* ======================================*/}
       {/*   6. LAYOUT PRINCIPAL (Mapa + Menu)   */}
       {/* ======================================*/}
@@ -229,7 +235,13 @@ useEffect(() => {
     <div className="painel painel-mapa">
       <div style={{ position: "relative" }}>
         <div style={{ marginTop: "30px" }}> 
+        {carregado ? (
           <MapaBrasil onEstadoChange={(estado) => { setEstadoHover(estado); setDadosBrasil(null); setRegiaoSel(null); }} siglaSelecionada={estadoHover ? estadoHover.sigla : null} regiaoSel={regiaoSel} />
+        ) : ( 
+          <div style={{ height: "300px", display: "flex", justifyContent: "center", alignItems: "center", color: "#666" }}>
+              Carregando mapa...
+            </div>
+          )}
         </div>
         <div style={{ position: "absolute", top: "80px", right: "5px", fontSize: "15px" }}>
           {REGIOES.map((r) => (
@@ -449,7 +461,7 @@ useEffect(() => {
     
 
         {/* --- 6.3 Menu Lateral (Esquerda do site) --- */}
-    <div className="menu-lateral">
+    <div className="menu-lateral" style={{ height: "auto", maxHeight: "none", overflow: "visible" }}>
       <div className="menu-titulo">Menu</div>
 
       <a href="#" onClick={(e) => { e.preventDefault(); setModalIndicadores(true); }} className="menu-item">

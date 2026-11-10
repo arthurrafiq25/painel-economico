@@ -156,6 +156,8 @@ main {
 }
 
 .menu-titulo {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   background-color: #2a5cc7;
   color: #ffffff;
   font-family: "Times New Roman", Times, serif;

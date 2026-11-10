@@ -41,14 +41,14 @@
     min-width: 0 !important;
   }
 
-  /* Coluna dos 600px */
-
-  .navegador-pagina > div[style*="display: flex"]
-  > div:first-child {
+  /* Coluna dos 600px vira 100% */
+  .navegador-pagina > div[style*="display: flex"] > div:first-child {
     width: 100% !important;
-    max-width: 600px !important;
+    max-width: 100% !important;
     min-width: 0 !important;
-    margin: 0 auto !important;
+    padding: 0 10px !important;
+    height: auto !important; /* Força altura automática */
+    overflow: visible !important; /* Permite que o menu apareça */
   }
 
   /* Menu lateral */
@@ -56,13 +56,13 @@
   .menu-lateral {
     position: static !important;
     order: 2;
-
+    height: auto !important;
     width: 100% !important;
-    max-width: 600px !important;
+    max-width: 625px !important;
     min-width: 0 !important;
-
     margin: 0 auto 12px !important;
     align-self: stretch !important;
+    overflow: visible !important; /* <--- ADICIONE ESTA LINHA */
   }
 
 
@@ -252,7 +252,7 @@
   }
 
   .titulo-animado {
-    top: -15% !important;
+    top: -22% !important;
     left: 0 !important;
 
     width: 75% !important;
@@ -277,7 +277,7 @@
 
     height: 28px !important;
 
-    margin: 4px 0 8px !important;
+    margin: 11px 0 8px !important;
 
     overflow: hidden !important;
   }
@@ -348,7 +348,7 @@
   }
 
   .blog-secao-titulo {
-    margin: 2px 0 8px !important;
+    margin: 5px 0 8px !important;
     font-size: 17px !important;
   }
 
@@ -420,7 +420,7 @@
     --tam: 65px !important;
     --giro: 8deg !important;
 
-    top: -3px !important;
+    top: -30px !important;
     right: 0 !important;
     left: auto !important;
   }
@@ -431,7 +431,7 @@
     --tam: 65px !important;
     --giro: -10deg !important;
 
-    top: 125px !important;
+    top: 165px !important;
     left: -10px !important;
     right: auto !important;
   }
@@ -542,4 +542,75 @@
     font-size: 14px !important;
   }
 
+}
+
+/* ==========================================================
+   MODAIS NO MOBILE — AJUSTE DE TAMANHO
+   ========================================================== */
+
+@media screen and (max-width: 902px) {
+  /* 1. Modal genérico (estilo Windows 95/XP) */
+  .modal-janela {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+    margin: 10px auto !important;
+  }
+
+  .modal-conteudo {
+    padding: 10px !important;
+    max-height: 75vh !important;
+    overflow-y: auto !important;
+  }
+
+  /* 2. Modal de Notícias (Navegador) */
+  .nav-antigo {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 3. Modal do Windows 7 (Geografia) */
+  .win7.w7-overlay .w7-window {
+    width: 95vw !important;
+    max-width: 85vw !important;
+    height: 85vh !important;
+    margin: 10px auto !important;
+  }
+
+  /* 4. Modal do MEI (Chatoom) */
+  .chatoom-janela,
+  div[style*="width: 450px"] {
+    width: 75vw !important;
+    max-width: 95vw !important;
+    height: auto !important;
+    margin: 10px auto !important;
+  }
+
+  /* 5. Modal do Terminal Bloomberg */
+  .terminal-bloomberg {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px !important;
+  }
+
+  /* 6. Modal do NotePad (Glossário) */
+  .modal-janela:has(.npm-janela) {
+    width: 75vw !important;
+    max-width: 95vw !important;
+    height: auto !important;
+    max-height: 90vh !important;
+    padding: 4px 4px 5px;
+  }
+
+  /* Aumenta a altura do "papel" para o texto caber melhor */
+  .npm-corpo {
+    height: 45vh !important; /* Ajuste para 70vh se quiser ainda maior */
+    max-height: 500px !important;
+  }
+
+  /* Ajusta a fonte do texto para não ficar minúscula no celular */
+  .npm-conteudo {
+    font-size: 13px !important;
+    padding: 10px !important;
+  }
 }
