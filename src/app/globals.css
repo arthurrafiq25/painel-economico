@@ -2931,3 +2931,585 @@ button.npm-dobra:focus-visible {
     transform: translateX(-100%); /* Move o tamanho exato da imagem */
   }
 }
+
+/* ==========================================================================
+   MODAL GEOGRAFIA - Windows 7 Explorer (Aero Glass) - versão leve
+   Cole no globals.css (ou importe este arquivo). Substitui o <style> que
+   ficava dentro do componente.
+
+   Todas as regras começam com ".win7.w7-overlay": isso as deixa mais
+   "fortes" que qualquer biblioteca global (como o 7.css) SEM usar !important.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   ✏️ VARIÁVEIS - mude aqui para personalizar o vidro, o tamanho e as cores
+   -------------------------------------------------------------------------- */
+.win7.w7-overlay{
+  --w7-largura: 900px;
+  --w7-altura: 600px;
+
+  /* Fundo escuro atrás da janela (use transparent para nenhum) */
+  --w7-overlay: rgba(0, 0, 0, 0.28);
+
+  /* VIDRO da moldura (topo, laterais e base). Menos opacidade = mais transparente */
+  --w7-vidro-topo: rgba(210, 229, 248, 0.50);
+  --w7-vidro-base: rgba(170, 200, 232, 0.46);
+  --w7-vidro-blur: 1px;        /* desfoque do que está atrás (0px = vidro cristalino) */
+  --w7-vidro-saturacao: 1.7;   /* cor do que passa pelo vidro */
+  --w7-reflexo: 0.30;          /* força dos reflexos diagonais (0 = sem reflexo) */
+
+  --w7-azul-texto: #1e395b;
+  --w7-borda-cliente: #5d6f8a;
+
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--w7-overlay);
+}
+
+/* --------------------------------------------------------------------------
+   MOLDURA DE VIDRO (um único desfoque = leve)
+   -------------------------------------------------------------------------- */
+.win7.w7-overlay .w7-window {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: var(--w7-largura);
+  max-width: 100%;
+  height: var(--w7-altura);
+  max-height: 100%;
+  padding: 0 8px 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--w7-vidro-topo) 0%, var(--w7-vidro-base) 100%);
+  -webkit-backdrop-filter: blur(var(--w7-vidro-blur)) saturate(var(--w7-vidro-saturacao));
+  backdrop-filter: blur(var(--w7-vidro-blur)) saturate(var(--w7-vidro-saturacao));
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-radius: 8px 8px 4px 4px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 10px 28px rgba(0, 0, 0, 0.45);
+  color: #000;
+  font: 12px/1.35 "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+/* Reflexos diagonais do Aero (só um degradê; não pesa) */
+.win7.w7-overlay .w7-window::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 190px;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(112deg,
+    rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 20%,
+    rgba(255, 255, 255, 0) 20.4%, rgba(255, 255, 255, 0) 48%,
+    rgba(255, 255, 255, 0.55) 48.4%, rgba(255, 255, 255, 0.55) 61%,
+    rgba(255, 255, 255, 0) 61.4%);
+  opacity: var(--w7-reflexo);
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent 100%);
+}
+
+.win7.w7-overlay .w7-window > * { position: relative; z-index: 1; }
+
+/* --------------------------------------------------------------------------
+   BARRA DE TÍTULO (fica sobre o vidro: sem fundo próprio)
+   -------------------------------------------------------------------------- */
+.win7.w7-overlay .w7-titlebar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 31px;
+  position: relative;
+  user-select: none;
+}
+
+.win7.w7-overlay .w7-title-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 0 0 3px;
+  color: #000;
+  font-size: 12px;
+  font-weight: 400;
+  text-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 10px #fff, 0 0 14px rgba(255, 255, 255, 0.9);
+}
+
+.win7.w7-overlay .w7-title-icon { font-size: 15px; line-height: 1; }
+
+.win7.w7-overlay .w7-controls { display: flex; margin-right: 4px; }
+
+/* Botão FECHAR (vermelho glossy) */
+.win7.w7-overlay .w7-close {
+  all: unset;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 47px;
+  height: 20px;
+  position: relative;
+  background: linear-gradient(to bottom, #f0c1bb 0%, #dc8274 46%, #c13a2a 50%, #d9573f 78%, #e8886d 100%);
+  border: 1px solid rgba(0, 0, 0, 0.6) !important;
+  border-top: none !important;
+  border-radius: 0 0 5px 5px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    inset 0 -2px 3px rgba(255, 170, 130, 0.45),
+    0 1px 2px rgba(0, 0, 0, 0.35) !important;
+  cursor: default;
+}
+.win7.w7-overlay .w7-close svg { filter: drop-shadow(0 0 2px rgba(80, 8, 0, 0.95)); }
+.win7.w7-overlay .w7-close:hover {
+  background: linear-gradient(to bottom, #f6c2ba 0%, #f19a8a 46%, #dc2e1c 50%, #ec5c43 78%, #fb9c82 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+    inset 0 -2px 4px rgba(255, 200, 160, 0.7),
+    0 0 8px 1px rgba(255, 90, 60, 0.75);
+}
+.win7.w7-overlay .w7-close:active {
+  background: linear-gradient(to bottom, #b3584c 0%, #a2362a 46%, #7e150b 50%, #a52b19 100%);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.55);
+}
+.win7.w7-overlay .w7-close:focus-visible { outline: 1px dotted #fff; outline-offset: -4px; }
+
+/* --------------------------------------------------------------------------
+   NAVEGAÇÃO (também sobre o vidro): orbes + endereço + pesquisa
+   -------------------------------------------------------------------------- */
+.win7.w7-overlay .w7-toolbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 8px;
+}
+
+.win7.w7-overlay .w7-navigation { position: relative; flex: 0 0 auto; width: 58px; height: 32px; }
+
+/* Orbes de vidro azul (voltar / avançar) */
+.win7.w7-overlay .w7-nav-button {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 1px solid #3b5878;
+  background:
+    radial-gradient(ellipse 78% 52% at 50% 20%, #ffffff 0%, rgba(255, 255, 255, 0.85) 55%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(ellipse 85% 60% at 50% 115%, #9fd6ff 0%, rgba(159, 214, 255, 0) 75%),
+    linear-gradient(to bottom, #e4f0fb 0%, #b7d4f0 50%, #98c1ea 52%, #c4def5 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+    0 1px 3px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+.win7.w7-overlay .w7-nav-back { left: 0; top: 1px; z-index: 2; width: 30px; height: 30px; }
+.win7.w7-overlay .w7-nav-back:hover {
+  background:
+    radial-gradient(ellipse 78% 52% at 50% 20%, #ffffff 0%, rgba(255, 255, 255, 0.9) 55%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(ellipse 85% 60% at 50% 115%, #7fd0ff 0%, rgba(127, 208, 255, 0) 75%),
+    linear-gradient(to bottom, #f0f8ff 0%, #c9e4fb 50%, #8fc8f6 52%, #bfe3fb 100%);
+  box-shadow: inset 0 0 0 1px #fff, 0 0 7px 2px rgba(120, 200, 255, 0.9), 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+/* "Avançar" fica apagado, como no Windows quando não há para onde avançar */
+.win7.w7-overlay .w7-nav-forward {
+  left: 27px;
+  top: 4px;
+  z-index: 1;
+  width: 25px;
+  height: 25px;
+  border-color: #7a8da5;
+  background:
+    radial-gradient(ellipse 78% 52% at 50% 20%, #ffffff 0%, rgba(255, 255, 255, 0.7) 55%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(to bottom, #eef3f9 0%, #d3deea 50%, #c3d1e1 52%, #dbe5f0 100%);
+}
+
+/* Barra de endereço */
+.win7.w7-overlay .w7-address {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  height: 25px;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid;
+  border-color: #6e819b #9aabc1 #b6c4d6 #9aabc1;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.16), 0 1px 0 rgba(255, 255, 255, 0.55);
+  color: #1b1b1b;
+  white-space: nowrap;
+}
+.win7.w7-overlay .w7-folder-icon { flex: 0 0 auto; margin: 0 4px 0 6px; }
+.win7.w7-overlay .w7-address-path { display: flex; flex: 1; align-items: center; min-width: 0; overflow: hidden; }
+.win7.w7-overlay .w7-breadcrumb {
+  padding: 2px 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: #1b1b1b;
+  cursor: default;
+}
+.win7.w7-overlay .w7-breadcrumb:hover { background: linear-gradient(#fdfeff, #e3effc); border-color: #b4cde9; }
+.win7.w7-overlay .w7-breadcrumb-current { font-weight: 400; }
+
+/* setinha ▸ entre as partes do caminho (CSS puro) */
+.win7.w7-overlay .w7-breadcrumb-arrow {
+  flex: 0 0 auto;
+  width: 0;
+  height: 0;
+  margin: 0 3px;
+  border-top: 3.5px solid transparent;
+  border-bottom: 3.5px solid transparent;
+  border-left: 4px solid #6c7d93;
+}
+
+.win7.w7-overlay .w7-address-arrow,
+.win7.w7-overlay .w7-address-refresh {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  align-self: stretch;
+  width: 21px;
+  border-left: 1px solid #dde5ef;
+}
+.win7.w7-overlay .w7-address-arrow::before {
+  content: "";
+  border-left: 3.5px solid transparent;
+  border-right: 3.5px solid transparent;
+  border-top: 4px solid #5d6f87;
+}
+.win7.w7-overlay .w7-address-arrow:hover,
+.win7.w7-overlay .w7-address-refresh:hover { background: linear-gradient(#fdfeff, #dcebfb); }
+
+/* Pesquisa */
+.win7.w7-overlay .w7-search {
+  display: flex;
+  flex: 0 0 200px;
+  align-items: center;
+  box-sizing: border-box;
+  height: 25px;
+  padding: 0 8px;
+  background: #fff;
+  border: 1px solid;
+  border-color: #6e819b #9aabc1 #b6c4d6 #9aabc1;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.16), 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+.win7.w7-overlay .w7-search input {
+  all: unset;
+  flex: 1;
+  min-width: 0;
+  color: #222;
+  font: 12px "Segoe UI", Tahoma, Arial, sans-serif;
+}
+.win7.w7-overlay .w7-search input::placeholder { color: #7a7a7a; opacity: 1; }
+.win7.w7-overlay .w7-search:focus-within { border-color: #3c7fb1; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.16), 0 0 4px rgba(90, 170, 240, 0.7); }
+.win7.w7-overlay .w7-search-icon { flex: 0 0 auto; margin-left: 5px; color: #7d8fa8; }
+
+/* --------------------------------------------------------------------------
+   ÁREA CLIENTE (branca, opaca)
+   -------------------------------------------------------------------------- */
+.win7.w7-overlay .w7-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--w7-borda-cliente);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+/* Barra de comandos */
+.win7.w7-overlay .w7-commandbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+  height: 31px;
+  padding: 0 6px;
+  background: linear-gradient(to bottom, #fcfdff 0%, #eef3fa 48%, #e3eaf4 52%, #edf2f9 100%);
+  border-bottom: 1px solid #d1dbe8;
+  color: var(--w7-azul-texto);
+}
+.win7.w7-overlay .w7-command {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 24px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  white-space: nowrap;
+  cursor: default;
+}
+.win7.w7-overlay .w7-command:hover {
+  background: linear-gradient(to bottom, #fafcff 0%, #e6effa 48%, #d3e2f4 52%, #e5eefa 100%);
+  border-color: #b8c9de;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+.win7.w7-overlay .w7-command-menu::after {
+  content: "";
+  margin-left: 7px;
+  border-left: 3.5px solid transparent;
+  border-right: 3.5px solid transparent;
+  border-top: 4px solid #5d6f87;
+}
+
+.win7.w7-overlay .w7-explorer { display: flex; flex: 1; min-height: 0; overflow: hidden; background: #fff; }
+
+/* Menu lateral */
+.win7.w7-overlay .w7-sidebar {
+  flex: 0 0 205px;
+  box-sizing: border-box;
+  padding: 10px 6px;
+  overflow-y: auto;
+  background: #fff;
+  border-right: 1px solid #d4dce8;
+}
+.win7.w7-overlay .w7-sidebar-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  margin-bottom: 4px;
+  padding: 0 6px;
+  color: var(--w7-azul-texto);
+}
+.win7.w7-overlay .w7-menu { margin: 0; padding: 0; list-style: none; }
+.win7.w7-overlay .w7-menu li { margin: 0 0 1px; padding: 0; }
+
+.win7.w7-overlay .w7-menu-item {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 26px;
+  padding: 0 8px 0 18px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #1e1e1e;
+  font: 12px "Segoe UI", Tahoma, Arial, sans-serif;
+  cursor: default;
+}
+.win7.w7-overlay .w7-menu-item:hover { background: linear-gradient(to bottom, #fafcfe, #e7f1fc); border-color: #cfe0f4; }
+.win7.w7-overlay .w7-menu-item.active,
+.win7.w7-overlay .w7-menu-item.active:hover {
+  background: linear-gradient(to bottom, #e9f4ff 0%, #d4e8fb 48%, #c3dcf6 52%, #d1e5fa 100%);
+  border-color: #8fb4dc;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+}
+.win7.w7-overlay .w7-menu-item:focus-visible { outline: 1px dotted #3a5a80; outline-offset: -3px; }
+.win7.w7-overlay .w7-menu-icon { display: flex; justify-content: center; flex: 0 0 19px; font-size: 14px; }
+
+/* Conteúdo */
+.win7.w7-overlay .w7-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  padding: 0 24px 12px;
+  overflow-y: auto;
+  background: #fff;
+}
+
+/* Faixa de título (como o "Biblioteca de Imagens" do Explorer) */
+.win7.w7-overlay .w7-content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 -24px 14px;
+  padding: 12px 24px 10px;
+  background: linear-gradient(to bottom, #f4f8fc, #e3ebf6);
+  border-bottom: 1px solid #d0dbea;
+}
+.win7.w7-overlay .w7-content-eyebrow {
+  display: block;
+  color: #7f94a8;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+.win7.w7-overlay .w7-content-header h2 {
+  margin: 2px 0 0;
+  padding: 0;
+  color: var(--w7-azul-texto);
+  font: 400 21px/1.25 "Segoe UI", Tahoma, Arial, sans-serif;
+  text-shadow: 0 1px #fff;
+}
+.win7.w7-overlay .w7-content-description { margin: 0 0 14px; color: #6e7e8b; font-size: 11px; }
+
+/* Cards: ao passar o mouse / focar ganham o destaque azul-vidro do Explorer */
+.win7.w7-overlay .w7-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.win7.w7-overlay .w7-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 8px 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  text-align: center;
+  cursor: default;
+  outline: 0;
+}
+.win7.w7-overlay .w7-card:hover {
+  background: linear-gradient(to bottom, #fbfdff 0%, #eaf3fd 48%, #dcebfc 52%, #ebf4fd 100%);
+  border-color: #b8d6fb;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85);
+}
+.win7.w7-overlay .w7-card:focus {
+  background: linear-gradient(to bottom, #eef7ff 0%, #d9ecfd 48%, #c2dffb 52%, #d6eafd 100%);
+  border-color: #7da2ce;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+.win7.w7-overlay .w7-card-number {
+  align-self: flex-start;
+  margin-bottom: 6px;
+  color: #94a9ba;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.win7.w7-overlay .w7-card-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 130px;
+  padding: 8px;
+  background: linear-gradient(to bottom, #f6f9fd, #dde8f5);
+  border: 1px solid #98aac1;
+  box-shadow: inset 0 0 0 1px #fff, 0 1px 3px rgba(0, 0, 0, 0.3);
+  color: #3f6190;
+  font-size: 10px;
+  line-height: 1.5;
+  outline: 1px dashed #9db8d6;
+  outline-offset: -5px;
+}
+.win7.w7-overlay .w7-card-image span { max-width: 145px; text-align: center; }
+.win7.w7-overlay .w7-card h3 { margin: 9px 0 3px; padding: 0; color: #1e395b; font: 600 12px/1.3 "Segoe UI", Tahoma, Arial, sans-serif; }
+.win7.w7-overlay .w7-card p { margin: 0; padding: 0; color: #6b7b88; font: 10px/1.5 "Segoe UI", Tahoma, Arial, sans-serif; }
+
+.win7.w7-overlay .w7-content-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 16px;
+  color: #9aaab7;
+  font-size: 10px;
+}
+
+/* Barra de status / painel de detalhes */
+.win7.w7-overlay .w7-statusbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 38px;
+  padding: 0 12px;
+  background: linear-gradient(to bottom, #fbfcfe 0%, #eaf0f8 100%);
+  border-top: 1px solid #d3deeb;
+  color: #1e1e1e;
+}
+.win7.w7-overlay .w7-status-left { display: flex; align-items: center; gap: 8px; }
+.win7.w7-overlay .w7-status-right { color: var(--w7-azul-texto); }
+
+/* --------------------------------------------------------------------------
+   BARRAS DE ROLAGEM (estilo Windows 7)
+   -------------------------------------------------------------------------- */
+.win7.w7-overlay .w7-sidebar,
+.win7.w7-overlay .w7-content { scrollbar-color: #c4cdda #f1f3f6; }
+
+.win7.w7-overlay .w7-sidebar::-webkit-scrollbar,
+.win7.w7-overlay .w7-content::-webkit-scrollbar { width: 17px; }
+.win7.w7-overlay .w7-sidebar::-webkit-scrollbar-track,
+.win7.w7-overlay .w7-content::-webkit-scrollbar-track {
+  background: linear-gradient(90deg, #e4e6ea, #f5f6f8 40%, #f5f6f8 60%, #eceef1);
+  border-left: 1px solid #dfe2e7;
+}
+.win7.w7-overlay .w7-sidebar::-webkit-scrollbar-thumb,
+.win7.w7-overlay .w7-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #f7f8fa 0%, #e2e6ec 45%, #cfd5de 50%, #dfe4eb 100%);
+  border: 1px solid #8e939c;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+.win7.w7-overlay .w7-sidebar::-webkit-scrollbar-thumb:hover,
+.win7.w7-overlay .w7-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #f1faff 0%, #cfe9fb 45%, #a9d3f2 50%, #c6e4f8 100%);
+  border-color: #3c7fb1;
+}
+.win7.w7-overlay .w7-sidebar::-webkit-scrollbar-button:single-button,
+.win7.w7-overlay .w7-content::-webkit-scrollbar-button:single-button {
+  display: block;
+  height: 17px;
+  background-color: #eceff3;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #aeb4bd;
+  border-radius: 2px;
+}
+.win7.w7-overlay .w7-sidebar::-webkit-scrollbar-button:single-button:vertical:decrement,
+.win7.w7-overlay .w7-content::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpolygon points='4.5,0 9,6 0,6' fill='%23566074'/%3E%3C/svg%3E");
+}
+.win7.w7-overlay .w7-sidebar::-webkit-scrollbar-button:single-button:vertical:increment,
+.win7.w7-overlay .w7-content::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpolygon points='0,0 9,0 4.5,6' fill='%23566074'/%3E%3C/svg%3E");
+}
+
+/* --------------------------------------------------------------------------
+   COMPATIBILIDADE E DESEMPENHO
+   -------------------------------------------------------------------------- */
+/* Navegador sem backdrop-filter: vidro mais opaco para continuar legível */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .win7.w7-overlay .w7-window { background: linear-gradient(180deg, rgba(205, 223, 243, 0.96), rgba(168, 195, 226, 0.96)); }
+}
+/* Quem pede "reduzir transparência" no sistema recebe vidro opaco */
+@media (prefers-reduced-transparency: reduce) {
+  .win7.w7-overlay .w7-window {
+    background: linear-gradient(180deg, #cfe1f4, #a9c4e2);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .win7.w7-overlay .w7-window::before { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   TELAS PEQUENAS
+   -------------------------------------------------------------------------- */
+@media (max-width: 760px) {
+  .win7.w7-overlay{ padding: 10px; --w7-vidro-blur: 5px; }
+  .win7.w7-overlay .w7-window { height: 100%; }
+  .win7.w7-overlay .w7-toolbar { flex-wrap: wrap; }
+  .win7.w7-overlay .w7-address { flex: 1 1 calc(100% - 70px); }
+  .win7.w7-overlay .w7-search { flex: 1 1 100%; order: 3; }
+  .win7.w7-overlay .w7-commandbar { overflow-x: auto; }
+  .win7.w7-overlay .w7-explorer { flex-direction: column; }
+  .win7.w7-overlay .w7-sidebar { flex: 0 0 auto; padding: 6px; border-right: 0; border-bottom: 1px solid #d4dce8; overflow-y: hidden; overflow-x: auto; }
+  .win7.w7-overlay .w7-sidebar-heading { display: none; }
+  .win7.w7-overlay .w7-menu { display: flex; gap: 4px; }
+  .win7.w7-overlay .w7-menu li { flex: 0 0 auto; margin: 0; }
+  .win7.w7-overlay .w7-menu-item { width: auto; padding: 0 10px; white-space: nowrap; }
+  .win7.w7-overlay .w7-content { padding: 0 14px 12px; }
+  .win7.w7-overlay .w7-content-header { margin: 0 -14px 12px; padding: 10px 14px 8px; }
+  .win7.w7-overlay .w7-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .win7.w7-overlay .w7-cards { grid-template-columns: 1fr; }
+  .win7.w7-overlay .w7-card-image { height: 140px; }
+}

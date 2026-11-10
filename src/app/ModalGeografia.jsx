@@ -1,11 +1,42 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 
+/* ==========================================================================
+   ✏️ PERSONALIZE AQUI - ligue/desligue ou troque o que quiser neste bloco.
+   (Cores, transparência, tamanho e blur do vidro ficam no CSS, no começo do
+   arquivo modal-geografia.css, nas variáveis --w7-*.)
+   ========================================================================== */
+const W7 = {
+  tituloJanela: "Geografia do Brasil",
+  iconeJanela: "🌎",
+
+  // Barra de endereço
+  rotuloRaiz: "Geografia do Brasil", // 1ª parte do caminho (a 2ª é a aba ativa)
+  mostrarBotaoAtualizar: true, // ícone verde de "atualizar" no fim do endereço
+
+  // Pesquisa (o campo continua sendo um <input> controlado pelo estado "pesquisa")
+  mostrarPesquisa: true,
+  placeholderPesquisa: "Pesquisar {aba}", // {aba} vira o nome da aba ativa
+  filtrarCardsPelaPesquisa: false, // true = digitar na pesquisa filtra os cards pelo título
+
+  // Barra de comandos (Organizar, Nova pasta...) - só decorativa
+  mostrarBarraComandos: false,
+  comandos: [
+    { rotulo: "Organizar", menu: true },
+    { rotulo: "Incluir na biblioteca", menu: true },
+    { rotulo: "Compartilhar com", menu: true },
+    { rotulo: "Nova pasta", menu: false },
+  ],
+
+  // Rodapé
+  mostrarBarraStatus: true,
+};
+
 export default function ModalGeografia({ onClose }) {
   const [abaAtiva, setAbaAtiva] = useState("Biomas");
   const [pesquisa, setPesquisa] = useState("");
+  const [imagemErro, setImagemErro] = useState(false);
 
   // Bloqueia a rolagem da página enquanto o modal estiver aberto
   useEffect(() => {
@@ -58,984 +89,124 @@ export default function ModalGeografia({ onClose }) {
     { titulo: "Distribuição", numero: "03" },
   ];
 
+  // Filtro opcional pela pesquisa (desligado por padrão: W7.filtrarCardsPelaPesquisa)
+  const termo = pesquisa.trim().toLowerCase();
+  const cardsVisiveis =
+    W7.filtrarCardsPelaPesquisa && termo
+      ? cards.filter((c) => c.titulo.toLowerCase().includes(termo))
+      : cards;
+
+  const textoItens = W7.filtrarCardsPelaPesquisa
+    ? `${cardsVisiveis.length} itens`
+    : abaAtiva === "Biomas"
+    ? "3 itens"
+    : "0 itens";
+
   return (
-    <div
-      className="win7 w7-overlay"
-      style={{
-        position: "fixed",
-        inset: 0,
-        backgroundColor: "rgba(0,0,0,0.42)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 1000,
-        backdropFilter: "blur(3px)",
-        WebkitBackdropFilter: "blur(3px)",
-        padding: "20px",
-      }}
-    >
-      <style>{`
-        /* =========================================
-           JANELA PRINCIPAL
-        ========================================= */
-
-        .win7 .w7-window {
-          position: relative;
-          box-sizing: border-box;
-          width: 900px;
-          max-width: 95vw;
-          height: 600px;
-          max-height: 90vh;
-          display: flex;
-          flex-direction: column;
-          padding: 0 !important;
-          margin: 0;
-          overflow: hidden;
-          border: 1px solid rgba(115, 169, 210, 0.95) !important;
-          border-radius: 8px 8px 4px 4px !important;
-          background: transparent !important;
-          box-shadow:
-            0 0 0 1px rgba(255,255,255,0.85),
-            0 2px 5px rgba(0,0,0,0.25),
-            0 12px 32px rgba(0,0,0,0.45),
-            0 30px 60px rgba(0,0,0,0.25) !important;
-          font-family: "Segoe UI", Tahoma, sans-serif;
-          color: #222;
-        }
-
-        .win7 .w7-window,
-        .win7 .w7-window *,
-        .win7 .w7-window *::before,
-        .win7 .w7-window *::after {
-          box-sizing: border-box;
-          transition: none !important;
-          animation: none !important;
-        }
-
-        .win7 .w7-window::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          z-index: 8;
-          border-radius: inherit;
-          pointer-events: none;
-          box-shadow:
-            inset 0 1px 1px rgba(255,255,255,0.95),
-            inset 1px 0 rgba(255,255,255,0.5),
-            inset -1px 0 rgba(255,255,255,0.35);
-        }
-
-                .win7 .w7-titlebar {
-          position: relative;
-          z-index: 2;
-          flex-shrink: 0;
-          height: 39px;
-          min-height: 39px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 6px 0 12px !important;
-          margin: 0 !important;
-          overflow: hidden;
-          border: none !important;
-          border-bottom: 1px solid rgba(91, 145, 187, 0.55) !important;
-          border-radius: 7px 7px 0 0 !important;
-
-          /* MUDANÇA AQUI: Fundo transparente */
-          background: rgba(255, 255, 255, 0.15) !important;
-
-          box-shadow:
-            inset 0 1px rgba(255,255,255,0.95),
-            inset 0 3px 8px rgba(255,255,255,0.25),
-            inset 0 -1px rgba(255,255,255,0.35);
-
-          backdrop-filter: blur(30px) saturate(180%);
-          -webkit-backdrop-filter: blur(30px) saturate(180%);
-        }
-
-        .win7 .w7-titlebar::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 2px;
-          right: 2px;
-          height: 65%;
-          pointer-events: none;
-          border-radius: 7px 7px 50% 50%;
-          background: linear-gradient(
-            180deg,
-            rgba(255,255,255,0.65),
-            rgba(255,255,255,0.15) 65%,
-            transparent
-          );
-        }
-
-        .win7 .w7-titlebar::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 1px;
-          background: rgba(255,255,255,0.55);
-          pointer-events: none;
-        }
-
-        .win7 .w7-title-text {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          color: #172c3e !important;
-          font-family: "Segoe UI", Tahoma, sans-serif !important;
-          font-size: 12px !important;
-          font-weight: 600 !important;
-          text-shadow: 0 1px 1px white !important;
-        }
-
-        .win7 .w7-title-icon {
-          font-size: 17px;
-        }
-
-        /* =========================================
-           BOTÃO FECHAR
-        ========================================= */
-
-        .win7 .w7-controls {
-          position: relative;
-          z-index: 3;
-          display: flex;
-          align-items: flex-start;
-          gap: 0;
-          height: 25px;
-          margin: -1px 0 0 auto !important;
-        }
-
-        .win7 .w7-controls button {
-          position: relative;
-          appearance: none !important;
-          -webkit-appearance: none !important;
-          width: 47px !important;
-          min-width: 47px !important;
-          height: 21px !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          border: 1px solid #8c2924 !important;
-          border-top: none !important;
-          border-radius: 0 0 4px 4px !important;
-
-          background: linear-gradient(
-            180deg,
-            #f5c5bd 0%,
-            #ec7e70 30%,
-            #d94437 68%,
-            #a92724 100%
-          ) !important;
-
-          box-shadow:
-            inset 0 1px 1px rgba(255,255,255,0.8),
-            inset 0 -2px 3px rgba(100,0,0,0.25),
-            0 1px 3px rgba(0,0,0,0.2) !important;
-
-          cursor: pointer;
-        }
-
-        .win7 .w7-controls button::before {
-          content: "×";
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-family: Arial, sans-serif;
-          font-size: 19px;
-          font-weight: 400;
-          text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-        }
-
-        .win7 .w7-controls button:hover,
-        .win7 .w7-controls button:focus {
-          background: linear-gradient(
-            180deg,
-            #f5c5bd 0%,
-            #ec7e70 30%,
-            #d94437 68%,
-            #a92724 100%
-          ) !important;
-          outline: none !important;
-          filter: none !important;
-          transform: none !important;
-        }
-
-        /* =========================================
-           CORPO BRANCO E OPACO
-        ========================================= */
-
-        .win7 .w7-body {
-          position: relative;
-          z-index: 1;
-          flex: 1;
-          min-height: 0;
-          display: flex;
-          flex-direction: column;
-          margin: 0 !important;
-          padding: 0 !important;
-          overflow: hidden;
-          background: #fff !important;
-          color: #222;
-          opacity: 1 !important;
-        }
-
-        /* =========================================
-           BARRA DE NAVEGAÇÃO COM VIDRO AERO
-        ========================================= */
-
-        .win7 .w7-toolbar {
-          position: relative;
-          z-index: 1;
-          flex-shrink: 0;
-          min-height: 44px;
-          display: flex;
-          align-items: center;
-          gap: 9px;
-          padding: 5px 10px;
-
-          background: linear-gradient(
-            180deg,
-            rgba(255,255,255,0.58) 0%,
-            rgba(229,243,255,0.42) 48%,
-            rgba(190,220,244,0.50) 100%
-          );
-
-          border-bottom: 1px solid rgba(115,157,192,0.50);
-
-          box-shadow:
-            inset 0 1px rgba(255,255,255,0.85),
-            inset 0 -1px rgba(255,255,255,0.35);
-
-          backdrop-filter: blur(26px) saturate(170%);
-          -webkit-backdrop-filter: blur(26px) saturate(170%);
-        }
-
-        .win7 .w7-navigation {
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          gap: 5px;
-        }
-
-        /* =========================================
-           SETAS REDONDAS E EM NEGRITO
-        ========================================= */
-
-        .win7 .w7-nav-button {
-          appearance: none !important;
-          -webkit-appearance: none !important;
-          width: 34px !important;
-          min-width: 34px !important;
-          height: 34px !important;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0 !important;
-
-          border: 1px solid rgba(100,145,180,0.85) !important;
-          border-radius: 50% !important;
-
-          background: linear-gradient(
-            180deg,
-            #ffffff 0%,
-            #e9f4fc 55%,
-            #c8e0f1 100%
-          ) !important;
-
-          color: #315a7b !important;
-          font-family: Arial, sans-serif !important;
-          font-size: 25px !important;
-          font-weight: 900 !important;
-          line-height: 1 !important;
-
-          box-shadow:
-            inset 0 1px 2px white,
-            0 1px 2px rgba(0,0,0,0.12);
-
-          cursor: pointer;
-        }
-
-        .win7 .w7-nav-button:hover,
-        .win7 .w7-nav-button:focus,
-        .win7 .w7-nav-button:active {
-          background: linear-gradient(
-            180deg,
-            #ffffff 0%,
-            #e9f4fc 55%,
-            #c8e0f1 100%
-          ) !important;
-
-          color: #315a7b !important;
-          outline: none !important;
-          filter: none !important;
-          transform: none !important;
-          box-shadow:
-            inset 0 1px 2px white,
-            0 1px 2px rgba(0,0,0,0.12) !important;
-        }
-
-        /* =========================================
-           BARRA DE ENDEREÇO
-        ========================================= */
-
-        .win7 .w7-address {
-          position: relative;
-          height: 30px;
-          flex: 1;
-          min-width: 0;
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          padding: 0 8px;
-          border: 1px solid #9cabb9;
-          border-radius: 3px;
-          background: #fff;
-          box-shadow:
-            inset 0 1px 3px rgba(0,0,0,0.12),
-            0 1px white;
-        }
-
-        .win7 .w7-folder-icon {
-          flex-shrink: 0;
-          font-size: 15px;
-        }
-
-        .win7 .w7-address-path {
-          min-width: 0;
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          overflow: hidden;
-          white-space: nowrap;
-          font-family: "Segoe UI", sans-serif;
-          font-size: 12px;
-        }
-
-        .win7 .w7-breadcrumb {
-          color: #374b5d;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-        .win7 .w7-breadcrumb-current {
-          color: #1d4d73;
-          font-weight: 600;
-        }
-
-        .win7 .w7-breadcrumb-arrow {
-          color: #7195b1;
-          font-size: 15px;
-        }
-
-        .win7 .w7-address-arrow {
-          flex-shrink: 0;
-          margin-left: auto;
-          color: #6b8194;
-          font-size: 9px;
-        }
-
-        /* =========================================
-           PESQUISA
-        ========================================= */
-
-        .win7 .w7-search {
-          flex-shrink: 0;
-          width: 190px;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          padding: 0 7px;
-          border: 1px solid #a1b2c1;
-          border-radius: 3px;
-          background: #fff;
-          box-shadow:
-            inset 0 1px 3px rgba(0,0,0,0.1),
-            0 1px white;
-        }
-
-        .win7 .w7-search input {
-          appearance: none !important;
-          flex: 1;
-          min-width: 0;
-          margin: 0;
-          padding: 0;
-          border: none !important;
-          outline: none !important;
-          color: #333 !important;
-          background: transparent !important;
-          box-shadow: none !important;
-          font-family: "Segoe UI", sans-serif !important;
-          font-size: 12px !important;
-        }
-
-        .win7 .w7-search input::placeholder {
-          color: #8997a4;
-        }
-
-        .win7 .w7-search-icon {
-          color: #527d9e;
-          font-size: 18px;
-          margin-left: 5px;
-        }
-
-        /* =========================================
-           EXPLORER
-        ========================================= */
-
-        .win7 .w7-explorer {
-          flex: 1;
-          min-height: 0;
-          display: flex;
-          overflow: hidden;
-          background: #fff;
-        }
-
-        /* =========================================
-           MENU LATERAL
-        ========================================= */
-
-        .win7 .w7-sidebar {
-          flex-shrink: 0;
-          width: 205px;
-          padding: 14px 9px;
-          overflow-y: auto;
-          background: linear-gradient(
-            90deg,
-            #f7f9fb 0%,
-            #f1f5f9 75%,
-            #eaf0f5 100%
-          );
-          border-right: 1px solid #c4ced8;
-          box-shadow: inset -1px 0 rgba(255,255,255,0.9);
-        }
-
-        .win7 .w7-sidebar-heading {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 3px 8px;
-          margin-bottom: 8px;
-          color: #245783;
-          font-family: "Segoe UI", sans-serif;
-          font-size: 12px;
-          font-weight: 600;
-          text-shadow: 0 1px white;
-        }
-
-        .win7 .w7-sidebar-heading-icon {
-          font-size: 12px;
-        }
-
-        .win7 .w7-menu {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-          padding: 0;
-          margin: 0;
-          list-style: none;
-        }
-
-        .win7 .w7-menu li {
-          padding: 0;
-          margin: 0;
-        }
-
-        .win7 .w7-menu-item {
-          appearance: none !important;
-          position: relative;
-          width: 100%;
-          min-height: 29px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 4px 8px !important;
-          border: 1px solid transparent !important;
-          border-radius: 2px !important;
-          background: transparent !important;
-          color: #493030 !important;
-          font-family: "Segoe UI", sans-serif !important;
-          font-size: 12px !important;
-          text-align: left;
-          cursor: pointer;
-        }
-
-        .win7 .w7-menu-item:hover,
-        .win7 .w7-menu-item:focus {
-          border-color: transparent !important;
-          background: transparent !important;
-          box-shadow: none !important;
-          outline: none !important;
-          filter: none !important;
-          transform: none !important;
-        }
-
-        .win7 .w7-menu-item.active {
-          border-color: #9fc8e7 !important;
-          background: #fadcdc !important;
-          color: #155e96 !important;
-          font-weight: 600;
-          box-shadow: inset 0 1px white;
-        }
-
-        .win7 .w7-menu-icon {
-          width: 19px;
-          flex-shrink: 0;
-          display: flex;
-          justify-content: center;
-          font-size: 14px;
-        }
-
-        /* =========================================
-           CONTEÚDO PRINCIPAL
-        ========================================= */
-
-        .win7 .w7-content {
-          position: relative;
-          flex: 1;
-          min-width: 0;
-          min-height: 0;
-          display: flex;
-          flex-direction: column;
-          padding: 20px 24px 12px;
-          overflow-y: auto;
-          background: #fff;
-        }
-
-        .win7 .w7-content-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding-bottom: 11px;
-          margin-bottom: 13px;
-          border-bottom: 1px solid #e5eaf0;
-        }
-
-        .win7 .w7-content-eyebrow {
-          color: #879aa9;
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: 1.2px;
-        }
-
-        .win7 .w7-content-header h2 {
-          margin: 4px 0 0 !important;
-          color: #28719a !important;
-          font-family: "Segoe UI", sans-serif !important;
-          font-size: 21px !important;
-          font-weight: 400 !important;
-          text-shadow: 0 1px white;
-        }
-
-        .win7 .w7-content-description {
-          margin: 0 0 13px;
-          color: #6e7e8b;
-          font-size: 11px;
-        }
-
-        /* =========================================
-           CARDS
-        ========================================= */
-
-        .win7 .w7-cards {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          align-items: start;
-          gap: 16px;
-        }
-
-        .win7 .w7-card {
-          min-width: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 9px 8px 10px;
-          border: 1px solid transparent;
-          border-radius: 2px;
-          background: transparent;
-          text-align: center;
-        }
-
-        .win7 .w7-card:hover,
-        .win7 .w7-card:focus {
-          border-color: transparent !important;
-          background: transparent !important;
-          box-shadow: none !important;
-          filter: none !important;
-          transform: none !important;
-        }
-
-        .win7 .w7-card-number {
-          align-self: flex-start;
-          margin-bottom: 7px;
-          color: #94a9ba;
-          font-size: 9px;
-          font-weight: 600;
-          letter-spacing: 1px;
-        }
-
-        .win7 .w7-card-image {
-          width: 100%;
-          height: 135px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 9px;
-          border: 1px solid #d1e0ec;
-          border-radius: 2px;
-          background: linear-gradient(
-            145deg,
-            #fafdff 0%,
-            #edf5fb 48%,
-            #e0edf7 100%
-          );
-          box-shadow:
-            inset 0 1px 3px rgba(60,100,140,0.09),
-            0 1px 0 white;
-          color: #8096a8;
-          font-size: 10px;
-          line-height: 1.5;
-        }
-
-        .win7 .w7-card-image span {
-          max-width: 145px;
-          text-align: center;
-        }
-
-        .win7 .w7-card h3 {
-          margin: 10px 0 4px !important;
-          color: #315b7c !important;
-          font-family: "Segoe UI", sans-serif !important;
-          font-size: 12px !important;
-          font-weight: 600 !important;
-        }
-
-        .win7 .w7-card p {
-          margin: 0 !important;
-          color: #7b8b98 !important;
-          font-family: "Segoe UI", sans-serif !important;
-          font-size: 10px !important;
-          line-height: 1.5 !important;
-        }
-
-        .win7 .w7-content-bottom {
-          display: flex;
-          justify-content: space-between;
-          margin-top: auto;
-          padding-top: 15px;
-          color: #9aaab7;
-          font-size: 10px;
-        }
-
-        /* =========================================
-           BARRA DE STATUS
-        ========================================= */
-
-        .win7 .w7-statusbar {
-          flex-shrink: 0;
-          min-height: 27px;
-          height: 27px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 10px;
-          border-top: 1px solid #c8d3dd;
-          background: linear-gradient(
-            180deg,
-            #f7f9fb,
-            #eaf0f5
-          );
-          box-shadow: inset 0 1px white;
-          color: #566b7d;
-          font-size: 10px;
-        }
-
-        .win7 .w7-status-left {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
-
-        .win7 .w7-status-icon {
-          font-size: 13px;
-        }
-
-        .win7 .w7-status-right {
-          color: #8797a4;
-        }
-
-        /* =========================================
-           SCROLLBARS
-        ========================================= */
-
-        .win7 .w7-window ::-webkit-scrollbar {
-          width: 13px;
-          height: 13px;
-        }
-
-        .win7 .w7-window ::-webkit-scrollbar-track {
-          background: #f0f3f6;
-          border-left: 1px solid #e0e6eb;
-        }
-
-        .win7 .w7-window ::-webkit-scrollbar-thumb {
-          border: 3px solid #f0f3f6;
-          border-radius: 10px;
-          background: #9bbbd4;
-        }
-
-        .win7 .w7-window ::-webkit-scrollbar-thumb:hover {
-          background: #9bbbd4;
-        }
-
-                /* =========================================
-           REMOÇÃO DE EFEITOS E BRILHOS DE HOVER
-        ========================================= */
-
-        /* Remove transições */
-        .win7 .w7-window *,
-        .win7 .w7-window *::before,
-        .win7 .w7-window *::after {
-          transition: none !important;
-          animation: none !important;
-        }
-
-        /* Remove o brilho/fundo de botões genéricos ao passar o mouse */
-        .win7 .w7-window button:hover,
-        .win7 .w7-window button:focus,
-        .win7 .w7-window button:active {
-          filter: none !important;
-          transform: none !important;
-          box-shadow: none !important;
-        }
-
-        /* Remove especificamente o fundo dos itens do menu e dos cards */
-        .win7 .w7-menu-item:hover,
-        .win7 .w7-menu-item:focus,
-        .win7 .w7-card:hover,
-        .win7 .w7-card:focus {
-          background: transparent !important;
-          border-color: transparent !important;
-          color: inherit !important;
-        }
-
-        /* Remove o fundo azul dos botões de navegação (setas) */
-        .win7 .w7-nav-button:hover,
-        .win7 .w7-nav-button:focus {
-          background: transparent !important;
-          border-color: transparent !important;
-          box-shadow: none !important;
-        }
-
-        /* Mantém o link do endereço sem decoração ao passar o mouse */
-        .win7 .w7-breadcrumb:hover {
-          color: #374b5d !important;
-          text-decoration: none !important;
-        }
-
-        /* =========================================
-           RESPONSIVIDADE
-        ========================================= */
-
-        @media (max-width: 760px) {
-          .win7 .w7-window {
-            width: 96vw;
-            height: 90vh;
-          }
-
-          .win7 .w7-toolbar {
-            flex-wrap: wrap;
-            padding: 7px;
-          }
-
-          .win7 .w7-address {
-            order: 2;
-            flex-basis: calc(100% - 145px);
-          }
-
-          .win7 .w7-search {
-            order: 3;
-            flex: 1;
-            width: auto;
-          }
-
-          .win7 .w7-explorer {
-            flex-direction: column;
-          }
-
-          .win7 .w7-sidebar {
-            width: 100%;
-            padding: 8px 10px;
-            border-right: none;
-            border-bottom: 1px solid #c4ced8;
-          }
-
-          .win7 .w7-menu {
-            flex-direction: row;
-            gap: 4px;
-            overflow-x: auto;
-          }
-
-          .win7 .w7-menu li {
-            flex-shrink: 0;
-          }
-
-          .win7 .w7-menu-item {
-            width: auto;
-            white-space: nowrap;
-          }
-
-          .win7 .w7-content {
-            padding: 15px;
-          }
-
-          .win7 .w7-cards {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
-        }
-
-        @media (max-width: 480px) {
-          .win7.w7-overlay {
-            padding: 7px !important;
-          }
-
-          .win7 .w7-window {
-            width: 100%;
-            height: 94vh;
-            max-height: 94vh;
-          }
-
-          .win7 .w7-titlebar {
-            min-height: 35px;
-            height: 35px;
-          }
-
-          .win7 .w7-search {
-            flex-basis: 100%;
-          }
-
-          .win7 .w7-address {
-            flex-basis: 100%;
-          }
-
-          .win7 .w7-cards {
-            grid-template-columns: 1fr;
-          }
-
-          .win7 .w7-card-image {
-            height: 155px;
-          }
-
-          .win7 .w7-content-header h2 {
-            font-size: 19px !important;
-          }
-        }
-          
-      `}</style>
-
+    <div className="win7 w7-overlay">
       <div
         className="w7-window"
         role="dialog"
         aria-modal="true"
-        aria-label="Geografia do Brasil"
-        style={{
-          width: "900px",
-          maxWidth: "95%",
-          height: "600px",
-          maxHeight: "90vh",
-          display: "flex",
-          flexDirection: "column",
-        }}
+        aria-label={W7.tituloJanela}
       >
-        <div className="title-bar w7-titlebar">
-          <div className="title-bar-text w7-title-text">
-            <span className="w7-title-icon">🌎</span>
-            Geografia do Brasil
+        {/* ===== BARRA DE TÍTULO (vidro) ===== */}
+        <div className="w7-titlebar">
+          <div className="w7-title-text">
+            <span className="w7-title-icon">{W7.iconeJanela}</span>
+            {W7.tituloJanela}
           </div>
 
-          <div className="title-bar-controls w7-controls">
+          <div className="w7-controls">
             <button
               type="button"
-              aria-label="Close"
+              className="w7-close"
+              aria-label="Fechar"
               title="Fechar"
               onClick={onClose}
-            />
+            >
+              <svg width="14" height="8" viewBox="0 0 14 10" aria-hidden="true">
+                <path d="M2.2 1.2l9.6 7.6M11.8 1.2L2.2 8.8" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+              </svg>
+            </button>
           </div>
         </div>
 
-        <div
-          className="window-body w7-body"
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            minHeight: 0,
-          }}
-        >
-          <div className="w7-toolbar">
-            <div className="w7-navigation">
-              <button
-                type="button"
-                className="w7-nav-button"
-                aria-label="Voltar"
-                title="Voltar"
-              >
-                ‹
-              </button>
+        {/* ===== NAVEGAÇÃO: orbes + endereço + pesquisa (também no vidro) ===== */}
+        <div className="w7-toolbar">
+          {/* Para tornar funcional: troque cada <span> por <button type="button" onClick={...}> */}
+          <div className="w7-navigation" aria-hidden="true">
+            <span className="w7-nav-button w7-nav-back">
+              <svg width="17" height="17" viewBox="0 0 24 24">
+                <path d="M11.5 2.5L2 12l9.5 9.5v-5.6H22V8.1H11.5z" fill="#1f4f8c" stroke="rgba(255,255,255,.9)" strokeWidth="1.3" strokeLinejoin="round" />
+              </svg>
+            </span>
+            <span className="w7-nav-button w7-nav-forward">
+              <svg width="13" height="13" viewBox="0 0 24 24">
+                <path d="M12.5 2.5L22 12l-9.5 9.5v-5.6H2V8.1h10.5z" fill="#8c9db1" stroke="rgba(255,255,255,.9)" strokeWidth="1.3" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </div>
 
-              <button
-                type="button"
-                className="w7-nav-button"
-                aria-label="Avançar"
-                title="Avançar"
-              >
-                ›
-              </button>
+          <div className="w7-address">
+            <svg className="w7-folder-icon" width="18" height="15" viewBox="0 0 24 20" aria-hidden="true">
+              <path d="M1.5 3h7.5l2 2.2h11.5v13.3h-21z" fill="#d6a42a" />
+              <path d="M1.5 7h21v11.5h-21z" fill="#f4d56a" stroke="#b9891f" strokeWidth="0.8" />
+            </svg>
+
+            <div className="w7-address-path">
+              <span className="w7-breadcrumb">{W7.rotuloRaiz}</span>
+              <span className="w7-breadcrumb-arrow" aria-hidden="true" />
+              <span className="w7-breadcrumb w7-breadcrumb-current">{abaAtiva}</span>
+              <span className="w7-breadcrumb-arrow" aria-hidden="true" />
             </div>
 
-            <div className="w7-address">
-              <span className="w7-folder-icon">📁</span>
+            <span className="w7-address-arrow" aria-hidden="true" />
+            {W7.mostrarBotaoAtualizar && (
+              <span className="w7-address-refresh" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24">
+                  <path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3" fill="none" stroke="#3f9b34" strokeWidth="3.2" strokeLinecap="round" />
+                  <path d="M21.5 2.5v7.2h-7.2z" fill="#3f9b34" />
+                </svg>
+              </span>
+            )}
+          </div>
 
-              <div className="w7-address-path">
-                <span className="w7-breadcrumb">
-                  Geografia do Brasil
-                </span>
-
-                <span className="w7-breadcrumb-arrow">›</span>
-
-                <span className="w7-breadcrumb w7-breadcrumb-current">
-                  {abaAtiva}
-                </span>
-              </div>
-
-              <span className="w7-address-arrow">▼</span>
-            </div>
-
+          {W7.mostrarPesquisa && (
             <div className="w7-search">
               <input
                 type="text"
-                placeholder="Pesquisar"
+                placeholder={W7.placeholderPesquisa.replace("{aba}", abaAtiva)}
                 value={pesquisa}
                 onChange={(e) => setPesquisa(e.target.value)}
                 aria-label="Pesquisar conteúdo"
               />
-
-              <span className="w7-search-icon">⌕</span>
+              <svg className="w7-search-icon" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.6" />
+                <path d="M15 15l6.5 6.5" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" />
+              </svg>
             </div>
-          </div>
+          )}
+        </div>
+
+        {/* ===== ÁREA CLIENTE: branca e opaca ===== */}
+        <div className="w7-body">
+          {W7.mostrarBarraComandos && (
+            <div className="w7-commandbar" aria-hidden="true">
+              {W7.comandos.map((c) => (
+                <span key={c.rotulo} className={c.menu ? "w7-command w7-command-menu" : "w7-command"}>
+                  {c.rotulo}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="w7-explorer">
             <aside className="w7-sidebar">
               <div className="w7-sidebar-heading">
-                <span className="w7-sidebar-heading-icon">⭐</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 2l3 6.6 7.2.8-5.4 4.8 1.6 7.1L12 17.6 5.6 21.3l1.6-7.1L1.8 9.4 9 8.6z" fill="#f6c846" stroke="#d99a1c" strokeWidth="1" strokeLinejoin="round" />
+                </svg>
                 Favoritos
               </div>
 
@@ -1049,15 +220,13 @@ export default function ModalGeografia({ onClose }) {
                           ? "w7-menu-item active"
                           : "w7-menu-item"
                       }
-                      onClick={() => setAbaAtiva(item.id)}
-                      aria-current={
-                        abaAtiva === item.id ? "page" : undefined
-                      }
+                      onClick={() => {
+                        setImagemErro(false);
+                        setAbaAtiva(item.id);
+}}
+                      aria-current={abaAtiva === item.id ? "page" : undefined}
                     >
-                      <span className="w7-menu-icon">
-                        {item.icone}
-                      </span>
-
+                      <span className="w7-menu-icon">{item.icone}</span>
                       {item.id}
                     </button>
                   </li>
@@ -1068,13 +237,9 @@ export default function ModalGeografia({ onClose }) {
             <main className="w7-content">
               <div className="w7-content-header">
                 <div>
-                  <span className="w7-content-eyebrow">
-                    GEOGRAFIA DO BRASIL
-                  </span>
-
+                  <span className="w7-content-eyebrow">GEOGRAFIA DO BRASIL</span>
                   <h2>{abaAtiva}</h2>
                 </div>
-
                 <div />
               </div>
 
@@ -1082,27 +247,15 @@ export default function ModalGeografia({ onClose }) {
                 Elementos e informações sobre {abaAtiva.toLowerCase()}.
               </p>
 
-              <div className="w7-cards">
-                {cards.map((card) => (
-                  <article className="w7-card" key={card.numero}>
-                    <span className="w7-card-number">
-                      {card.numero}
-                    </span>
-
-                    <div className="w7-card-image">
-                      <span>
-                        [ESPAÇO PARA INFOGRÁFICO / IMAGEM]
-                      </span>
-                    </div>
-
-                    <h3>{card.titulo}</h3>
-
-                    <p>
-                      Texto breve sobre {abaAtiva.toLowerCase()}.
-                    </p>
-                  </article>
-                ))}
-              </div>
+              {/* IMAGEM GIGANTE QUE MUDA CONFORME A ABA */}
+              <div style={{ width: "100%", marginTop: "10px", display: "flex", justifyContent: "center" }}>
+                <img 
+                  src={`/infografico_${abaAtiva.toLowerCase()}.png`} 
+                  alt={`Infográfico de ${abaAtiva}`} 
+                  style={{ maxWidth: "80%", height: "auto", display: "block" }} 
+                  onError={(e) => { e.target.style.display = "none"; }}
+                />
+                </div>
 
               <div className="w7-content-bottom">
                 <span>Geografia do Brasil</span>
@@ -1111,19 +264,19 @@ export default function ModalGeografia({ onClose }) {
             </main>
           </div>
 
-          <div className="w7-statusbar">
-            <div className="w7-status-left">
-              <span className="w7-status-icon">📁</span>
+          {W7.mostrarBarraStatus && (
+            <div className="w7-statusbar">
+              <div className="w7-status-left">
+                <svg className="w7-status-icon" width="30" height="25" viewBox="0 0 24 20" aria-hidden="true">
+                  <path d="M1.5 3h7.5l2 2.2h11.5v13.3h-21z" fill="#d6a42a" />
+                  <path d="M1.5 7h21v11.5h-21z" fill="#f4d56a" stroke="#b9891f" strokeWidth="0.8" />
+                </svg>
+                <span>{textoItens}</span>
+              </div>
 
-              <span>
-                {abaAtiva === "Biomas" ? "3 itens" : "0 itens"}
-              </span>
+              <span className="w7-status-right">{abaAtiva}</span>
             </div>
-
-            <span className="w7-status-right">
-              {abaAtiva}
-            </span>
-          </div>
+          )}
         </div>
       </div>
     </div>
