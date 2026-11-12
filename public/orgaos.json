@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {
+      "id": "presidente",
+      "type": "institucional",
+      "position": { "x": 400, "y": 50 },
+      "data": {
+        "label": "Presidente da República",
+        "tipo": "executivo",
+        "raiz": true,
+        "cargo": "Chefe de Estado e de Governo",
+        "mandato": "4 anos (reeleição permitida)",
+        "salario": "R$ 46.366,19",
+        "descricao": "Comanda o Poder Executivo Federal, sanciona leis e representa o país."
+      }
+    },
+    {
+      "id": "fazenda",
+      "type": "institucional",
+      "position": { "x": 50, "y": 200 },
+      "data": {
+        "label": "Ministério da Fazenda",
+        "tipo": "executivo",
+        "cargo": "Ministro da Fazenda",
+        "mandato": "Cargo de confiança do Presidente",
+        "salario": "R$ 46.366,19",
+        "descricao": "Responsável pela política econômica, arrecadação e gastos do governo."
+      }
+    },
+    {
+      "id": "justica",
+      "type": "institucional",
+      "position": { "x": 250, "y": 200 },
+      "data": {
+        "label": "Ministério da Justiça",
+        "tipo": "executivo",
+        "cargo": "Ministro da Justiça",
+        "mandato": "Cargo de confiança do Presidente",
+        "salario": "R$ 46.366,19",
+        "descricao": "Cuida da segurança pública, polícia federal e direitos dos cidadãos."
+      }
+    },
+    {
+      "id": "saude",
+      "type": "institucional",
+      "position": { "x": 450, "y": 200 },
+      "data": {
+        "label": "Ministério da Saúde",
+        "tipo": "executivo",
+        "cargo": "Ministro da Saúde",
+        "mandato": "Cargo de confiança do Presidente",
+        "salario": "R$ 46.366,19",
+        "descricao": "Coordena o SUS e as políticas de saúde pública."
+      }
+    },
+    {
+      "id": "educacao",
+      "type": "institucional",
+      "position": { "x": 650, "y": 200 },
+      "data": {
+        "label": "Ministério da Educação",
+        "tipo": "executivo",
+        "cargo": "Ministro da Educação",
+        "mandato": "Cargo de confiança do Presidente",
+        "salario": "R$ 46.366,19",
+        "descricao": "Cuida da educação básica, universidades federais e do ENEM."
+      }
+    },
+    {
+      "id": "camara",
+      "type": "institucional",
+      "position": { "x": 100, "y": 350 },
+      "data": {
+        "label": "Câmara dos Deputados",
+        "tipo": "legislativo",
+        "cargo": "513 Deputados Federais",
+        "mandato": "4 anos",
+        "salario": "R$ 46.366,19",
+        "descricao": "Representa o povo, cria e vota leis, fiscaliza o Executivo."
+      }
+    },
+    {
+      "id": "senado",
+      "type": "institucional",
+      "position": { "x": 700, "y": 350 },
+      "data": {
+        "label": "Senado Federal",
+        "tipo": "legislativo",
+        "cargo": "81 Senadores",
+        "mandato": "8 anos",
+        "salario": "R$ 46.366,19",
+        "descricao": "Representa os estados, revisa leis e aprova indicados para o STF."
+      }
+    },
+    {
+      "id": "stf",
+      "type": "institucional",
+      "position": { "x": 400, "y": 500 },
+      "data": {
+        "label": "Supremo Tribunal Federal",
+        "tipo": "judiciario",
+        "cargo": "11 Ministros",
+        "mandato": "Até 75 anos (aposentadoria)",
+        "salario": "R$ 46.366,19",
+        "descricao": "Guarda a Constituição e decide sobre conflitos entre os poderes."
+      }
+    }
+  ],
+  "edges": [
+    { "id": "e-pres-fazenda", "source": "presidente", "target": "fazenda" },
+    { "id": "e-pres-justica", "source": "presidente", "target": "justica" },
+    { "id": "e-pres-saude", "source": "presidente", "target": "saude" },
+    { "id": "e-pres-educacao", "source": "presidente", "target": "educacao" },
+    { "id": "e-pres-camara", "source": "presidente", "target": "camara" },
+    { "id": "e-pres-senado", "source": "presidente", "target": "senado" },
+    { "id": "e-pres-stf", "source": "presidente", "target": "stf" }
+  ]
+}

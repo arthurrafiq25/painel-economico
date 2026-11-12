@@ -565,8 +565,8 @@
 
   /* 2. Modal de Notícias (Navegador) */
   .nav-antigo {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 70% !important;
+    max-width: 70% !important;
   }
 
   /* 3. Modal do Windows 7 (Geografia) */

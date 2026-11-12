@@ -15,10 +15,7 @@ https://neocities.org/browse
 - https://ezgif.com/
 
 Novos modais:
-- https://rockybergen.com/whatsnew/2018/3/30/c64minimonitor
-- https://radio.kwsx.online/
-- https://frutigeraeroarchive.org/images/introduction/thumbnails/windows_7.jpg
-- https://upload.wikimedia.org/wikipedia/commons/0/02/Lotus-123-3.0-MSDOS.png?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original
+
 
 ## 1. Notícias por estado no mapa
 Links/cards flutuantes sobre cada UF com notícias relevantes daquele estado.
