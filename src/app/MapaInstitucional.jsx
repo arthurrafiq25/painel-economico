@@ -17,7 +17,7 @@ import "@xyflow/react/dist/style.css";
 
 /* ==========================================================================
    PERSONALIZE AQUI
-   ========================================================================== */
+========================================================================== */
 const CORES_PODER = {
   executivo: "#3b6fe0",
   legislativo: "#14a38b",
@@ -49,7 +49,7 @@ const OPCOES_AJUSTE = { padding: 0.15, minZoom: MAPA.zoomMinimoNoAjuste };
 
 /* ==========================================================================
    CARTÃO (nó customizado)
-   ========================================================================== */
+========================================================================== */
 function CartaoNo({ data }) {
   const cor = CORES_PODER[data.tipo] || CORES_PODER.outro;
   return (
@@ -95,6 +95,7 @@ function AjusteAutomatico() {
 export default function MapaInstitucional() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges] = useState([]);
+  const [nodeSelecionado, setNodeSelecionado] = useState(null);
 
   useEffect(() => {
     fetch("/orgaos.json")
@@ -119,7 +120,7 @@ export default function MapaInstitucional() {
   }, [setNodes]);
 
   const onNodeClick = useCallback((event, node) => {
-    alert(`Clicou em: ${node.data.label}`);
+    setNodeSelecionado(node.data);
   }, []);
 
   return (
@@ -155,6 +156,26 @@ export default function MapaInstitucional() {
         )}
         <AjusteAutomatico />
       </ReactFlow>
+      {nodeSelecionado && (
+      <div style={{
+        position: "absolute", top: "20px", right: "20px", width: "300px",
+        background: "#fff", borderRadius: "12px", padding: "20px",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.15)", zIndex: 10,
+        fontFamily: "Segoe UI, sans-serif"
+      }}>
+        <button 
+          onClick={() => setNodeSelecionado(null)}
+          style={{ position: "absolute", top: "10px", right: "10px", border: "none", background: "transparent", cursor: "pointer", fontSize: "16px" }}
+        >
+          ✕
+        </button>
+        <h3 style={{ margin: "0 0 10px 0", color: "#1f2937" }}>{nodeSelecionado.label}</h3>
+        <p style={{ margin: "0 0 8px 0", fontSize: "13px", color: "#444" }}><strong>Cargo:</strong> {nodeSelecionado.cargo}</p>
+        <p style={{ margin: "0 0 8px 0", fontSize: "13px", color: "#444" }}><strong>Mandato:</strong> {nodeSelecionado.mandato}</p>
+        <p style={{ margin: "0 0 8px 0", fontSize: "13px", color: "#444" }}><strong>Salário:</strong> {nodeSelecionado.salario}</p>
+        <p style={{ margin: "0", fontSize: "13px", color: "#666", lineHeight: "1.5" }}>{nodeSelecionado.descricao}</p>
+      </div>
+    )}
     </div>
   );
 }
