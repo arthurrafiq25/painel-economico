@@ -5,7 +5,7 @@ import { useState, useEffect, useMemo } from "react";
 // ✏️ PERSONALIZE AQUI ------------------------------------------------------
 const MODO_GUIA = false; // true = mostra contornos tracejados nos espaços vazios; false = esconde
 const TITULO_BLOG = "Calendário Histórico"; // título para leitores de tela (não aparece)
-const TEXTO_SOBRE = "Vamos conhecer juntos a história do Brasil.";
+const TEXTO_SOBRE = "O grande diario do Brasil.";
 const ROTULO_TODOS = "todos os anos";
 const TITULO_SECAO = "ARTIGOS";
 const MSG_VAZIO = "Nenhum artigo por aqui ainda.";
