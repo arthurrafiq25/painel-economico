@@ -13,6 +13,8 @@ import CalendarioHistorico from "./CalendarioHistorico";
 import ModalGeografia from "./ModalGeografia";
 import ModalMEI from "./ModalMEI";
 import ModalInstitucional from "./ModalInstitucional";
+import AvisoMobile from "./AvisoMobile";
+import ModalIndigena from "./ModalIndigena";
 
 // =========================================
 // 1. DADOS FIXOS (Não mudam com frequência)
@@ -69,6 +71,7 @@ export default function Home() {
   const [modalGeografia, setModalGeografia] = useState(false);
   const [modalMEI, setModalMEI] = useState(false);
   const [modalInstitucional, setModalInstitucional] = useState(false);
+  const [modalIndigena, setModalIndigena] = useState(false);
   // =========================================
   const aoTeclarNaAba = (e) => {
   if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return; e.preventDefault();
@@ -170,6 +173,7 @@ useEffect(() => {
 
   return (
     <main>
+      <AvisoMobile />
       {/* ======================================*/}
       {/*   6. LAYOUT PRINCIPAL (Mapa + Menu)   */}
       {/* ======================================*/}
@@ -489,6 +493,11 @@ useEffect(() => {
               <img src="https://www.google.com/s2/favicons?domain=gov.br&sz=32" alt="" className="menu-icone" />
                 Órgãos Estatais
               </a>
+
+              <a href="#" onClick={(e) => { e.preventDefault(); setModalIndigena(true); }} className="menu-item">
+              <img src="https://www.google.com/s2/favicons?domain=funai.gov.br&sz=32" alt="" className="menu-icone" />
+                Povos Indígenas
+              </a>
               
             </div>
           </div> /* fecha o flex */ 
@@ -730,6 +739,11 @@ useEffect(() => {
 {/* --- 9.2 Modal Institucional --- */}
   {modalInstitucional && (
   <ModalInstitucional onClose={() => setModalInstitucional(false)} />
+)}
+
+{/* --- 9.3 Modal Povos Indígenas --- */}
+{modalIndigena && (
+  <ModalIndigena onClose={() => setModalIndigena(false)} />
 )}
 
     </main>
