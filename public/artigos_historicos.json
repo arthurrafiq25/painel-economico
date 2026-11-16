@@ -1,4 +1,13 @@
 {
-  "total": 0,
-  "artigos": []
+  "total": 1,
+  "artigos": [
+    {
+      "id": "6899253878506435959",
+      "ano": 1500,
+      "titulo": "Colonização no Brasil",
+      "conteudo": "<div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhcPF1QBLUeBQye5l6S_YCVuALsCHF53NFdNPcLlfNmGrZXieyRszd9bWOOsQM1ZoWDFhGrMhwzNQwKXbiIZjKELkDb3DGLcPVBIRK_Oun8MBvLqJNVj7mq3OG0cIN8SzOUkCxQ_OGRkAxBqWnYBPdJ-zs14f12EOqWCLbFqI4laxK0DH-hndLZ4I3U0fQ/s600/IMG_1320.webp\" style=\"margin-left: 1em; margin-right: 1em;\"><img border=\"0\" data-original-height=\"394\" data-original-width=\"600\" height=\"210\" src=\"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhcPF1QBLUeBQye5l6S_YCVuALsCHF53NFdNPcLlfNmGrZXieyRszd9bWOOsQM1ZoWDFhGrMhwzNQwKXbiIZjKELkDb3DGLcPVBIRK_Oun8MBvLqJNVj7mq3OG0cIN8SzOUkCxQ_OGRkAxBqWnYBPdJ-zs14f12EOqWCLbFqI4laxK0DH-hndLZ4I3U0fQ/s320/IMG_1320.webp\" width=\"320\" /></a></div><br /><p>O ano é 1500. O povo indígena vivia em harmonia com a natureza, organizados em suas aldeias, até o dia 22 abril avistarem, de longe, as grandes caravelas portuguesas.</p><p><br /></p><p><br /></p><p><br /></p>",
+      "dataPublicacao": "2026-11-16T08:08:21-08:00",
+      "url": "https://calendariohistoricobrasil.blogspot.com/2026/11/colonizacao-no-brasil.html"
+    }
+  ]
 }
